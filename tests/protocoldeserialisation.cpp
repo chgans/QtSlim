@@ -151,7 +151,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseStringList_data()
                 );
     QTest::newRow("List with two string elements")
             << "[000002:000002:Hi:000005:doug.:]"
-            << (QStringList()b
+            << (QStringList()
                 << "Hi"
                 << "doug."
                 );
