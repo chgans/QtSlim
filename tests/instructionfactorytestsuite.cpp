@@ -26,7 +26,7 @@ void InstructionFactoryTestSuite::testCreateAssignInstruction()
     Instruction *abstractInstruction = InstructionFactory::createInstruction(words);
 
     AssignInstruction *instruction = dynamic_cast<AssignInstruction*>(abstractInstruction);
-    QVERIFY(instruction != 0);
+    QVERIFY(instruction != nullptr);
 
     QCOMPARE(instruction->instructionId(), QString("id"));
     QCOMPARE(instruction->symbolName(), QString("symbol"));
@@ -45,7 +45,7 @@ void InstructionFactoryTestSuite::testCreateCallInstruction()
     Instruction *abstractInstruction = InstructionFactory::createInstruction(words);
 
     CallInstruction *instruction = dynamic_cast<CallInstruction*>(abstractInstruction);
-    QVERIFY(instruction != 0);
+    QVERIFY(instruction != nullptr);
 
     QCOMPARE(instruction->instructionId(), QString("id"));
     QCOMPARE(instruction->instanceName(), QString("instance"));
@@ -67,7 +67,7 @@ void InstructionFactoryTestSuite::testCreateCallAndAssignInstruction()
     Instruction *abstractInstruction = InstructionFactory::createInstruction(words);
 
     CallAndAssignInstruction *instruction = dynamic_cast<CallAndAssignInstruction*>(abstractInstruction);
-    QVERIFY(instruction != 0);
+    QVERIFY(instruction != nullptr);
 
     QCOMPARE(instruction->instructionId(), QString("id"));
     QCOMPARE(instruction->symbolName(), QString("symbol"));
@@ -87,7 +87,7 @@ void InstructionFactoryTestSuite::testCreateImportInstruction()
     Instruction *abstractInstruction = InstructionFactory::createInstruction(words);
 
     ImportInstruction *instruction = dynamic_cast<ImportInstruction*>(abstractInstruction);
-    QVERIFY(instruction != 0);
+    QVERIFY(instruction != nullptr);
 
     QCOMPARE(instruction->instructionId(), QString("id"));
     QCOMPARE(instruction->path(), QString("path"));
@@ -105,8 +105,7 @@ void InstructionFactoryTestSuite::testCreateMakeInstruction()
     Instruction *abstractInstruction = InstructionFactory::createInstruction(words);
 
     MakeInstruction *instruction = dynamic_cast<MakeInstruction*>(abstractInstruction);
-    QVERIFY(instruction != 0);
-
+    QVERIFY(instruction != nullptr);
 
     QCOMPARE(instruction->instructionId(), QString("id"));
     QCOMPARE(instruction->instanceName(), QString("instance"));
