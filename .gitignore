@@ -1,0 +1,4 @@
+# Qt Creator user's project files
+*.pro.user
+*.pro.user.*
+
