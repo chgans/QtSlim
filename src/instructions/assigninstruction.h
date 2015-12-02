@@ -9,6 +9,16 @@ public:
     AssignInstruction(const QString &instructionId, const QString &symbolName,
                       const QString &value);
 
+    QString symbolName() const
+    {
+        return m_symbolName;
+    }
+
+    QString symbolValue() const
+    {
+        return m_value;
+    }
+
     static const QString NAME;
 
 private:

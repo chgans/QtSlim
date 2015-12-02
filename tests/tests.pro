@@ -12,11 +12,14 @@ SOURCES += \
     main.cpp \
     protocolserialisation.cpp \
     protocoldeserialisation.cpp \
-    protocol.cpp
+    protocol.cpp \
+    instructions.cpp
 
 HEADERS += \
     protocol.h \
     protocolserialisation.h \
-    protocoldeserialisation.h
+    protocoldeserialisation.h \
+    instructions.h
 
+INCLUDEPATH += $$PWD/../src
 DEFINES += SRCDIR=\\\"$$PWD/\\\"

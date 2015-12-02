@@ -12,6 +12,27 @@ public:
                              const QString &instanceName, const QString &methodName,
                              const QVariantList &arguments);
 
+
+    QString symbolName() const
+    {
+        return m_symbolName;
+    }
+
+    QString instanceName() const
+    {
+        return m_instanceName;
+    }
+
+    QString methodName() const
+    {
+        return m_methodName;
+    }
+
+    QVariantList arguments() const
+    {
+        return m_arguments;
+    }
+
     static const QString NAME;
 
 private:

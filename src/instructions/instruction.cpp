@@ -6,6 +6,11 @@ Instruction::Instruction(const QString &id):
 
 }
 
+Instruction::~Instruction()
+{
+
+}
+
 QString Instruction::instructionId() const
 {
     return m_id;

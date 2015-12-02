@@ -12,6 +12,7 @@ class Instruction
 {
 public:
     Instruction(const QString &instructionId);
+    virtual ~Instruction();
 
     QString instructionId() const;
 
