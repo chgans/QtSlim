@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core
+QT       += core network
 
 QT       -= gui
 
@@ -13,6 +13,7 @@ CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
-
+LIBS += ../lib/libqtslim.a
+INCLUDEPATH += $$PWD/../lib
 
 SOURCES += main.cpp

@@ -1,4 +1,4 @@
-QT       += network testlib
+QT       += network testlib network
 
 QT       -= gui
 
@@ -21,5 +21,7 @@ HEADERS += \
     protocoldeserialisation.h \
     instructions.h
 
-INCLUDEPATH += $$PWD/../src
+INCLUDEPATH += $$PWD/../lib
+LIBS += ../lib/libqtslim.a
+
 DEFINES += SRCDIR=\\\"$$PWD/\\\"

@@ -3,13 +3,11 @@ QT -= gui
 
 CONFIG += c++11
 
-TARGET = qtslim-server
-CONFIG += console
-CONFIG -= app_bundle
+TARGET = qtslim
+TEMPLATE = lib
+CONFIG += staticlib
 
-TEMPLATE = app
-
-SOURCES += main.cpp \
+SOURCES += \
     slimserver.cpp \
     slimservice.cpp \
     slimstring.cpp \

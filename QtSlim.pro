@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
+CONFIG += ordered
 
 SUBDIRS += \
-    src \
+    lib \
     tests \
     app
