@@ -1,8 +1,10 @@
-#include <QCoreApplication>
+#include "slimapplication.h"
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-
-    return a.exec();
+    SlimApplication app(argc, argv);
+    app.setOrganizationName("Ch'Gans Engineering Ltd.");
+    app.setOrganizationDomain("chgans.engineering");
+    app.setApplicationName("QtSlim");
+    return app.exec();
 }
