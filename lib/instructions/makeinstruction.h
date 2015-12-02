@@ -11,6 +11,20 @@ public:
     MakeInstruction(const QString &instructionId, const QString &instanceName,
                     const QString &className, const QVariantList &arguments);
 
+    QString instanceName() const
+    {
+        return m_instanceName;
+    }
+
+    QString className() const
+    {
+        return m_className;
+    }
+
+    QStringList arguments() const
+    {
+        return QStringList(); //m_arguments;
+    }
     static const QString NAME;
 
 private:

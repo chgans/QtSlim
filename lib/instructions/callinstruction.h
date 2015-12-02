@@ -11,6 +11,21 @@ public:
     CallInstruction(const QString &instructionId, const QString &instanceName,
                     const QString &methodName, const QVariantList &arguments);
 
+    QString instanceName() const
+    {
+        return m_instanceName;
+    }
+
+    QString methodName() const
+    {
+        return m_methodName;
+    }
+
+    QStringList arguments() const
+    {
+        return QStringList(); //m_arguments;
+    }
+
     static const QString NAME;
 
 private:

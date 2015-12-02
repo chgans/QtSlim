@@ -8,6 +8,11 @@ class ImportInstruction : public Instruction
 public:
     ImportInstruction(const QString &instructionId, const QString &path);
 
+    QString path() const
+    {
+        return m_path;
+    }
+
     static const QString NAME;
 
 private:

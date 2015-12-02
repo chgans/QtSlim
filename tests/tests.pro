@@ -13,13 +13,15 @@ SOURCES += \
     protocolserialisation.cpp \
     protocoldeserialisation.cpp \
     protocol.cpp \
-    instructions.cpp
+    instructions.cpp \
+    instructionfactorytestsuite.cpp
 
 HEADERS += \
     protocol.h \
     protocolserialisation.h \
     protocoldeserialisation.h \
-    instructions.h
+    instructions.h \
+    instructionfactorytestsuite.h
 
 INCLUDEPATH += $$PWD/../lib
 LIBS += ../lib/libqtslim.a

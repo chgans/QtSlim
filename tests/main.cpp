@@ -4,6 +4,7 @@
 #include "protocolserialisation.h"
 #include "protocoldeserialisation.h"
 #include "instructions.h"
+#include "instructionfactorytestsuite.h"
 
 int main(int argc, char** argv) {
     QCoreApplication app(argc, argv);
@@ -13,7 +14,8 @@ int main(int argc, char** argv) {
     ProtocolDeserialisationTestSuite testSuite2;
     InstructionTestSuite testSuite3;
 
-    return QTest::qExec(&testSuite1, argc, argv) |
-            QTest::qExec(&testSuite2, argc, argv) |
-            QTest::qExec(&testSuite3, argc, argv);
+    return QTest::qExec(new ProtocolSerialisationTestSuite, argc, argv) |
+            QTest::qExec(new ProtocolDeserialisationTestSuite, argc, argv) |
+            QTest::qExec(new InstructionTestSuite, argc, argv) |
+            QTest::qExec(new InstructionFactoryTestSuite, argc, argv);
 }
