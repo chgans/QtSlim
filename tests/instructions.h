@@ -3,11 +3,11 @@
 
 #include <QObject>
 
-class instructions : public QObject
+class InstructionTestSuite : public QObject
 {
     Q_OBJECT
 public:
-    explicit instructions(QObject *parent = 0);
+    explicit InstructionTestSuite(QObject *parent = 0);
 
 private slots:
     void initTestCase();

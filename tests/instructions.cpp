@@ -7,50 +7,50 @@
 
 #include <QtTest>
 
-instructions::instructions(QObject *parent) : QObject(parent)
+InstructionTestSuite::InstructionTestSuite(QObject *parent) : QObject(parent)
 {
 
 }
 
-void instructions::initTestCase()
+void InstructionTestSuite::initTestCase()
 {
 
 }
 
-void instructions::cleanupTestCase()
+void InstructionTestSuite::cleanupTestCase()
 {
 
 }
 
-void instructions::testAssignInstruction()
+void InstructionTestSuite::testAssignInstruction()
 {
     AssignInstruction instruction("id", "symbol", "value");
-    QCOMPARE(instruction.instructionId(), "id");
-    QCOMPARE(instruction.symbolName(), "symbol");
-    QCOMPARE(instruction.symbolValue(), "value");
+    QCOMPARE(instruction.instructionId(), QString("id"));
+    QCOMPARE(instruction.symbolName(), QString("symbol"));
+    QCOMPARE(instruction.symbolValue(), QString("value"));
 }
 
-void instructions::testCallAndAssignInstruction()
+void InstructionTestSuite::testCallAndAssignInstruction()
 {
     CallAndAssignInstruction instruction("id", "symbol", "instance", "method", QVariantList() << "value1" << "value2");
-    QCOMPARE(instruction.instructionId(), "id");
-    QCOMPARE(instruction.symbolName(), "symbol");
-    QCOMPARE(instruction.instanceName(), "instance");
-    QCOMPARE(instruction.methodName(), "method");
-    QCOMPARE(instruction.methodName(), QVariantList() << "value1" << "value2");
+    QCOMPARE(instruction.instructionId(), QString("id"));
+    QCOMPARE(instruction.symbolName(), QString("symbol"));
+    QCOMPARE(instruction.instanceName(), QString("instance"));
+    QCOMPARE(instruction.methodName(), QString("method"));
+    QCOMPARE(instruction.arguments(), QVariantList() << "value1" << "value2");
 }
 
-void instructions::testCallInstruction()
+void InstructionTestSuite::testCallInstruction()
 {
 
 }
 
-void instructions::testImportInstruction()
+void InstructionTestSuite::testImportInstruction()
 {
 
 }
 
-void instructions::testMakeInstruction()
+void InstructionTestSuite::testMakeInstruction()
 {
 
 }
