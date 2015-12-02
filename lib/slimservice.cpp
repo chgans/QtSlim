@@ -118,6 +118,26 @@ QString encodeResultList(const QList<InstructionResult *> resultList)
     return encodeList(encodedResultList);
 }
 
+QVariantList extractArgs(const SlimStringList &words, int fromIndex = 0)
+{
+    QVariantList args;
+    if (words.count() <= fromIndex)
+        return QVariantList();
+    for (int i=fromIndex; i<words.count(); i++) {
+        SlimString word = words[i];
+        if (!word.isValid()) {
+            // FIXME
+            continue;
+        }
+        else if (word.isList()) {
+            args.append(extractArgs(word.toList()));
+        }
+        else
+            args.append(word.value());
+    }
+    return args;
+}
+
 // TODO: We receive an instruction list, we reply with a response list
 void SlimService::onStringReceived(const SlimString &string)
 {
@@ -127,14 +147,15 @@ void SlimService::onStringReceived(const SlimString &string)
     }
 
     SlimStringList instructionList = string.toList();
-    QList<InstructionResult *> resultList;
-    foreach (const SlimString &instruction, instructionList) {
-        Instruction *inst = InstructionFactory::createInstruction(instruction.toList()); // TODO: pass instruction string
-        InstructionResult *result = inst->execute(m_executor);
-        resultList.append(result);
+    QList<InstructionResult *> results;
+    foreach (const SlimString &instructionString, instructionList) {
+        QVariantList instructionTokens = extractArgs(instructionString.toList());
+        Instruction *instruction = InstructionFactory::createInstruction(instructionTokens);
+        InstructionResult *result = instruction->execute(m_executor);
+        results.append(result);
     }
 
-    QString answer = encodeResultList(resultList);
+    QString answer = encodeResultList(results);
     m_writer->sendString(answer);
 }
 

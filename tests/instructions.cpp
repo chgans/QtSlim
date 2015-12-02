@@ -35,25 +35,25 @@ void InstructionTestSuite::testAssignInstruction()
 
 void InstructionTestSuite::testCallAndAssignInstruction()
 {
-    CallAndAssignInstruction instruction("id", "symbol", "instance", "method", QVariantList() << "value1" << "value2");
+    CallAndAssignInstruction instruction("id", "symbol", "instance", "method",
+                                         QVariantList() << "value1" << "value2");
 
     QCOMPARE(instruction.instructionId(), QString("id"));
     QCOMPARE(instruction.symbolName(), QString("symbol"));
     QCOMPARE(instruction.instanceName(), QString("instance"));
     QCOMPARE(instruction.methodName(), QString("method"));
-    QEXPECT_FAIL("", "FIXME", Continue);
-    QCOMPARE(instruction.arguments(), QStringList() << "value1" << "value2");
+    QCOMPARE(instruction.arguments(), QVariantList() << "value1" << "value2");
 }
 
 void InstructionTestSuite::testCallInstruction()
 {
-    CallInstruction instruction("id", "instance", "method", QVariantList() << "value1" << "value2");
+    CallInstruction instruction("id", "instance", "method",
+                                QVariantList() << "value1" << "value2");
 
     QCOMPARE(instruction.instructionId(), QString("id"));
     QCOMPARE(instruction.instanceName(), QString("instance"));
     QCOMPARE(instruction.methodName(), QString("method"));
-    QEXPECT_FAIL("", "FIXME", Continue);
-    QCOMPARE(instruction.arguments(), QStringList() << "value1" << "value2");
+    QCOMPARE(instruction.arguments(), QVariantList() << "value1" << "value2");
 }
 
 void InstructionTestSuite::testImportInstruction()
@@ -66,13 +66,13 @@ void InstructionTestSuite::testImportInstruction()
 
 void InstructionTestSuite::testMakeInstruction()
 {
-    MakeInstruction instruction("id", "instance", "class", QVariantList() << "value1" << "value2");
+    MakeInstruction instruction("id", "instance", "class",
+                                QVariantList() << "value1" << "value2");
 
     QCOMPARE(instruction.instructionId(), QString("id"));
     QCOMPARE(instruction.instanceName(), QString("instance"));
     QCOMPARE(instruction.className(), QString("class"));
-    QEXPECT_FAIL("", "FIXME", Continue);
-    QCOMPARE(instruction.arguments(), QStringList() << "value1" << "value2");
+    QCOMPARE(instruction.arguments(), QVariantList() << "value1" << "value2");
 }
 
 

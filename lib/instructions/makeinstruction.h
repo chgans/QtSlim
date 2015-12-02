@@ -21,10 +21,11 @@ public:
         return m_className;
     }
 
-    QStringList arguments() const
+    QVariantList arguments() const
     {
-        return QStringList(); //m_arguments;
+        return m_arguments;
     }
+
     static const QString NAME;
 
 private:

@@ -28,9 +28,9 @@ public:
         return m_methodName;
     }
 
-    QStringList arguments() const
+    QVariantList arguments() const
     {
-        return QStringList(); // m_arguments;
+        return m_arguments;
     }
 
     static const QString NAME;
