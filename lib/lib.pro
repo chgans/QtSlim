@@ -8,12 +8,13 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 SOURCES += \
+    slimapplication.cpp \
     slimserver.cpp \
     slimservice.cpp \
-    slimstring.cpp \
     slimexecutioncontext.cpp \
-    slimstringreader.cpp \
-    slimstringwriter.cpp \
+    protocol/slimstring.cpp \
+    protocol/slimstringreader.cpp \
+    protocol/slimstringwriter.cpp \
     instructions/assigninstruction.cpp \
     instructions/callandassigninstruction.cpp \
     instructions/callinstruction.cpp \
@@ -26,16 +27,16 @@ SOURCES += \
     instructions/invalidinstruction.cpp \
     instructions/makeinstruction.cpp \
     instructions/successinstructionresult.cpp \
-    instructions/voidinstructionresult.cpp \
-    slimapplication.cpp
+    instructions/voidinstructionresult.cpp
 
 HEADERS += \
+    slimapplication.h \
     slimserver.h \
     slimservice.h \
     slimexecutioncontext.h \
-    slimstring.h \
-    slimstringreader.h \
-    slimstringwriter.h \
+    protocol/slimstring.h \
+    protocol/slimstringreader.h \
+    protocol/slimstringwriter.h \
     instructions/assigninstruction.h \
     instructions/callandassigninstruction.h \
     instructions/callinstruction.h \
@@ -48,5 +49,4 @@ HEADERS += \
     instructions/invalidinstruction.h \
     instructions/makeinstruction.h \
     instructions/successinstructionresult.h \
-    instructions/voidinstructionresult.h \
-    slimapplication.h
+    instructions/voidinstructionresult.h

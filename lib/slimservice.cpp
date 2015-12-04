@@ -1,7 +1,7 @@
 #include "slimservice.h"
 
-#include "slimstringreader.h"
-#include "slimstringwriter.h"
+#include "protocol/slimstringreader.h"
+#include "protocol/slimstringwriter.h"
 
 #include "instructions/instructionexecutor.h"
 #include "instructions/instructionfactory.h"
