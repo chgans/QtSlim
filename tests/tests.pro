@@ -13,12 +13,10 @@ SOURCES += \
     main.cpp \
     protocolserialisation.cpp \
     protocoldeserialisation.cpp \
-    protocol.cpp \
     instructions.cpp \
     instructionfactorytestsuite.cpp
 
 HEADERS += \
-    protocol.h \
     protocolserialisation.h \
     protocoldeserialisation.h \
     instructions.h \

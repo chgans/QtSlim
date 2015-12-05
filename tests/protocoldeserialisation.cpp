@@ -1,6 +1,6 @@
 #include <QtTest>
 
-#include "protocol.h"
+#include "protocol/slimstring.h"
 #include "protocoldeserialisation.h"
 
 

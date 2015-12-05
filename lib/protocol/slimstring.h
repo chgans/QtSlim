@@ -34,4 +34,19 @@ private:
 
 typedef QList<SlimString> SlimStringList;
 
+
+class InstructionResult;
+QString encodeLength(int value);
+QString encodeString(const QString &value);
+QString encodeList(const QStringList &valueList);
+QString encodeResult(const InstructionResult *result);
+QString encodeResultList(const QList<InstructionResult *> resultList);
+QVariantList extractArgs(const SlimStringList &words, int fromIndex = 0);
+
+QString serialiseLength(int length);
+QString serialise(const QVariant &value);
+QString serialiseList(const QVariantList &values);
+QVariant deserialise(const QString &data);
+QVariantList deserialiseList(const QString &data);
+
 #endif // SLIMSTRING_H

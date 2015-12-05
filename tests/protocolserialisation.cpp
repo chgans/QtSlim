@@ -1,7 +1,7 @@
 #include <QtTest>
 #include <QDebug>
 
-#include "protocol.h"
+#include "protocol/slimstring.h"
 #include "protocolserialisation.h"
 
 

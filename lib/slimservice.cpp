@@ -1,5 +1,6 @@
 #include "slimservice.h"
 
+#include "protocol/slimstring.h"
 #include "protocol/slimstringreader.h"
 #include "protocol/slimstringwriter.h"
 
@@ -73,69 +74,6 @@ void SlimService::start()
 void SlimService::stop()
 {
     //m_writer->sendString("Bye");
-}
-
-QString encodeLength(int value)
-{
-    static const int digits = 6;
-    static const int base = 10;
-    static const QChar fill('0');
-    return QString("%1").arg(value, digits, base, fill);
-}
-
-QString encodeString(const QString &value)
-{
-    return QString("%1:%2")
-            .arg(encodeLength(value.length()))
-            .arg(value);
-}
-
-QString encodeList(const QStringList &valueList)
-{
-    QStringList encodedStrings;
-    foreach (const QString &value, valueList) {
-        encodedStrings << encodeString(value).append(QChar(':'));
-    }
-    return QString("[%1:%2]")
-               .arg(encodeLength(valueList.length()))
-               .arg(encodedStrings.join(QString()));
-}
-
-QString encodeResult(const InstructionResult *result)
-{
-    QStringList resultFields;
-    resultFields << result->id()
-                 << result->value().toString();
-    return encodeList(resultFields);
-}
-
-QString encodeResultList(const QList<InstructionResult *> resultList)
-{
-    QStringList encodedResultList;
-    foreach (const InstructionResult *result, resultList) {
-        encodedResultList << encodeResult(result);
-    }
-    return encodeList(encodedResultList);
-}
-
-QVariantList extractArgs(const SlimStringList &words, int fromIndex = 0)
-{
-    QVariantList args;
-    if (words.count() <= fromIndex)
-        return QVariantList();
-    for (int i=fromIndex; i<words.count(); i++) {
-        SlimString word = words[i];
-        if (!word.isValid()) {
-            // FIXME
-            continue;
-        }
-        else if (word.isList()) {
-            args.append(extractArgs(word.toList()));
-        }
-        else
-            args.append(word.value());
-    }
-    return args;
 }
 
 // TODO: We receive an instruction list, we reply with a response list
