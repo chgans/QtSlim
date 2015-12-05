@@ -14,13 +14,15 @@ SOURCES += \
     protocolserialisation.cpp \
     protocoldeserialisation.cpp \
     instructions.cpp \
-    instructionfactorytestsuite.cpp
+    instructionfactorytestsuite.cpp \
+    resultencodertestsuite.cpp
 
 HEADERS += \
     protocolserialisation.h \
     protocoldeserialisation.h \
     instructions.h \
-    instructionfactorytestsuite.h
+    instructionfactorytestsuite.h \
+    resultencodertestsuite.h
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 

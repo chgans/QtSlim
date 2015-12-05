@@ -27,7 +27,8 @@ SOURCES += \
     instructions/invalidinstruction.cpp \
     instructions/makeinstruction.cpp \
     instructions/successinstructionresult.cpp \
-    instructions/voidinstructionresult.cpp
+    instructions/voidinstructionresult.cpp \
+    instructions/resultencoder.cpp
 
 HEADERS += \
     slimapplication.h \
@@ -49,4 +50,5 @@ HEADERS += \
     instructions/invalidinstruction.h \
     instructions/makeinstruction.h \
     instructions/successinstructionresult.h \
-    instructions/voidinstructionresult.h
+    instructions/voidinstructionresult.h \
+    instructions/resultencoder.h
