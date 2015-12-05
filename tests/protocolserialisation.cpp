@@ -1,7 +1,7 @@
 #include <QtTest>
 #include <QDebug>
 
-#include "protocol/slimstring.h"
+#include "protocol/slimserialiser.h"
 #include "protocolserialisation.h"
 
 
@@ -40,7 +40,7 @@ void ProtocolSerialisationTestSuite::testCanSerialiseString()
 {
     QFETCH(QString, input);
     QFETCH(QString, output);
-    QString deserialised = serialise(QVariant::fromValue<QString>(input));
+    QString deserialised = SlimSerialiser::serialise(QVariant::fromValue<QString>(input));
     QCOMPARE(deserialised, output);
     QCOMPARE(deserialised.isEmpty(), input.isEmpty());
     QCOMPARE(deserialised.isNull(), input.isNull());
@@ -69,7 +69,7 @@ void ProtocolSerialisationTestSuite::testCanSerialiseInteger()
 {
     QFETCH(int, input);
     QFETCH(QString, output);
-    QCOMPARE(serialise(QVariant::fromValue<int>(input)), output);
+    QCOMPARE(SlimSerialiser::serialise(QVariant::fromValue<int>(input)), output);
 }
 
 void ProtocolSerialisationTestSuite::testCanSerialiseFloat_data()
@@ -92,7 +92,7 @@ void ProtocolSerialisationTestSuite::testCanSerialiseFloat()
 {
     QFETCH(qreal, input);
     QFETCH(QString, output);
-    QCOMPARE(serialise(QVariant::fromValue<qreal>(input)), output);
+    QCOMPARE(SlimSerialiser::serialise(QVariant::fromValue<qreal>(input)), output);
 }
 
 void ProtocolSerialisationTestSuite::testCanSerialiseBoolean_data()
@@ -112,7 +112,7 @@ void ProtocolSerialisationTestSuite::testCanSerialiseBoolean()
 {
     QFETCH(bool, input);
     QFETCH(QString, output);
-    QCOMPARE(serialise(QVariant::fromValue<bool>(input)), output);
+    QCOMPARE(SlimSerialiser::serialise(QVariant::fromValue<bool>(input)), output);
 }
 
 void ProtocolSerialisationTestSuite::testCanSerialiseStringList_data()
@@ -121,21 +121,21 @@ void ProtocolSerialisationTestSuite::testCanSerialiseStringList_data()
     QTest::addColumn<QVariantList>("deserialised");
 
     QTest::newRow("Empty list")
-            << "[000000:]"
+            << "000009:[000000:]"
             << QVariantList();
     QTest::newRow("List with one string element")
-            << "[000001:000008:Hi doug.:]"
+            << "000025:[000001:000008:Hi doug.:]"
             << (QVariantList()
                 << "Hi doug."
                 );
     QTest::newRow("List with two string elements")
-            << "[000002:000002:Hi:000005:doug.:]"
+            << "000032:[000002:000002:Hi:000005:doug.:]"
             << (QVariantList()
                 << "Hi"
                 << "doug."
                 );
     QTest::newRow("List with one list of string")
-            << "[000001:000032:[000002:000002:Hi:000005:doug.:]:]"
+            << "000049:[000001:000032:[000002:000002:Hi:000005:doug.:]:]"
             << (QVariantList()
                 << QVariant::fromValue<QVariantList>(QVariantList()
                     << QVariant::fromValue<QString>("Hi")
@@ -143,7 +143,7 @@ void ProtocolSerialisationTestSuite::testCanSerialiseStringList_data()
                     )
                 );
     QTest::newRow("List with two lists of string")
-            << "[000002:000032:[000002:000002:Hi:000005:doug.:]:000044:[000003:000005:Hello:000005:World:000001:!:]:]"
+            << "000101:[000002:000032:[000002:000002:Hi:000005:doug.:]:000044:[000003:000005:Hello:000005:World:000001:!:]:]"
             << (QVariantList()
                 << QVariant::fromValue<QVariantList>(QVariantList()
                     << QVariant::fromValue<QString>("Hi")
@@ -156,22 +156,7 @@ void ProtocolSerialisationTestSuite::testCanSerialiseStringList_data()
                     )
                 );
     QTest::newRow("List with nested lists")
-            << "[000005:"
-                 "000017:decisionTable_0_1:"
-                 "000004:call:"
-                 "000015:decisionTable_0:"
-                 "000005:table:"
-                 "000091:[000002:"
-                   "000035:[000002:"
-                     "000004:Name:"
-                     "000006:Value?:"
-                   "]:"
-                   "000031:[000002:"
-                     "000003:foo:"
-                     "000003:bar:"
-                   "]:"
-                 "]:"
-               "]"
+            << "000181:[000005:000017:decisionTable_0_1:000004:call:000015:decisionTable_0:000005:table:000091:[000002:000035:[000002:000004:Name:000006:Value?:]:000031:[000002:000003:foo:000003:bar:]:]:]"
             << (QVariantList()
                 << "decisionTable_0_1"
                 << "call"
@@ -194,6 +179,5 @@ void ProtocolSerialisationTestSuite::testCanSerialiseStringList()
 {
     QFETCH(QString, serialised);
     QFETCH(QVariantList, deserialised);
-    QCOMPARE(serialiseList(deserialised), serialised);
+    QCOMPARE(SlimSerialiser::serialise(deserialised), serialised);
 }
-

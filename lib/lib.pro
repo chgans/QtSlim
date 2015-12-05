@@ -28,7 +28,8 @@ SOURCES += \
     instructions/makeinstruction.cpp \
     instructions/successinstructionresult.cpp \
     instructions/voidinstructionresult.cpp \
-    instructions/resultencoder.cpp
+    instructions/resultencoder.cpp \
+    protocol/slimserialiser.cpp
 
 HEADERS += \
     slimapplication.h \
@@ -51,4 +52,5 @@ HEADERS += \
     instructions/makeinstruction.h \
     instructions/successinstructionresult.h \
     instructions/voidinstructionresult.h \
-    instructions/resultencoder.h
+    instructions/resultencoder.h \
+    protocol/slimserialiser.h
