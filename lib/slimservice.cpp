@@ -1,11 +1,13 @@
 #include "slimservice.h"
 
-#include "protocol/slimstring.h"
 #include "protocol/slimstringreader.h"
+#include "protocol/slimdeserialiser.h"
 #include "protocol/slimstringwriter.h"
+#include "protocol/slimserialiser.h"
 
 #include "instructions/instructionexecutor.h"
 #include "instructions/instructionfactory.h"
+#include "instructions/resultencoder.h"
 
 #include <QDebug>
 
@@ -68,7 +70,7 @@ void SlimService::start()
 {
     connect(m_reader, &SlimStringReader::stringReceived,
             this, &SlimService::onStringReceived);
-    m_writer->sendRawString("Slim -- V0.4");
+    m_writer->sendString("Slim -- V0.4\n");
 }
 
 void SlimService::stop()
@@ -76,24 +78,17 @@ void SlimService::stop()
     //m_writer->sendString("Bye");
 }
 
-// TODO: We receive an instruction list, we reply with a response list
-void SlimService::onStringReceived(const SlimString &string)
+void SlimService::onStringReceived(const QString &string)
 {
-    if (!string.isList()) {
-        qWarning() << "Received a non-list slim string" << string.value();
-        return;
-    }
-
-    SlimStringList instructionList = string.toList();
-    QList<InstructionResult *> results;
-    foreach (const SlimString &instructionString, instructionList) {
-        QVariantList instructionTokens = extractArgs(instructionString.toList());
-        Instruction *instruction = InstructionFactory::createInstruction(instructionTokens);
+    QVariantList statements = SlimDeserialiser::deserialise(string).toList();
+    QVariantList results;
+    foreach (const QVariant &statement, statements) {
+        Instruction *instruction = InstructionFactory::createInstruction(statement.toList());
         InstructionResult *result = instruction->execute(m_executor);
-        results.append(result);
+        results.append(ResultEncoder::encodeResult(*result));
     }
 
-    QString answer = encodeResultList(results);
+    QString answer = SlimSerialiser::serialise(QVariant(results));
     m_writer->sendString(answer);
 }
 

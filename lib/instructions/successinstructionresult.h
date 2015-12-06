@@ -17,8 +17,6 @@ public:
     {
         return true;
     }
-
-    QString value() const;
 };
 
 #endif // SUCCESSINSTRUCTIONRESULT_H

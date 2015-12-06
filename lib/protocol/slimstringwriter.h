@@ -16,10 +16,7 @@ signals:
     void stringWritten();
 
 public slots:
-    void sendString(const QString &string);
-    void sendSlimString(const SlimString &string);
-    void sendRawString(const QString &string);
-    void sendList(const QStringList &list);
+    void sendString(const QString &slimString);
 
 private slots:
     void onBytesWritten(qint64 bytes);

@@ -44,4 +44,3 @@ QVariant ResultEncoder::encodeVoidResult(const VoidInstructionResult &result)
     tokens << result.id();
     return QVariant(tokens);
 }
-

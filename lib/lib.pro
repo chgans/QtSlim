@@ -12,7 +12,6 @@ SOURCES += \
     slimserver.cpp \
     slimservice.cpp \
     slimexecutioncontext.cpp \
-    protocol/slimstring.cpp \
     protocol/slimstringreader.cpp \
     protocol/slimstringwriter.cpp \
     instructions/assigninstruction.cpp \
@@ -37,7 +36,6 @@ HEADERS += \
     slimserver.h \
     slimservice.h \
     slimexecutioncontext.h \
-    protocol/slimstring.h \
     protocol/slimstringreader.h \
     protocol/slimstringwriter.h \
     instructions/assigninstruction.h \

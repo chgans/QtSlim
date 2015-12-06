@@ -2,7 +2,6 @@
 #define SLIMSTRINGREADER_H
 
 #include <QObject>
-#include "slimstring.h"
 
 class QIODevice;
 
@@ -13,15 +12,13 @@ public:
     explicit SlimStringReader(QIODevice *inputDevice, QObject *parent = 0);
 
 signals:
-    void stringReceived(const SlimString &string);
-    void stringListReceived(const QStringList &list);
+    void stringReceived(const QString &string);
 
 private slots:
     void onReadyRead();
 
 private:
     static bool tryParse(const QString &input, QString &output, QString &remain);
-    static bool tryParseList(const QString &input, QStringList &output);
 
     QIODevice *m_device;
     QString m_buffer;

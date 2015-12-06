@@ -22,7 +22,7 @@ public slots:
     void stop();
 
 private slots:
-    void onStringReceived(const SlimString &string);
+    void onStringReceived(const QString &string);
 
 private:
     QIODevice *m_inputDevice = nullptr;

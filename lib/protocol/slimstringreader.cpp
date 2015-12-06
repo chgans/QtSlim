@@ -34,45 +34,19 @@ bool SlimStringReader::tryParse(const QString &input, QString &output, QString &
     if (content.length() < length)
         return false;
 
-    output = content.left(length);
+    output = input.left(6 + 1 + length);
     remain = content.mid(length + 1);
     return true;
 }
 
-bool SlimStringReader::tryParseList(const QString &input, QStringList &output)
-{
-    return false;
-}
-
 void SlimStringReader::onReadyRead()
 {
-    QByteArray data = m_device->readAll();
-    m_buffer.append(data);
-    SlimString token(m_buffer);
-    if (!token.isValid()) {
-        qWarning() << "Received invalid slim data" << data;
-        return;
-    }
-    qDebug() << "< " << m_buffer;
-    emit stringReceived(token);
-    m_buffer.clear();
-
-#if 0
-    m_buffer.append(received);
+    m_buffer.append(m_device->readAll());
     QString string;
     QString remain;
     bool gotString = tryParse(m_buffer, string, remain);
-    if (!gotString) {
-        m_buffer.clear();
-        return;
-    }
-    m_buffer = remain;
-
-    QStringList list;
-    bool gotList = tryParseList(string, list);
-    if (!gotList)
+    if (gotString) {
         emit stringReceived(string);
-    else
-        emit stringListReceived(list);
-#endif
+        m_buffer = remain;
+    }
 }
