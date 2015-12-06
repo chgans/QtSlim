@@ -1,6 +1,6 @@
 #include <QtTest>
 
-#include "protocol/slimstring.h"
+#include "protocol/slimdeserialiser.h"
 #include "protocoldeserialisation.h"
 
 
@@ -42,7 +42,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseString()
 {
     QFETCH(QString, input);
     QFETCH(QString, output);
-    QString deserialised = deserialise(input).value<QString>();
+    QString deserialised = SlimDeserialiser::deserialise(input).value<QString>();
     QCOMPARE(deserialised, output);
     QCOMPARE(deserialised.isEmpty(), output.isEmpty());
     QCOMPARE(deserialised.isNull(), output.isNull());
@@ -71,7 +71,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseInteger()
 {
     QFETCH(QString, input);
     QFETCH(int, output);
-    int deserialised = deserialise(input).value<int>();
+    int deserialised = SlimDeserialiser::deserialise(input).value<int>();
     QCOMPARE(deserialised, output);
 }
 
@@ -96,7 +96,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseFloat()
 {
     QFETCH(QString, input);
     QFETCH(qreal, output);
-    qreal deserialised = deserialise(input).value<qreal>();
+    qreal deserialised = SlimDeserialiser::deserialise(input).value<qreal>();
     QCOMPARE(deserialised, output);
 }
 
@@ -132,35 +132,76 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseBoolean()
 {
     QFETCH(QString, input);
     QFETCH(bool, output);
-    bool deserialised = deserialise(input).value<bool>();
+    bool deserialised = SlimDeserialiser::deserialise(input).value<bool>();
     QCOMPARE(deserialised, output);
 }
 
 void ProtocolDeserialisationTestSuite::testCanDeserialiseStringList_data()
 {
     QTest::addColumn<QString>("input");
-    QTest::addColumn<QStringList>("output");
+    QTest::addColumn<QVariantList>("output");
 
     QTest::newRow("Empty list")
-            << "[000000:]"
-            << QStringList();
+            << "000009:[000000:]"
+            << QVariantList();
     QTest::newRow("List with one string element")
-            << "[000001:000008:Hi doug.:]"
-            << (QStringList()
+            << "000025:[000001:000008:Hi doug.:]"
+            << (QVariantList()
                 << "Hi doug."
                 );
     QTest::newRow("List with two string elements")
-            << "[000002:000002:Hi:000005:doug.:]"
-            << (QStringList()
+            << "000032:[000002:000002:Hi:000005:doug.:]"
+            << (QVariantList()
                 << "Hi"
                 << "doug."
+                );
+    QTest::newRow("List with one list of string")
+            << "000049:[000001:000032:[000002:000002:Hi:000005:doug.:]:]"
+            << (QVariantList()
+                << QVariant::fromValue<QVariantList>(QVariantList()
+                    << QVariant::fromValue<QString>("Hi")
+                    << QVariant::fromValue<QString>("doug.")
+                    )
+                );
+    QTest::newRow("List with two lists of string")
+            << "000101:[000002:000032:[000002:000002:Hi:000005:doug.:]:000044:[000003:000005:Hello:000005:World:000001:!:]:]"
+            << (QVariantList()
+                << QVariant::fromValue<QVariantList>(QVariantList()
+                    << QVariant::fromValue<QString>("Hi")
+                    << QVariant::fromValue<QString>("doug.")
+                    )
+                << QVariant::fromValue<QVariantList>(QVariantList()
+                    << QVariant::fromValue<QString>("Hello")
+                    << QVariant::fromValue<QString>("World")
+                    << QVariant::fromValue<QString>("!")
+                    )
+                );
+    QTest::newRow("List with nested lists")
+            << "000181:[000005:000017:decisionTable_0_1:000004:call:000015:decisionTable_0:000005:table:000091:[000002:000035:[000002:000004:Name:000006:Value?:]:000031:[000002:000003:foo:000003:bar:]:]:]"
+            << (QVariantList()
+                << "decisionTable_0_1"
+                << "call"
+                << "decisionTable_0"
+                << "table"
+                << QVariant::fromValue<QVariantList>(QVariantList()
+                    << QVariant::fromValue<QVariantList>(QVariantList()
+                        << "Name"
+                        << "Value?"
+                        )
+                    << QVariant::fromValue<QVariantList>(QVariantList()
+                        << "foo"
+                        << "bar"
+                        )
+                    )
                 );
 }
 
 void ProtocolDeserialisationTestSuite::testCanDeserialiseStringList()
 {
     QFETCH(QString, input);
-    QFETCH(QStringList, output);
-    QStringList deserialised = deserialise(input).value<QStringList>();
+    QFETCH(QVariantList, output);
+
+    QVariantList deserialised = SlimDeserialiser::deserialise(input).value<QVariantList>();
+
     QCOMPARE(deserialised, output);
 }
