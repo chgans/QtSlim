@@ -7,7 +7,7 @@ class Division : public QObject
 {
     Q_OBJECT
 public:
-    explicit Division(QObject *parent = 0);
+    Q_INVOKABLE explicit Division(QObject *parent = 0);
 
 signals:
 

@@ -30,7 +30,8 @@ SOURCES += \
     instructions/resultencoder.cpp \
     protocol/slimserialiser.cpp \
     protocol/slimdeserialiser.cpp \
-    execution/division.cpp
+    execution/division.cpp \
+    execution/metaobjectexecutor.cpp
 
 HEADERS += \
     slimapplication.h \
@@ -55,4 +56,5 @@ HEADERS += \
     instructions/resultencoder.h \
     protocol/slimserialiser.h \
     protocol/slimdeserialiser.h \
-    execution/division.h
+    execution/division.h \
+    execution/metaobjectexecutor.h

@@ -9,48 +9,9 @@
 #include "instructions/instructionfactory.h"
 #include "instructions/resultencoder.h"
 
+#include "execution/metaobjectexecutor.h"
+
 #include <QDebug>
-
-class LedaInstructionExecutor: public InstructionExecutor
-{
-public:
-    LedaInstructionExecutor() {}
-
-    // InstructionExecutor interface
-public:
-    void assign(const QString &name, const QString &value);
-    QString callAndAssign(const QString &symbolName, const QString &instanceName, const QString &methodName, const QVariantList &arguments);
-    QString call(const QString &instanceName, const QString &methodName, const QVariantList &arguments);
-    void import(const QString &path);
-    void make(const QString &instanceName, const QString &className, const QVariantList &arguments);
-};
-
-void LedaInstructionExecutor::assign(const QString &name, const QString &value)
-{
-    qDebug() << __FUNCTION__ << name << value;
-}
-
-QString LedaInstructionExecutor::callAndAssign(const QString &symbolName, const QString &instanceName, const QString &methodName, const QVariantList &arguments)
-{
-    qDebug() << __FUNCTION__ << symbolName << instanceName << methodName << arguments;
-    return QString();
-}
-
-QString LedaInstructionExecutor::call(const QString &instanceName, const QString &methodName, const QVariantList &arguments)
-{
-    qDebug() << __FUNCTION__ << instanceName << methodName << arguments;
-    return QString();
-}
-
-void LedaInstructionExecutor::import(const QString &path)
-{
-    qDebug() << __FUNCTION__ << path;
-}
-
-void LedaInstructionExecutor::make(const QString &instanceName, const QString &className, const QVariantList &arguments)
-{
-    qDebug() << __FUNCTION__ << instanceName << className << arguments;
-}
 
 SlimService::SlimService(QIODevice *inputDevice, QIODevice *outputDevice, QObject *parent):
     QObject(parent),
@@ -58,7 +19,7 @@ SlimService::SlimService(QIODevice *inputDevice, QIODevice *outputDevice, QObjec
     m_outputDevice(outputDevice),
     m_reader(new SlimStringReader(inputDevice, this)),
     m_writer(new SlimStringWriter(outputDevice, this)),
-    m_executor(new LedaInstructionExecutor())
+    m_executor(new MetaObjectExecutor())
 {
 }
 
