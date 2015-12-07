@@ -3,13 +3,9 @@
 
 #include <QVariant>
 
-// TODO: only 2 different result classes
-// class SuccessResult;
-// class ErrorResult;
-
 class InstructionResult;
 class ErrorInstructionResult;
-class SuccessInstructionResult;
+class OkInstructionResult;
 class VoidInstructionResult;
 
 class ResultEncoder
@@ -20,7 +16,7 @@ public:
 private:
     ResultEncoder();
     static QVariant encodeErrorResult(const ErrorInstructionResult& result);
-    static QVariant encodeSucessResult(const SuccessInstructionResult& result);
+    static QVariant encodeOkResult(const OkInstructionResult& result);
     static QVariant encodeVoidResult(const VoidInstructionResult& result);
 };
 

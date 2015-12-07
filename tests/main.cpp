@@ -4,6 +4,7 @@
 #include "protocolserialisation.h"
 #include "protocoldeserialisation.h"
 #include "instructions.h"
+#include "instructionresulttestsuite.h"
 #include "instructionfactorytestsuite.h"
 #include "resultencodertestsuite.h"
 
@@ -14,6 +15,7 @@ int main(int argc, char** argv) {
     return QTest::qExec(new ProtocolSerialisationTestSuite, argc, argv) |
             QTest::qExec(new ProtocolDeserialisationTestSuite, argc, argv) |
             QTest::qExec(new InstructionTestSuite, argc, argv) |
+            QTest::qExec(new InstructionResultTestSuite, argc, argv) |
             QTest::qExec(new InstructionFactoryTestSuite, argc, argv) |
             QTest::qExec(new ResultEncoderTestSuite, argc, argv);
 }

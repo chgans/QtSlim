@@ -10,7 +10,8 @@ public:
     explicit ResultEncoderTestSuite(QObject *parent = 0);
 
 private slots:
-    void testEncodeSucessResult();
+    void testEncodeResult();
+    void testEncodeOkResult();
     void testEncodeErrorResult();
     void testEncodeVoidResult();
 };

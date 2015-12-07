@@ -1,7 +1,8 @@
 #include "resultencodertestsuite.h"
 
+#include "instructions/resultencoder.h"
 #include "instructions/errorinstructionresult.h"
-#include "instructions/successinstructionresult.h"
+#include "instructions/okinstructionresult.h"
 #include "instructions/voidinstructionresult.h"
 
 ResultEncoderTestSuite::ResultEncoderTestSuite(QObject *parent) : QObject(parent)
@@ -9,17 +10,20 @@ ResultEncoderTestSuite::ResultEncoderTestSuite(QObject *parent) : QObject(parent
 
 }
 
-void ResultEncoderTestSuite::testEncodeSucessResult()
+void ResultEncoderTestSuite::testEncodeResult()
+{
+
+}
+
+void ResultEncoderTestSuite::testEncodeOkResult()
 {
 }
 
 void ResultEncoderTestSuite::testEncodeErrorResult()
 {
-
 }
 
 void ResultEncoderTestSuite::testEncodeVoidResult()
 {
-
 }
 

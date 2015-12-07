@@ -20,17 +20,13 @@ private:
 
     // InstructionExecutor interface
 public:
-    void assign(const QString &name, const QString &value);
-    QString callAndAssign(const QString &symbolName,
-                          const QString &instanceName,
-                          const QString &methodName,
-                          const QVariantList &arguments);
-    QString call(const QString &instanceName,
-                 const QString &methodName,
-                 const QVariantList &arguments);
-    void import(const QString &path);
-    void make(const QString &instanceName,
-              const QString &className,
+    bool assign(const QString &name, const QString &value);
+    bool callAndAssign(const QString &symbolName, const QString &instanceName,
+                       const QString &methodName, const QVariantList &arguments);
+    bool call(const QString &instanceName, const QString &methodName,
+              const QVariantList &arguments);
+    bool import(const QString &path);
+    bool make(const QString &instanceName, const QString &className,
               const QVariantList &arguments);
 };
 

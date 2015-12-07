@@ -1,6 +1,7 @@
 #include "importinstruction.h"
 #include "instructionexecutor.h"
-#include "successinstructionresult.h"
+#include "voidinstructionresult.h"
+#include "errorinstructionresult.h"
 
 const QString ImportInstruction::NAME = QStringLiteral("Import");
 
@@ -13,6 +14,7 @@ ImportInstruction::ImportInstruction(const QString &instructionId, const QString
 
 InstructionResult *ImportInstruction::execute(InstructionExecutor *executor) const
 {
-    executor->import(m_path);
-    return new SuccessInstructionResult(instructionId());
+    if (!executor->import(m_path))
+        return new ErrorInstructionResult(instructionId(), executor->errorString());
+    return new VoidInstructionResult(instructionId());
 }

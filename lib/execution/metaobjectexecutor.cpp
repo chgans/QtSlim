@@ -1,10 +1,15 @@
 #include "metaobjectexecutor.h"
-
 #include "division.h"
 
 #include <QMetaMethod>
-
 #include <QDebug>
+
+// These can be useful:
+// - https://gist.github.com/andref/2838534
+// - http://stackoverflow.com/questions/7721923/calling-qmetaobjectinvokemethod-with-variable-amount-of-parameters
+// - http://delta.affinix.com/2006/08/14/invokemethodwithvariants/
+// - https://github.com/mikeprevas/QSlim
+
 
 MetaObjectExecutor::MetaObjectExecutor():
     InstructionExecutor()
@@ -17,95 +22,83 @@ void MetaObjectExecutor::addMetaObject(const QMetaObject *metaObject)
     m_metaObjectDictionary[metaObject->className()] = metaObject;
 }
 
-void MetaObjectExecutor::assign(const QString &name, const QString &value)
+bool MetaObjectExecutor::assign(const QString &name, const QString &value)
 {
     Q_UNUSED(name);
     Q_UNUSED(value);
+
+    clearErrorString();
+    clearResult();
+
+    setError("Not implemented");
+    return false;
 }
 
-QString MetaObjectExecutor::callAndAssign(const QString &symbolName,
-                                          const QString &instanceName,
-                                          const QString &methodName,
-                                          const QVariantList &arguments)
+bool MetaObjectExecutor::callAndAssign(const QString &symbolName, const QString &instanceName,
+                                       const QString &methodName, const QVariantList &arguments)
 {
     Q_UNUSED(symbolName);
     Q_UNUSED(instanceName);
     Q_UNUSED(methodName);
     Q_UNUSED(arguments);
-    return QString();
+
+    clearErrorString();
+    clearResult();
+
+    setError("Not implemented");
+    return false;
 }
 
-QString MetaObjectExecutor::call(const QString &instanceName,
-                                 const QString &methodName,
-                                 const QVariantList &arguments)
-{
-    if (!m_objectDictionary.contains(instanceName)) {
-        qWarning() << instanceName << ":No object intance known by that name";
-        return QString();
-    }
-
-    QObject *object = m_objectDictionary.value(instanceName);
-    const QMetaObject metaObject = object->staticMetaObject;
-
-    const char *member = methodName.toUtf8().data();
-    int methodIndex = metaObject.indexOfMethod(member);
-    if (methodIndex == -1) {
-        qWarning() << methodName << ":Method not found on instance" << instanceName;
-        return QString();
-    }
-
-    QMetaMethod metaMethod = metaObject.method(methodIndex);
-
-    QGenericReturnArgument returnedArg;
-    int returnedArgType = metaMethod.returnType();
-    qreal realReturnedArg;
-    if ( returnedArgType == QMetaType::QReal)
-        returnedArg = Q_RETURN_ARG(qreal, realReturnedArg);
-    else {
-        qWarning() << methodName << ": Unhandled returned argument type";
-        return QString();
-    }
-
-    Q_UNUSED(arguments);
-
-    bool success = metaMethod.invoke(object, returnedArg);
-    if (!success) {
-        qWarning() << methodName << ":Calling of this method name failed";
-        return QString();
-    }
-
-    if ( returnedArgType == QMetaType::QReal)
-        return QString("%1").arg(realReturnedArg);
-    return QString();
-}
-
-void MetaObjectExecutor::import(const QString &path)
-{
-    Q_UNUSED(path);
-}
-
-void MetaObjectExecutor::make(const QString &instanceName,
-                              const QString &className,
+bool MetaObjectExecutor::call(const QString &instanceName, const QString &methodName,
                               const QVariantList &arguments)
 {
+    Q_UNUSED(instanceName);
+    Q_UNUSED(methodName);
+    Q_UNUSED(arguments);
+
+    clearErrorString();
+    clearResult();
+
+    setError("Not implemented");
+    return false;
+}
+
+bool MetaObjectExecutor::import(const QString &path)
+{
+    Q_UNUSED(path);
+
+    clearErrorString();
+    clearResult();
+
+    setError("Not implemented");
+    return false;
+}
+
+bool MetaObjectExecutor::make(const QString &instanceName, const QString &className,
+                              const QVariantList &arguments)
+{
+    clearErrorString();
+    clearResult();
+
     if (!m_metaObjectDictionary.contains(className)) {
-        qWarning() << className << ": No meta object found";
-        return;
+        setError(QString("%1: Class not found").arg(className));
+        return false;
     }
 
     if (m_objectDictionary.contains(instanceName)) {
-        qWarning() << instanceName << ": An object with same instance name already exists";
-        return;
+        setError(QString("%1: Object already exists").arg(instanceName));
+        return false;
     }
 
     Q_UNUSED(arguments)
     const QMetaObject *metaObject = m_metaObjectDictionary.value(className);
     QObject *object = metaObject->newInstance();
     if (object == nullptr) {
-        qWarning() << instanceName << className << ": Construction failed";
-        return;
+        setError(QString("%1: Construction failed").arg(className));
+        return false;
     }
 
     m_objectDictionary[instanceName] = object;
+    return true;
 }
 

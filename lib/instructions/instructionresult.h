@@ -4,16 +4,22 @@
 #include <QString>
 #include <QVariant>
 
+
+// TBD:
+// - Do we need two InstructionResult classes? One for Application error and one
+//   for SLim error (exception?)
+// - Should we keep InstructionResult abstract and add a ValueInstructionResult (re Void InstructionResult)
+
 class InstructionResult
 {
 public:
-    InstructionResult(const QString &id, const QVariant &value = QVariant());
+    InstructionResult(const QString &id, const QVariant &result = QVariant());
 
     QString id() const;
-    QVariant value() const;
+    QVariant result() const;
 
-    virtual bool hasValue() const = 0;
-    virtual bool hasError() const = 0;
+    virtual bool hasResult() const;
+    virtual bool hasError() const;
 
 private:
     QString m_id;

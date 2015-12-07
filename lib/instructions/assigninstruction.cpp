@@ -1,6 +1,7 @@
 #include "assigninstruction.h"
 #include "instructionexecutor.h"
-#include "successinstructionresult.h"
+#include "okinstructionresult.h"
+#include "errorinstructionresult.h"
 
 const QString AssignInstruction::NAME = QStringLiteral("Assign");
 
@@ -15,6 +16,8 @@ AssignInstruction::AssignInstruction(const QString &instructionId, const QString
 
 InstructionResult *AssignInstruction::execute(InstructionExecutor *executor) const
 {
-    executor->assign(m_symbolName, m_value);
-    return new SuccessInstructionResult(instructionId());
+    if (!executor->assign(m_symbolName, m_value)) {
+        return new ErrorInstructionResult(instructionId(), executor->errorString());
+    }
+    return new OkInstructionResult(instructionId());
 }

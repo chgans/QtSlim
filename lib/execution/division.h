@@ -12,20 +12,9 @@ public:
 signals:
 
 public slots:
-    void setNumerator(qreal value)
-    {
-        m_numerator = value;
-    }
-
-    void setDenominator(qreal value)
-    {
-        m_denominator = value;
-    }
-
-    qreal quotient() const
-    {
-        return m_numerator/m_denominator;
-    }
+    void setNumerator(qreal value);
+    void setDenominator(qreal value);
+    qreal quotient() const;
 
 private:
     qreal m_numerator;

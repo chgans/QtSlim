@@ -13,7 +13,7 @@ public:
         return false;
     }
 
-    bool hasValue() const
+    bool hasResult() const
     {
         return false;
     }

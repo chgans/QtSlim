@@ -2,32 +2,35 @@
 #define INSTRUCTIONEXECUTOR_H
 
 #include <QString>
+#include <QVariant>
 #include <QVariantList>
 
-// TODO: make it return InstructionResult
 class InstructionExecutor
 {
 public:
     InstructionExecutor();
 
-    virtual void assign(const QString &name, const QString &value) = 0;
-    virtual QString callAndAssign(const QString &symbolName, const QString &instanceName,
+    virtual bool assign(const QString &name, const QString &value) = 0;
+    virtual bool callAndAssign(const QString &symbolName, const QString &instanceName,
                                   const QString &methodName, const QVariantList &arguments) = 0;
-    virtual QString call(const QString &instanceName, const QString &methodName,
+    virtual bool call(const QString &instanceName, const QString &methodName,
                          const QVariantList &arguments) = 0;
-    virtual void import(const QString &path) = 0;
+    virtual bool import(const QString &path) = 0;
 
-    // TODO: return bool + set last error
-    virtual void make(const QString &instanceName, const QString &className,
+    virtual bool make(const QString &instanceName, const QString &className,
                       const QVariantList &arguments) = 0;
 
-    QString lastErrorString() const;
+    QVariant result() const;
+    QString errorString() const;
 
 protected:
-    void setErrorString(const QString &error);
+    void setError(const QString &error);
     void clearErrorString();
+    void setResult(const QVariant &result);
+    void clearResult();
 
 private:
+    QVariant m_result;
     QString m_errorString;
 };
 

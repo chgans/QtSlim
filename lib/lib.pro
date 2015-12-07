@@ -25,7 +25,7 @@ SOURCES += \
     instructions/instructionresult.cpp \
     instructions/invalidinstruction.cpp \
     instructions/makeinstruction.cpp \
-    instructions/successinstructionresult.cpp \
+    instructions/okinstructionresult.cpp \
     instructions/voidinstructionresult.cpp \
     instructions/resultencoder.cpp \
     protocol/slimserialiser.cpp \
@@ -51,7 +51,7 @@ HEADERS += \
     instructions/instructionresult.h \
     instructions/invalidinstruction.h \
     instructions/makeinstruction.h \
-    instructions/successinstructionresult.h \
+    instructions/okinstructionresult.h \
     instructions/voidinstructionresult.h \
     instructions/resultencoder.h \
     protocol/slimserialiser.h \

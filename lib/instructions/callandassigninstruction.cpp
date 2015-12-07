@@ -1,6 +1,8 @@
 #include "callandassigninstruction.h"
 #include "instructionexecutor.h"
-#include "successinstructionresult.h"
+
+#include "okinstructionresult.h"
+#include "errorinstructionresult.h"
 
 const QString CallAndAssignInstruction::NAME = QStringLiteral("CallAndAssign");
 
@@ -18,6 +20,9 @@ CallAndAssignInstruction::CallAndAssignInstruction(const QString &instructionId,
 
 InstructionResult *CallAndAssignInstruction::execute(InstructionExecutor *executor) const
 {
-    QString result = executor->callAndAssign(m_symbolName, m_instanceName, m_methodName, m_arguments);
-    return new SuccessInstructionResult(instructionId()/*FIXME: , result*/);
+    if (!executor->callAndAssign(m_symbolName, m_instanceName, m_methodName, m_arguments)) {
+        return new ErrorInstructionResult(instructionId(), executor->errorString());
+    }
+    // FIXME: call returning void vs non-void
+    return new InstructionResult(instructionId(), executor->result());
 }

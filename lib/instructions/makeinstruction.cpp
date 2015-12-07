@@ -1,6 +1,7 @@
 #include "makeinstruction.h"
 #include "instructionexecutor.h"
-#include "successinstructionresult.h"
+#include "okinstructionresult.h"
+#include "errorinstructionresult.h"
 
 const QString MakeInstruction::NAME = QStringLiteral("Make");
 
@@ -16,7 +17,7 @@ MakeInstruction::MakeInstruction(const QString &instructionId, const QString &in
 
 InstructionResult *MakeInstruction::execute(InstructionExecutor *executor) const
 {
-    // TODO: Makes InstructionExecutor return ErrorInstructionResult if can't find constructor
-    executor->make(m_instanceName, m_className, m_arguments);
-    return new SuccessInstructionResult(instructionId());
+    if (!executor->make(m_instanceName, m_className, m_arguments))
+        return new ErrorInstructionResult(instructionId(), executor->errorString());
+    return new OkInstructionResult(instructionId());
 }
