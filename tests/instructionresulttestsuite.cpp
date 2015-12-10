@@ -12,6 +12,16 @@ InstructionResultTestSuite::InstructionResultTestSuite(QObject *parent) : QObjec
 
 }
 
+void InstructionResultTestSuite::initTestCase()
+{
+
+}
+
+void InstructionResultTestSuite::cleanupTestCase()
+{
+
+}
+
 void InstructionResultTestSuite::testInstructionResultWithValue()
 {
     InstructionResult result("instruction_0", "some_value");

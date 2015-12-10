@@ -10,6 +10,8 @@ public:
     explicit InstructionResultTestSuite(QObject *parent = 0);
 
 private slots:
+    void initTestCase();
+    void cleanupTestCase();
     void testInstructionResultWithValue();
     void testInstructionResultWithoutValue();
     void testOkInstructionResult();

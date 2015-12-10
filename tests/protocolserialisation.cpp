@@ -5,7 +5,8 @@
 #include "protocolserialisation.h"
 
 
-ProtocolSerialisationTestSuite::ProtocolSerialisationTestSuite()
+ProtocolSerialisationTestSuite::ProtocolSerialisationTestSuite(QObject *parent):
+    QObject(parent)
 {
 }
 

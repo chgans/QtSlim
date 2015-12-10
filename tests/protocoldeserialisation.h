@@ -8,7 +8,7 @@ class ProtocolDeserialisationTestSuite : public QObject
     Q_OBJECT
 
 public:
-    ProtocolDeserialisationTestSuite();
+    ProtocolDeserialisationTestSuite(QObject *parent = 0);
 
 private slots:
     void initTestCase();

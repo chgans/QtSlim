@@ -3,7 +3,7 @@
 
 #include "protocolserialisation.h"
 #include "protocoldeserialisation.h"
-#include "instructions.h"
+#include "instructiontestsuite.h"
 #include "instructionresulttestsuite.h"
 #include "instructionfactorytestsuite.h"
 #include "resultencodertestsuite.h"

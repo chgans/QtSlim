@@ -10,6 +10,8 @@ public:
     explicit InstructionFactoryTestSuite(QObject *parent = 0);
 
 private slots:
+    void initTestCase();
+    void cleanupTestCase();
     void testCreateAssignInstruction();
     void testCreateCallInstruction();
     void testCreateCallAndAssignInstruction();

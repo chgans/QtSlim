@@ -13,7 +13,6 @@ SOURCES += \
     main.cpp \
     protocolserialisation.cpp \
     protocoldeserialisation.cpp \
-    instructions.cpp \
     instructionfactorytestsuite.cpp \
     resultencodertestsuite.cpp \
     instructionresulttestsuite.cpp \
@@ -22,12 +21,12 @@ SOURCES += \
     metamethodinvokertestsuite.cpp \
     metamethodinspectortestsuite.cpp \
     fixtures/basicqobectfixture.cpp \
-    fixtures/division.cpp
+    fixtures/division.cpp \
+    instructiontestsuite.cpp
 
 HEADERS += \
     protocolserialisation.h \
     protocoldeserialisation.h \
-    instructions.h \
     instructionfactorytestsuite.h \
     resultencodertestsuite.h \
     instructionresulttestsuite.h \
@@ -36,7 +35,8 @@ HEADERS += \
     metamethodinvokertestsuite.h \
     metamethodinspectortestsuite.h \
     fixtures/basicqobectfixture.h \
-    fixtures/division.h
+    fixtures/division.h \
+    instructiontestsuite.h
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 

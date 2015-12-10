@@ -8,7 +8,7 @@ class ProtocolSerialisationTestSuite : public QObject
     Q_OBJECT
 
 public:
-    ProtocolSerialisationTestSuite();
+    ProtocolSerialisationTestSuite(QObject *parent = 0);
 
 private slots:
     void initTestCase();

@@ -14,6 +14,16 @@ InstructionFactoryTestSuite::InstructionFactoryTestSuite(QObject *parent) : QObj
 
 }
 
+void InstructionFactoryTestSuite::initTestCase()
+{
+
+}
+
+void InstructionFactoryTestSuite::cleanupTestCase()
+{
+
+}
+
 void InstructionFactoryTestSuite::testCreateAssignInstruction()
 {
     QVariantList words;

@@ -10,6 +10,16 @@ ResultEncoderTestSuite::ResultEncoderTestSuite(QObject *parent) : QObject(parent
 
 }
 
+void ResultEncoderTestSuite::initTestCase()
+{
+
+}
+
+void ResultEncoderTestSuite::cleanupTestCase()
+{
+
+}
+
 void ResultEncoderTestSuite::testEncodeResult()
 {
 

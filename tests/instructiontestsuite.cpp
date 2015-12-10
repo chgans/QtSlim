@@ -1,4 +1,4 @@
-#include "instructions.h"
+#include "instructiontestsuite.h"
 
 #include "instructions/instructionexecutor.h"
 #include "instructions/assigninstruction.h"
@@ -74,34 +74,3 @@ void InstructionTestSuite::testMakeInstruction()
     QCOMPARE(instruction.className(), QString("class"));
     QCOMPARE(instruction.arguments(), QVariantList() << "value1" << "value2");
 }
-
-
-#if 0
-class InstructionExecutorMock: public InstructionExecutor
-{
-public:
-    InstructionExecutorMock() {}
-
-    // InstructionExecutor interface
-public:
-    void assign(const QString &name, const QString &value)
-    {
-    }
-
-    QString callAndAssign(const QString &symbolName, const QString &instanceName, const QString &methodName, const QVariantList &arguments)
-    {
-    }
-
-    QString call(const QString &instanceName, const QString &methodName, const QVariantList &arguments)
-    {
-    }
-
-    void import(const QString &path)
-    {
-    }
-
-    void make(const QString &instanceName, const QString &className, const QVariantList &arguments)
-    {
-    }
-};
-#endif

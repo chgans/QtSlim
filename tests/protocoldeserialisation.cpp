@@ -3,8 +3,10 @@
 #include "protocol/slimdeserialiser.h"
 #include "protocoldeserialisation.h"
 
+// TODO: Do not check for data conversion here
 
-ProtocolDeserialisationTestSuite::ProtocolDeserialisationTestSuite()
+ProtocolDeserialisationTestSuite::ProtocolDeserialisationTestSuite(QObject *parent):
+    QObject(parent)
 {
 
 }
