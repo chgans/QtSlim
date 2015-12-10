@@ -6,10 +6,14 @@
 class Division : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(qreal numerator READ numerator WRITE setNumerator)
+    Q_PROPERTY(qreal denominator READ denominator WRITE setDenominator)
+
 public:
     Q_INVOKABLE explicit Division(QObject *parent = 0);
 
-signals:
+    Q_INVOKABLE qreal numerator() const;
+    Q_INVOKABLE qreal denominator() const;
 
 public slots:
     void setNumerator(qreal value);
