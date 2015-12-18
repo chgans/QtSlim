@@ -57,7 +57,7 @@ void MetaMethodInspectorTestSuite::testMethodWitReturnValue()
     MetaMethodInspector inspector(method);
     QCOMPARE(inspector.hasReturnValue(), true);
     QCOMPARE(inspector.returnValueTypeId(), int(QMetaType::Bool));
-    QCOMPARE(inspector.returnValueTypeName(), QString("bool"));
+    QCOMPARE(inspector.returnValueTypeName(), QByteArray("bool"));
 }
 
 void MetaMethodInspectorTestSuite::testMethodWithoutReturnValue()
@@ -69,6 +69,6 @@ void MetaMethodInspectorTestSuite::testMethodWithoutReturnValue()
     MetaMethodInspector inspector(method);
     QCOMPARE(inspector.hasReturnValue(), false);
     QCOMPARE(inspector.returnValueTypeId(), int(QMetaType::Void));
-    QCOMPARE(inspector.returnValueTypeName(), QString("void"));
+    QCOMPARE(inspector.returnValueTypeName(), QByteArray("void"));
 }
 

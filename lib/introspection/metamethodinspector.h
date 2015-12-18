@@ -17,7 +17,7 @@ public:
 
     bool hasReturnValue() const;
     int returnValueTypeId() const;
-    QString returnValueTypeName() const;
+    QByteArray returnValueTypeName() const;
 
 private:
     const QMetaMethod &m_metaMethod;

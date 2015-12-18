@@ -48,7 +48,7 @@ int MetaMethodInspector::returnValueTypeId() const
     return m_metaMethod.returnType();
 }
 
-QString MetaMethodInspector::returnValueTypeName() const
+QByteArray MetaMethodInspector::returnValueTypeName() const
 {
-    return QString(m_metaMethod.typeName());
+    return QByteArray(m_metaMethod.typeName());
 }
