@@ -36,3 +36,28 @@ qreal Division::quotient() const
     return result;
 }
 
+void Division::table(QVariant table)
+{
+    Q_UNUSED(table)
+}
+
+void Division::beginTable()
+{
+
+}
+
+void Division::endTable()
+{
+
+}
+
+void Division::execute()
+{
+
+}
+
+void Division::reset()
+{
+
+}
+

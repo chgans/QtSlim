@@ -2,8 +2,9 @@
 #define DIVISION_H
 
 #include <QObject>
+#include "fixture/idecisiontable.h"
 
-class Division : public QObject
+class Division : public QObject, public IDecisionTable
 {
     Q_OBJECT
     Q_PROPERTY(qreal numerator READ numerator WRITE setNumerator)
@@ -23,6 +24,14 @@ public slots:
 private:
     qreal m_numerator;
     qreal m_denominator;
+
+    // IDecisionTable interface
+public slots:
+    void table(QVariant table);
+    void beginTable();
+    void endTable();
+    void execute();
+    void reset();
 };
 
 #endif // DIVISION_H
