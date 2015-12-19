@@ -55,7 +55,7 @@ void InstructionResultTestSuite::testErrorInstructionResult()
     QCOMPARE(result.id(), QString("error_0"));
     QCOMPARE(result.hasError(), true);
     QCOMPARE(result.hasResult(), false);
-    QCOMPARE(result.result(), QVariant(QString("message:<<Error 42: bad luck!>>")));
+    QCOMPARE(result.result(), QVariant(QString("__EXCEPTION__:message:<<Error 42: bad luck!>>")));
 }
 
 void InstructionResultTestSuite::testVoidInstructionResult()
