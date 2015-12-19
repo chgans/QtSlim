@@ -49,7 +49,7 @@ void MetaMethodInvoker::setParameters(const QVariantList &parameters)
 
 bool MetaMethodInvoker::validate()
 {
-    if (m_object == nullptr) {
+    if (m_object == nullptr && m_method.methodType() != QMetaMethod::Constructor) {
         setError(QString("Object is null"));
         return false;
     }
@@ -66,7 +66,12 @@ bool MetaMethodInvoker::invoke()
 {
     clearError();
 
-    if (m_inspector.hasReturnValue()) {
+    qDebug() << "Calling" << m_method.methodSignature()
+             << "with" << m_parametersStorage << "on" << m_object ;
+    if (m_method.methodType() == QMetaMethod::Constructor) {
+        invokeConstructor();
+    }
+    else if (m_inspector.hasReturnValue()) {
         invokeWithReturn();
     }
     else {
@@ -74,6 +79,16 @@ bool MetaMethodInvoker::invoke()
     }
 
     return !hasError();
+}
+
+bool MetaMethodInvoker::hasResult() const
+{
+    return !m_returnValueStorage.isNull();
+}
+
+QVariant MetaMethodInvoker::result() const
+{
+    return m_returnValueStorage;
 }
 
 bool MetaMethodInvoker::hasError() const
@@ -84,6 +99,31 @@ bool MetaMethodInvoker::hasError() const
 QString MetaMethodInvoker::errorMessage() const
 {
     return m_errorMessage;
+}
+
+void MetaMethodInvoker::invokeConstructor()
+{
+    const QMetaObject *metaObject = m_method.enclosingMetaObject();
+    QObject *result;
+    switch (m_parameters.count()) {
+    case 0:
+        result = metaObject->newInstance();
+        break;
+    case 1:
+        result = metaObject->newInstance(m_parameters[0]);
+        break;
+    case 2:
+        result = metaObject->newInstance(m_parameters[0], m_parameters[1]);
+        break;
+    default:
+        ASSERT_UNREACHABLE_LOCATION();
+        break;
+    }
+
+    m_returnValueStorage = QVariant::fromValue<QObject*>(result);
+
+    if (result == nullptr)
+        setError("Unknown error (QMetaObject::newInstance())");
 }
 
 void MetaMethodInvoker::invokeWithoutReturn()
@@ -114,6 +154,10 @@ void MetaMethodInvoker::invokeWithoutReturn()
 void MetaMethodInvoker::invokeWithReturn()
 {
     bool success;
+
+    const QByteArray typeName = m_inspector.returnValueTypeName();
+    m_returnValueStorage = QVariant(m_inspector.returnValueTypeId());
+    m_returnValue = QGenericReturnArgument(typeName.constData(), m_returnValueStorage.data());
 
     switch (m_parameters.count()) {
     case 0:

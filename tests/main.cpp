@@ -11,6 +11,7 @@
 #include "metamethodinspectortestsuite.h"
 #include "metamethodinvokertestsuite.h"
 #include "metaobjectinspectortestsuite.h"
+#include "metaobjectmakertestsuite.h"
 
 int main(int argc, char** argv) {
     QCoreApplication app(argc, argv);
@@ -25,5 +26,6 @@ int main(int argc, char** argv) {
             QTest::qExec(new MetaObjectInspectorTestSuite(&app), argc, argv) |
             QTest::qExec(new MetaMethodListTestSuite(&app), argc, argv) |
             QTest::qExec(new MetaMethodInspectorTestSuite(&app), argc, argv) |
-            QTest::qExec(new MetaMethodInvokerTestSuite(&app), argc, argv);
+            QTest::qExec(new MetaMethodInvokerTestSuite(&app), argc, argv) |
+            QTest::qExec(new MetaObjectMakerTestSuite(&app), argc, argv);
 }

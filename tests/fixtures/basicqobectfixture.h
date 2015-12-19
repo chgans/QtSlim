@@ -7,7 +7,7 @@ class BasicQObectFixture : public QObject
 {
     Q_OBJECT
 public:
-    explicit BasicQObectFixture(QObject *parent = 0);
+    Q_INVOKABLE explicit BasicQObectFixture(QObject *parent = 0);
 
     Q_INVOKABLE explicit BasicQObectFixture(int param1);
     Q_INVOKABLE explicit BasicQObectFixture(int param1, bool param2);

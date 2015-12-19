@@ -33,6 +33,7 @@ private:
     QVariantList m_parametersStorage;
     QGenericReturnArgument m_returnValue;
     QList<QGenericArgument> m_parameters;
+    void invokeConstructor();
     void invokeWithoutReturn();
     void invokeWithReturn();
 

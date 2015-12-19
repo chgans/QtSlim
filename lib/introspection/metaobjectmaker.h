@@ -25,7 +25,6 @@ private:
     QMetaObject m_metaObject;
     MetaObjectInspector m_metaObjectInspector;
     QVariantList m_arguments;
-    QList<QMetaMethod> m_methods;
     QString m_errorMessage;
     QObject *m_object;
 

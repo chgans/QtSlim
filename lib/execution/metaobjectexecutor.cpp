@@ -1,5 +1,8 @@
 #include "metaobjectexecutor.h"
 
+#include "introspection/metaobjectmaker.h"
+#include "introspection/metamethodinvoker.h"
+
 MetaObjectExecutor::MetaObjectExecutor():
     InstructionExecutor()
 {
@@ -40,14 +43,27 @@ bool MetaObjectExecutor::callAndAssign(const QString &symbolName, const QString 
 bool MetaObjectExecutor::call(const QString &instanceName, const QString &methodName,
                               const QVariantList &arguments)
 {
-    Q_UNUSED(instanceName);
-    Q_UNUSED(methodName);
-    Q_UNUSED(arguments);
-
-    clearErrorString();
     clearResult();
 
-    setError("Not implemented");
+    if (!m_objectDictionary.contains(instanceName)) {
+        setError("Object not found");
+        return false;
+    }
+
+    QObject *object = m_objectDictionary.value(instanceName);
+    MetaObjectInspector inspector(object->staticMetaObject);
+    MetaMethodList methods = inspector.allMethods()
+            .filterByName(methodName)
+            .filterByArgumentCount(arguments.count());
+    foreach (const QMetaMethod &method, methods) {
+        MetaMethodInvoker invoker(method);
+        invoker.setObject(object);
+        invoker.setParameters(arguments);
+        if (!invoker.invoke())
+            continue;
+        return true;
+    }
+    setError("No compatible method found");
     return false;
 }
 
@@ -65,14 +81,26 @@ bool MetaObjectExecutor::import(const QString &path)
 bool MetaObjectExecutor::make(const QString &instanceName, const QString &className,
                               const QVariantList &arguments)
 {
-    Q_UNUSED(instanceName);
-    Q_UNUSED(className);
-    Q_UNUSED(arguments);
-
-    clearErrorString();
     clearResult();
 
-    setError("Not implemented");
-    return false;
+    if (m_objectDictionary.contains(instanceName)) {
+        setError("Object already exists");
+        return false;
+    }
+
+    if (!m_metaObjectDictionary.contains(className)) {
+        setError("Unknown class name");
+        return false;
+    }
+
+    MetaObjectMaker maker(*m_metaObjectDictionary.value(className));
+    maker.setParameters(arguments);
+    if (!maker.make()) {
+        setError(maker.errorMessage());
+        return false;
+    }
+
+    m_objectDictionary.insert(instanceName, maker.object());
+    return true;
 }
 

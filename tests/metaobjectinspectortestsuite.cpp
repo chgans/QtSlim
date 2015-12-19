@@ -27,12 +27,12 @@ void MetaObjectInspectorTestSuite::testConstructors()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.constructors();
-    QCOMPARE(methods.count(), 2);
-    QCOMPARE(methods[0].methodSignature(), QByteArray("BasicQObectFixture(int)"));
-    QCOMPARE(methods[1].methodSignature(), QByteArray("BasicQObectFixture(int,bool)"));
+    QCOMPARE(methods.count(), 4);
+    QCOMPARE(methods[1].methodSignature(), QByteArray("BasicQObectFixture()"));
+    QCOMPARE(methods[0].methodSignature(), QByteArray("BasicQObectFixture(QObject*)"));
+    QCOMPARE(methods[2].methodSignature(), QByteArray("BasicQObectFixture(int)"));
+    QCOMPARE(methods[3].methodSignature(), QByteArray("BasicQObectFixture(int,bool)"));
 }
-
-#include <QDebug>
 
 void MetaObjectInspectorTestSuite::testAllMethods()
 {

@@ -11,12 +11,13 @@ class MetaObjectExecutor: public InstructionExecutor
 {
 public:
     MetaObjectExecutor();
+    void addMetaObject(const QMetaObject* metaObject);
 
 private:
     QMap<QString, const QMetaObject* > m_metaObjectDictionary;
-    void addMetaObject(const QMetaObject* metaObject);
 
     QMap<QString, QObject* > m_objectDictionary;
+    QMap<QString, QString> m_symbolMap;
 
     // InstructionExecutor interface
 public:
