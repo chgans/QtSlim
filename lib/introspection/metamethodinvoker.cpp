@@ -3,10 +3,11 @@
 #include <QGenericArgument>
 #include <QGenericReturnArgument>
 
-#include <QDebug>
+#include <QLoggingCategory>
+Q_DECLARE_LOGGING_CATEGORY(invoker)
+Q_LOGGING_CATEGORY(invoker, "qtslim.introspection.invoker", QtWarningMsg)
 
 #define ASSERT_UNREACHABLE_LOCATION() Q_ASSERT(false)
-
 
 // TODO:
 //  - Move parameter conversion into it's own helper class
@@ -44,6 +45,8 @@ void MetaMethodInvoker::setParameters(const QVariantList &parameters)
         const QVariant &stored = m_parametersStorage[index];
         QByteArray typeName = typeNames[index];
         m_parameters.append(QGenericArgument(typeName.constData(), stored.constData()));
+        qCDebug(invoker) << "Setting parameter" << m_inspector.parameterNames().value(index)
+                         << "to" << value;
     }
 }
 
@@ -66,8 +69,10 @@ bool MetaMethodInvoker::invoke()
 {
     clearError();
 
-    qDebug() << "Calling" << m_method.methodSignature()
-             << "with" << m_parametersStorage << "on" << m_object ;
+    qCDebug(invoker) << "Calling" << m_method.methodSignature()
+                     << "with" << m_parametersStorage
+                     << "on" << m_object ;
+
     if (m_method.methodType() == QMetaMethod::Constructor) {
         invokeConstructor();
     }
@@ -104,6 +109,9 @@ QString MetaMethodInvoker::errorMessage() const
 void MetaMethodInvoker::invokeConstructor()
 {
     const QMetaObject *metaObject = m_method.enclosingMetaObject();
+
+    qCDebug(invoker) << "Invoking constructor for" << metaObject->className();
+
     QObject *result;
     switch (m_parameters.count()) {
     case 0:
@@ -122,6 +130,8 @@ void MetaMethodInvoker::invokeConstructor()
 
     m_returnValueStorage = QVariant::fromValue<QObject*>(result);
 
+    qCDebug(invoker) << "Return value is" << m_returnValueStorage;
+
     if (result == nullptr)
         setError("Unknown error (QMetaObject::newInstance())");
 }
@@ -130,6 +140,7 @@ void MetaMethodInvoker::invokeWithoutReturn()
 {
     bool success;
 
+    qCDebug(invoker) << "Invoking method without return value";
     switch (m_parameters.count()) {
     case 0:
         success = m_method.invoke(m_object, m_connectionType);
@@ -146,6 +157,8 @@ void MetaMethodInvoker::invokeWithoutReturn()
         ASSERT_UNREACHABLE_LOCATION();
         break;
     }
+
+    qCDebug(invoker) << "Return value is" << m_returnValueStorage;
 
     if (!success)
         setError("Unknown error (QMetaMethod::invoke())");
@@ -176,6 +189,8 @@ void MetaMethodInvoker::invokeWithReturn()
         break;
     }
 
+    qCDebug(invoker) << "Return value is" << m_returnValueStorage;
+
     if (!success)
         setError("Unknown error (QMetaMethod::invoke())");
 }
@@ -183,6 +198,7 @@ void MetaMethodInvoker::invokeWithReturn()
 void MetaMethodInvoker::setError(const QString &message)
 {
     m_errorMessage = message;
+    qCWarning(invoker) << m_errorMessage;
 }
 
 void MetaMethodInvoker::clearError()
