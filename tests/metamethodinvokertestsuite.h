@@ -2,6 +2,7 @@
 #define METAMETHODINVOKERTESTSUITE_H
 
 #include <QObject>
+#include <QVariant>
 
 class MetaMethodInvokerTestSuite : public QObject
 {
@@ -17,7 +18,7 @@ private slots:
 
 private:
     void invoke(QObject *object, const QString &methodName, const QVariantList &parameters);
-
+    QVariant m_invokeResult;
 };
 
 #endif // METAMETHODINVOKERTESTSUITE_H

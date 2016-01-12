@@ -2,6 +2,7 @@
 #include "instructionexecutor.h"
 #include "okinstructionresult.h"
 #include "errorinstructionresult.h"
+#include "voidinstructionresult.h"
 
 const QString CallInstruction::NAME = QStringLiteral("Call");
 
@@ -20,6 +21,10 @@ InstructionResult *CallInstruction::execute(InstructionExecutor *executor) const
     if (!executor->call(m_instanceName, m_methodName, m_arguments)) {
         return new ErrorInstructionResult(instructionId(), executor->errorString());
     }
-    // FIXME: call returning void vs non-void
+
+    if (!executor->result().isValid()) {
+        return new VoidInstructionResult(instructionId());
+    }
+
     return new InstructionResult(instructionId(), executor->result());
 }

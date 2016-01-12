@@ -169,8 +169,11 @@ void MetaMethodInvoker::invokeWithReturn()
     bool success;
 
     const QByteArray typeName = m_inspector.returnValueTypeName();
-    m_returnValueStorage = QVariant(m_inspector.returnValueTypeId());
+    QVariant::Type typeId = QVariant::Type(m_inspector.returnValueTypeId());
+    m_returnValueStorage = QVariant(typeId);
     m_returnValue = QGenericReturnArgument(typeName.constData(), m_returnValueStorage.data());
+
+    qCDebug(invoker) << "Invoking method with a return value of type" << typeId << "aka" << typeName;
 
     switch (m_parameters.count()) {
     case 0:

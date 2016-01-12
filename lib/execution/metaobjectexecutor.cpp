@@ -60,7 +60,8 @@ bool MetaObjectExecutor::call(const QString &instanceName, const QString &method
     }
 
     QObject *object = m_objectDictionary.value(instanceName);
-    MetaObjectInspector inspector(object->staticMetaObject);
+    MetaObjectInspector inspector(*object->metaObject());
+    qCDebug(executor) << "Object class is" <<  object->metaObject()->className();
     MetaMethodList methods = inspector.allMethods()
             .filterByName(methodName)
             .filterByArgumentCount(arguments.count());
@@ -72,6 +73,7 @@ bool MetaObjectExecutor::call(const QString &instanceName, const QString &method
         invoker.setParameters(arguments);
         if (!invoker.invoke())
             continue;
+        setResult(invoker.result());
         return true;
     }
     setError("No compatible method found");

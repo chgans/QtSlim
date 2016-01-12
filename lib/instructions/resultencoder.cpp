@@ -1,6 +1,7 @@
 #include "resultencoder.h"
 
 #include "instruction.h"
+#include "instructionresult.h"
 #include "errorinstructionresult.h"
 #include "okinstructionresult.h"
 #include "voidinstructionresult.h"
@@ -15,13 +16,16 @@ QVariant ResultEncoder::encodeResult(const InstructionResult &result)
     const ErrorInstructionResult *errorResult = dynamic_cast<const ErrorInstructionResult *>(&result);
     if (errorResult != nullptr)
         return encodeErrorResult(*errorResult);
+
     const OkInstructionResult *okResult = dynamic_cast<const OkInstructionResult *>(&result);
     if (okResult != nullptr)
         return encodeOkResult(*okResult);
+
     const VoidInstructionResult *voidResult = dynamic_cast<const VoidInstructionResult *>(&result);
     if (voidResult != nullptr)
         return encodeVoidResult(*voidResult);
-    return QVariant();
+
+    return encodeValueResult(result);
 }
 
 // TODO: Error message format should be part of the protocol (the __EXCEPTION__ and message<<...>> bits
@@ -43,6 +47,13 @@ QVariant ResultEncoder::encodeOkResult(const OkInstructionResult &result)
 QVariant ResultEncoder::encodeVoidResult(const VoidInstructionResult &result)
 {
     QVariantList tokens;
-    tokens << result.id();
+    tokens << result.id() << result.result();
+    return QVariant(tokens);
+}
+
+QVariant ResultEncoder::encodeValueResult(const InstructionResult &result)
+{
+    QVariantList tokens;
+    tokens << result.id() << result.result();
     return QVariant(tokens);
 }

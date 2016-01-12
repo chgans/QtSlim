@@ -3,6 +3,7 @@
 
 #include "okinstructionresult.h"
 #include "errorinstructionresult.h"
+#include "voidinstructionresult.h"
 
 const QString CallAndAssignInstruction::NAME = QStringLiteral("CallAndAssign");
 
@@ -23,6 +24,10 @@ InstructionResult *CallAndAssignInstruction::execute(InstructionExecutor *execut
     if (!executor->callAndAssign(m_symbolName, m_instanceName, m_methodName, m_arguments)) {
         return new ErrorInstructionResult(instructionId(), executor->errorString());
     }
-    // FIXME: call returning void vs non-void
+
+    if (executor->result().isNull()) {
+        return new VoidInstructionResult(instructionId());
+    }
+
     return new InstructionResult(instructionId(), executor->result());
 }

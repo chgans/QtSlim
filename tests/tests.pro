@@ -22,7 +22,8 @@ SOURCES += \
     metamethodinspectortestsuite.cpp \
     fixtures/basicqobectfixture.cpp \
     fixtures/division.cpp \
-    instructiontestsuite.cpp
+    instructiontestsuite.cpp \
+    metaobjectmakertestsuite.cpp
 
 HEADERS += \
     protocolserialisation.h \
@@ -36,7 +37,8 @@ HEADERS += \
     metamethodinspectortestsuite.h \
     fixtures/basicqobectfixture.h \
     fixtures/division.h \
-    instructiontestsuite.h
+    instructiontestsuite.h \
+    metaobjectmakertestsuite.h
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 

@@ -26,13 +26,20 @@ void MetaMethodInvokerTestSuite::cleanupTestCase()
 void MetaMethodInvokerTestSuite::testInvoke()
 {
     Division *division = new Division();
+
     invoke(division, "setNumerator", QVariantList() << "10.0");
     QCOMPARE(division->numerator(), 10.0);
+    QVERIFY(!m_invokeResult.isValid());
+
     invoke(division, "setDenominator", QVariantList() << "2.5");
     QCOMPARE(division->denominator(), 2.5);
-    invoke(division, "quotient", QVariantList());
+    QVERIFY(!m_invokeResult.isValid());
 
+    invoke(division, "quotient", QVariantList());
+    QVERIFY(m_invokeResult.isValid());
+    QCOMPARE(m_invokeResult, QVariant(4.0));
     QCOMPARE(division->quotient(), 4.0);
+
     delete division;
 }
 
@@ -49,5 +56,6 @@ void MetaMethodInvokerTestSuite::invoke(QObject *object, const QString &methodNa
     QCOMPARE(invoker.validate(), true);
     QCOMPARE(invoker.invoke(), true);
     QCOMPARE(invoker.hasError(), false);
+    m_invokeResult = invoker.result();
 }
 

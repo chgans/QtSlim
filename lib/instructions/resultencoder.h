@@ -18,6 +18,7 @@ private:
     static QVariant encodeErrorResult(const ErrorInstructionResult& result);
     static QVariant encodeOkResult(const OkInstructionResult& result);
     static QVariant encodeVoidResult(const VoidInstructionResult& result);
+    static QVariant encodeValueResult(const InstructionResult& result);
 };
 
 #endif // RESULTENCODER_H
