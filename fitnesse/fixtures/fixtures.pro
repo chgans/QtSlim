@@ -12,9 +12,11 @@ CONFIG += plugin no_plugin_name_prefix
 
 DEFINES += FIXTURES_LIBRARY
 
-SOURCES += fixtureprovider.cpp
+SOURCES += fixtureprovider.cpp \
+    division.cpp
 
-HEADERS += fixtureprovider.h
+HEADERS += fixtureprovider.h \
+    division.h
 
 INCLUDEPATH += $$PWD/../../lib
 
