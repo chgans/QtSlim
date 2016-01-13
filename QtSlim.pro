@@ -3,5 +3,6 @@ CONFIG += ordered
 
 SUBDIRS += \
     lib \
+    app \
     tests \
-    app
+    fitnesse
