@@ -5,17 +5,29 @@
 
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(executor)
-Q_LOGGING_CATEGORY(executor, "qtslim.execution.executor", QtWarningMsg)
+Q_LOGGING_CATEGORY(executor, "qtslim.execution.executor", QtDebugMsg)
 
 MetaObjectExecutor::MetaObjectExecutor():
     InstructionExecutor()
 {
 }
 
+MetaObjectExecutor::~MetaObjectExecutor()
+{
+
+}
+
 void MetaObjectExecutor::addMetaObject(const QMetaObject *metaObject)
 {
     m_metaObjectDictionary[metaObject->className()] = metaObject;
     qCDebug(executor) << "Added" << metaObject->className() << "to the meta object dictionary";
+}
+
+void MetaObjectExecutor::addMetaObjects(QList<const QMetaObject *> metaObjects)
+{
+    foreach (auto metaObject, metaObjects) {
+        addMetaObject(metaObject);
+    }
 }
 
 bool MetaObjectExecutor::assign(const QString &name, const QString &value)

@@ -3,8 +3,12 @@
 
 #include <QTcpServer>
 #include <QTcpSocket>
-#include <QDebug>
 
+#include <QLoggingCategory>
+Q_DECLARE_LOGGING_CATEGORY(app)
+Q_LOGGING_CATEGORY(app, "qtslim.application", QtDebugMsg)
+
+// FIXME: enforce arguments => %p %m (port number, class path)
 SlimApplication::SlimApplication(int argc, char **argv):
     QCoreApplication(argc, argv),
     m_server(new QTcpServer(this))
@@ -13,6 +17,7 @@ SlimApplication::SlimApplication(int argc, char **argv):
     int port = 8888;
     if (arguments().count() == 2)
         port = arguments().at(1).toInt();
+    qCDebug(app) << "Listening on port" << port;
     m_server->listen(QHostAddress::Any, port);
     connect(m_server, &QTcpServer::acceptError,
             this, &SlimApplication::onServerAcceptError);

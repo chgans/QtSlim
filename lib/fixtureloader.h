@@ -2,21 +2,26 @@
 #define FIXTURELOADER_H
 
 #include "ifixtureprovider.h"
+#include <QStringList>
 
 class QPluginLoader;
 
+
+// TBD: QPluginLoader::staticPlugins() and  QPluginLoader::staticInstances()
 class FixtureLoader
 {
 public:
     FixtureLoader();
 
-    IFixtureProvider *load(const QString filename);
-    bool hasError() const;
-    QString errorString() const;
+    void setPath(const QString &path);
+    void load();
+
+    QList<const QMetaObject *> fixtureMetaObjects() const;
 
 private:
-    void setErrorString(const QString &message);
-    QString m_errorString;
+    QStringList m_pathList;
+    QList<const QMetaObject *> m_fixtureMetaObjects;
+    void addPlugin(QObject *plugin);
 };
 
 #endif // FIXTURELOADER_H

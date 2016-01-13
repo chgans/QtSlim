@@ -11,6 +11,8 @@
 
 #include "execution/metaobjectexecutor.h"
 
+#include "fixtureloader.h"
+
 #include <QDebug>
 
 SlimService::SlimService(QIODevice *inputDevice, QIODevice *outputDevice, QObject *parent):
@@ -19,16 +21,22 @@ SlimService::SlimService(QIODevice *inputDevice, QIODevice *outputDevice, QObjec
     m_outputDevice(outputDevice),
     m_reader(new SlimStringReader(inputDevice, this)),
     m_writer(new SlimStringWriter(outputDevice, this)),
-    m_executor(new MetaObjectExecutor())
+    m_executor(new MetaObjectExecutor),
+    m_fixtureLoader(new FixtureLoader)
 {
 }
 
 SlimService::~SlimService()
 {
+    delete m_fixtureLoader;
+    delete m_executor;
 }
 
 void SlimService::start()
 {
+    m_fixtureLoader->load();
+    m_executor->addMetaObjects(m_fixtureLoader->fixtureMetaObjects());
+
     connect(m_reader, &SlimStringReader::stringReceived,
             this, &SlimService::onStringReceived);
     m_writer->sendString("Slim -- V0.4\n");

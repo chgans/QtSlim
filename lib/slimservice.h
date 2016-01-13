@@ -6,8 +6,9 @@
 class QIODevice;
 class SlimStringReader;
 class SlimStringWriter;
-class InstructionExecutor;
+class MetaObjectExecutor;
 class SlimString;
+class FixtureLoader;
 
 class SlimService : public QObject
 {
@@ -29,7 +30,8 @@ private:
     QIODevice *m_outputDevice = nullptr;
     SlimStringReader *m_reader;
     SlimStringWriter *m_writer;
-    InstructionExecutor *m_executor;
+    MetaObjectExecutor *m_executor;
+    FixtureLoader *m_fixtureLoader;
 };
 
 #endif // SLIMSERVICE_H

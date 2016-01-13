@@ -6,12 +6,16 @@
 #include <QString>
 #include <QMetaObject>
 #include <QMap>
+#include <QList>
 
 class MetaObjectExecutor: public InstructionExecutor
 {
 public:
     MetaObjectExecutor();
+    virtual ~MetaObjectExecutor();
+
     void addMetaObject(const QMetaObject* metaObject);
+    void addMetaObjects(QList<const QMetaObject*> metaObjects);
 
 private:
     QMap<QString, const QMetaObject* > m_metaObjectDictionary;
