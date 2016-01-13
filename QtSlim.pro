@@ -5,4 +5,5 @@ SUBDIRS += \
     lib \
     app \
     tests \
-    fitnesse
+    fitnesse \
+    doc
