@@ -21,7 +21,7 @@ private:
     QMap<QString, const QMetaObject* > m_metaObjectDictionary;
 
     QMap<QString, QObject* > m_objectDictionary;
-    QMap<QString, QString> m_symbolMap;
+    QMap<QString, QVariant> m_symbolMap;
 
     // InstructionExecutor interface
 public:

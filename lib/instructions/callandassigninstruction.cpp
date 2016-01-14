@@ -25,9 +25,10 @@ InstructionResult *CallAndAssignInstruction::execute(InstructionExecutor *execut
         return new ErrorInstructionResult(instructionId(), executor->errorString());
     }
 
-    if (executor->result().isNull()) {
+    QVariant result = executor->result();
+    if (!result.isValid()) {
         return new VoidInstructionResult(instructionId());
     }
 
-    return new InstructionResult(instructionId(), executor->result());
+    return new InstructionResult(instructionId(), result);
 }

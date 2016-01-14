@@ -32,29 +32,22 @@ void MetaObjectExecutor::addMetaObjects(QList<const QMetaObject *> metaObjects)
 
 bool MetaObjectExecutor::assign(const QString &name, const QString &value)
 {
-    Q_UNUSED(name);
-    Q_UNUSED(value);
+    qCDebug(executor) << "Assiging" << value
+                      << "to" << name;
 
-    clearErrorString();
-    clearResult();
+    m_symbolMap[name] = value;
 
-    setError("Not implemented");
-    return false;
+    return true;
 }
 
 bool MetaObjectExecutor::callAndAssign(const QString &symbolName, const QString &instanceName,
                                        const QString &methodName, const QVariantList &arguments)
 {
-    Q_UNUSED(symbolName);
-    Q_UNUSED(instanceName);
-    Q_UNUSED(methodName);
-    Q_UNUSED(arguments);
+    if (!call(instanceName, methodName, arguments))
+        return false;
 
-    clearErrorString();
-    clearResult();
-
-    setError("Not implemented");
-    return false;
+    // FIXME: check valid result?
+    return assign(symbolName, result().toString());
 }
 
 bool MetaObjectExecutor::call(const QString &instanceName, const QString &methodName,
