@@ -13,6 +13,7 @@ public:
 
     void setVariable(const QString &name, const QVariant &value);
     QVariant variable(const QString &name) const;
+    QString expandVariables(const QString &content);
 
     void addPath(const QString &path);
 

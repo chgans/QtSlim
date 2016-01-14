@@ -8,6 +8,8 @@
 #include <QMap>
 #include <QList>
 
+class SlimExecutionContext;
+
 class MetaObjectExecutor: public InstructionExecutor
 {
 public:
@@ -16,12 +18,11 @@ public:
 
     void addMetaObject(const QMetaObject* metaObject);
     void addMetaObjects(QList<const QMetaObject*> metaObjects);
+    void setExecutionContext(SlimExecutionContext *context);
 
 private:
     QMap<QString, const QMetaObject* > m_metaObjectDictionary;
-
-    QMap<QString, QObject* > m_objectDictionary;
-    QMap<QString, QVariant> m_symbolMap;
+    SlimExecutionContext *m_context;
 
     // InstructionExecutor interface
 public:

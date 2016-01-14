@@ -3,6 +3,8 @@
 #include "introspection/metaobjectmaker.h"
 #include "introspection/metamethodinvoker.h"
 
+#include "slimexecutioncontext.h"
+
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(executor)
 Q_LOGGING_CATEGORY(executor, "qtslim.execution.executor", QtDebugMsg)
@@ -30,12 +32,18 @@ void MetaObjectExecutor::addMetaObjects(QList<const QMetaObject *> metaObjects)
     }
 }
 
+void MetaObjectExecutor::setExecutionContext(SlimExecutionContext *context)
+{
+    m_context = context;
+}
+
 bool MetaObjectExecutor::assign(const QString &name, const QString &value)
 {
     qCDebug(executor) << "Assiging" << value
                       << "to" << name;
 
-    m_symbolMap[name] = value;
+    QString finalString = m_context->expandVariables(value);
+    m_context->setVariable(name, QVariant(finalString));
 
     return true;
 }
@@ -59,12 +67,13 @@ bool MetaObjectExecutor::call(const QString &instanceName, const QString &method
                       << "on" << instanceName
                       << "with" << arguments;
 
-    if (!m_objectDictionary.contains(instanceName)) {
+    QObject *object = m_context->instance(instanceName);
+
+    if (object == nullptr) {
         setError("Object not found");
         return false;
     }
 
-    QObject *object = m_objectDictionary.value(instanceName);
     MetaObjectInspector inspector(*object->metaObject());
     qCDebug(executor) << "Object class is" <<  object->metaObject()->className();
     MetaMethodList methods = inspector.allMethods()
@@ -103,7 +112,7 @@ bool MetaObjectExecutor::make(const QString &instanceName, const QString &classN
 
     qCDebug(executor) << "Making" << instanceName << "of class" << className;
 
-    if (m_objectDictionary.contains(instanceName)) {
+    if (m_context->instance(instanceName) != nullptr) {
         setError("Object already exists");
         return false;
     }
@@ -120,7 +129,7 @@ bool MetaObjectExecutor::make(const QString &instanceName, const QString &classN
         return false;
     }
 
-    m_objectDictionary.insert(instanceName, maker.object());
+    m_context->setInstance(instanceName, maker.object());
     return true;
 }
 

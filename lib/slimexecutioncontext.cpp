@@ -17,6 +17,15 @@ QVariant SlimExecutionContext::variable(const QString &name) const
     return QVariant();
 }
 
+QString SlimExecutionContext::expandVariables(const QString &content)
+{
+    QString result = content;
+    foreach (const QString &key, m_variables.keys()) {
+        result.replace(QString("$%1").arg(key), m_variables.value(key).toString());
+    }
+    return result;
+}
+
 void SlimExecutionContext::addPath(const QString &path)
 {
     if (m_paths.contains(path))

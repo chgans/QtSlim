@@ -12,6 +12,7 @@
 #include "execution/metaobjectexecutor.h"
 
 #include "fixtureloader.h"
+#include "slimexecutioncontext.h"
 
 #include <QDebug>
 
@@ -22,12 +23,15 @@ SlimService::SlimService(QIODevice *inputDevice, QIODevice *outputDevice, QObjec
     m_reader(new SlimStringReader(inputDevice, this)),
     m_writer(new SlimStringWriter(outputDevice, this)),
     m_executor(new MetaObjectExecutor),
-    m_fixtureLoader(new FixtureLoader)
+    m_fixtureLoader(new FixtureLoader),
+    m_executionContext(new SlimExecutionContext)
 {
+    m_executor->setExecutionContext(m_executionContext);
 }
 
 SlimService::~SlimService()
 {
+    delete m_executionContext;
     delete m_fixtureLoader;
     delete m_executor;
 }

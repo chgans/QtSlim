@@ -9,6 +9,7 @@ class SlimStringWriter;
 class MetaObjectExecutor;
 class SlimString;
 class FixtureLoader;
+class SlimExecutionContext;
 
 class SlimService : public QObject
 {
@@ -32,6 +33,7 @@ private:
     SlimStringWriter *m_writer;
     MetaObjectExecutor *m_executor;
     FixtureLoader *m_fixtureLoader;
+    SlimExecutionContext *m_executionContext;
 };
 
 #endif // SLIMSERVICE_H
