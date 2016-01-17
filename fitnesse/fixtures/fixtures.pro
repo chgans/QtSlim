@@ -13,10 +13,12 @@ CONFIG += plugin no_plugin_name_prefix
 DEFINES += FIXTURES_LIBRARY
 
 SOURCES += fixtureprovider.cpp \
-    division.cpp
+    division.cpp \
+    echofixture.cpp
 
 HEADERS += fixtureprovider.h \
-    division.h
+    division.h \
+    echofixture.h
 
 INCLUDEPATH += $$PWD/../../lib
 
