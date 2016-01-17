@@ -23,6 +23,7 @@ public:
 private:
     QMap<QString, const QMetaObject* > m_metaObjectDictionary;
     SlimExecutionContext *m_context;
+    const QMetaObject* resolveMetaObject(const QString &className);
 
     // InstructionExecutor interface
 public:

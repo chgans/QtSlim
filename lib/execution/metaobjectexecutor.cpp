@@ -37,6 +37,18 @@ void MetaObjectExecutor::setExecutionContext(SlimExecutionContext *context)
     m_context = context;
 }
 
+const QMetaObject *MetaObjectExecutor::resolveMetaObject(const QString &className)
+{
+    if (m_metaObjectDictionary.contains(className))
+        return m_metaObjectDictionary.value(className);
+    foreach (const QString nameSpace, m_context->pathList()) {
+        QString name = nameSpace + "::" + className;
+        if (m_metaObjectDictionary.contains(name))
+            return m_metaObjectDictionary.value(name);
+    }
+    return nullptr;
+}
+
 bool MetaObjectExecutor::assign(const QString &name, const QString &value)
 {
     qCDebug(executor) << "Assiging" << value
@@ -96,13 +108,13 @@ bool MetaObjectExecutor::call(const QString &instanceName, const QString &method
 
 bool MetaObjectExecutor::import(const QString &path)
 {
-    Q_UNUSED(path);
-
     clearErrorString();
     clearResult();
-
-    setError("Not implemented");
-    return false;
+    QString nameSpace = path;
+    nameSpace.replace(".", "::");
+    qCDebug(executor) << "Adding namespace" << nameSpace;
+    m_context->addPath(nameSpace);
+    return true;
 }
 
 bool MetaObjectExecutor::make(const QString &instanceName, const QString &className,
@@ -117,12 +129,13 @@ bool MetaObjectExecutor::make(const QString &instanceName, const QString &classN
         return false;
     }
 
-    if (!m_metaObjectDictionary.contains(className)) {
+    const QMetaObject *metaObject = resolveMetaObject(className);
+    if (metaObject == nullptr) {
         setError("Unknown class name");
         return false;
     }
 
-    MetaObjectMaker maker(*m_metaObjectDictionary.value(className));
+    MetaObjectMaker maker(*metaObject);
     maker.setParameters(arguments);
     if (!maker.make()) {
         setError(maker.errorMessage());

@@ -1,6 +1,8 @@
 #include "fixtureprovider.h"
 #include "division.h"
 
+using namespace fitnesse::fixtures;
+
 FixtureProvider::FixtureProvider()
 {
 }

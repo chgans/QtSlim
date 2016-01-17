@@ -1,3 +1,6 @@
+!|Import|
+|fitnesse.fixtures|
+
 | Division |
 | numerator | denominator | quotient? |
 | 10 | 2 | $result= |

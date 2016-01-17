@@ -33,6 +33,11 @@ void SlimExecutionContext::addPath(const QString &path)
     m_paths.append(path);
 }
 
+QStringList SlimExecutionContext::pathList() const
+{
+    return m_paths;
+}
+
 void SlimExecutionContext::setInstance(const QString &name, QObject *object)
 {
     m_instances[name] = object;

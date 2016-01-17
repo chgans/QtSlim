@@ -2,6 +2,11 @@
 
 #include <QDebug>
 
+namespace fitnesse
+{
+namespace fixtures
+{
+
 Division::Division(QObject *parent):
     QObject(parent), m_numerator(0.0), m_denominator(0.0)
 {
@@ -61,3 +66,5 @@ void Division::reset()
 
 }
 
+}
+}

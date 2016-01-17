@@ -4,6 +4,11 @@
 #include <QObject>
 #include "fixture/idecisiontable.h"
 
+namespace fitnesse
+{
+namespace fixtures
+{
+
 class Division : public QObject, public IDecisionTable
 {
     Q_OBJECT
@@ -33,5 +38,8 @@ public slots:
     void execute();
     void reset();
 };
+
+}
+}
 
 #endif // DIVISION_H

@@ -16,6 +16,7 @@ public:
     QString expandVariables(const QString &content);
 
     void addPath(const QString &path);
+    QStringList pathList() const;
 
     void setInstance(const QString &name, QObject *object);
     QObject *instance(const QString &name) const;
