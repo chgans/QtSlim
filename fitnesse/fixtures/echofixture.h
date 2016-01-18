@@ -9,7 +9,6 @@ namespace fitnesse
 namespace fixtures
 {
 
-
 class EchoFixture : public QObject, public IDecisionTable
 {
     Q_OBJECT
@@ -26,7 +25,7 @@ private:
     QString m_name;
 
     // IDecisionTable interface
-public:
+public slots:
     void table(QVariant table);
     void beginTable();
     void endTable();

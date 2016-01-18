@@ -14,11 +14,17 @@ DEFINES += FIXTURES_LIBRARY
 
 SOURCES += fixtureprovider.cpp \
     division.cpp \
-    echofixture.cpp
+    echofixture.cpp \
+    testslim.cpp \
+    pagedriver.cpp \
+    testquery.cpp
 
 HEADERS += fixtureprovider.h \
     division.h \
-    echofixture.h
+    echofixture.h \
+    testslim.h \
+    pagedriver.h \
+    testquery.h
 
 INCLUDEPATH += $$PWD/../../lib
 
