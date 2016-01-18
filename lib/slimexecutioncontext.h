@@ -21,9 +21,11 @@ public:
     void setInstance(const QString &name, QObject *object);
     QObject *instance(const QString &name) const;
 
+    void reset();
+
 private:
     QMap<QString, QObject *> m_instances;
-    // TBD: QList<Library> m_libraries;
+    QMap<QString, QObject *> m_libraries;
     QMap<QString, QVariant> m_variables; // TBD: VariableStore
     QList<QString> m_paths;
 };

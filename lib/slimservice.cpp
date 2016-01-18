@@ -53,20 +53,21 @@ void SlimService::stop()
 
 void SlimService::onStringReceived(const QString &string)
 {
-    //qDebug() << "Request:" << string;
+    qDebug() << "************************************************";
+    qDebug() << "Executing request:" << string;
+    m_executionContext->reset();
     QVariantList statements = SlimDeserialiser::deserialise(string).toList();
     QVariantList results;
     foreach (const QVariant &statement, statements) {
-        //qDebug() << "Executing statement:" << statement;
+        qDebug() << "Executing statement:" << statement;
         Instruction *instruction = InstructionFactory::createInstruction(statement.toList());
         InstructionResult *result = instruction->execute(m_executor);
-        //qDebug() << "Execution result:" << result->result();
         results.append(ResultEncoder::encodeResult(*result));
-        //qDebug() << "Execution result:" << ResultEncoder::encodeResult(*result);
+        qDebug() << "Statement execution result:" << ResultEncoder::encodeResult(*result);
     }
 
     QString answer = SlimSerialiser::serialise(QVariant(results));
-    //qDebug() << "Answer:" << answer;
+    qDebug() << "Request execution result:" << answer;
     m_writer->sendString(answer);
 }
 

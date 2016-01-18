@@ -40,13 +40,26 @@ QStringList SlimExecutionContext::pathList() const
 
 void SlimExecutionContext::setInstance(const QString &name, QObject *object)
 {
-    m_instances[name] = object;
+    if (name.startsWith("library"))
+        m_libraries[name] = object;
+    else
+        m_instances[name] = object;
 }
 
 QObject *SlimExecutionContext::instance(const QString &name) const
 {
     if (m_instances.contains(name))
         return m_instances[name];
+    if (m_libraries.contains(name))
+        return m_libraries[name];
     return nullptr;
+}
+
+// FIXME: delete objects
+// Keep path and libraries
+void SlimExecutionContext::reset()
+{
+    m_instances.clear();
+    //m_variables.clear();
 }
 
