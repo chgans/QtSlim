@@ -17,6 +17,7 @@ class TestSlim : public QObject, public IDecisionTable
 public:
     Q_INVOKABLE explicit TestSlim();
     Q_INVOKABLE explicit TestSlim(int arg);
+    Q_INVOKABLE explicit TestSlim(int arg, TestSlim *other);
 
 public slots:
     bool echoBoolean(bool value);
@@ -24,6 +25,10 @@ public slots:
     void setString(const QString &value);
     QString getStringArg() const;
     int returnConstructorArg() const;
+    TestSlim *createTestSlimWithString(const QString &arg) const;
+    // FIXME: should be const here, but there's conversion problem between const vs non-const via QVariant
+    bool isSame(TestSlim *other) const;
+    QString getStringFromOther(TestSlim *other) const;
 
 private:
     QString m_stringArg;
@@ -40,4 +45,8 @@ public slots:
 
 }
 }
+
+Q_DECLARE_METATYPE(fitnesse::fixtures::TestSlim*)
+Q_DECLARE_METATYPE(const fitnesse::fixtures::TestSlim*)
+
 #endif // TESTSLIM_H

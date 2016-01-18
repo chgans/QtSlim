@@ -7,6 +7,7 @@
 #include "echofixture.h"
 #include "pagedriver.h"
 #include "setup.h"
+#include "teardown.h"
 
 // fitnesse.slim.test
 #include "testslim.h"
@@ -19,6 +20,8 @@ FixtureProvider::FixtureProvider()
     qRegisterMetaType<fitnesse::fixtures::TableColumn>("TableColumn");
     qRegisterMetaType<fitnesse::fixtures::TableRow>("TableRow");
     qRegisterMetaType<fitnesse::fixtures::Table>("Table");
+    qRegisterMetaType<fitnesse::fixtures::TestSlim*>("TestSlim*");
+    qRegisterMetaType<const fitnesse::fixtures::TestSlim*>("const TestSlim*");
 }
 
 QList<const QMetaObject *> FixtureProvider::fixtureMetaObjects() const
@@ -28,6 +31,7 @@ QList<const QMetaObject *> FixtureProvider::fixtureMetaObjects() const
             << &PageDriver::staticMetaObject
             << &EchoFixture::staticMetaObject
             << &SetUp::staticMetaObject
+            << &TearDown::staticMetaObject
             << &TestSlim::staticMetaObject
             << &TestQuery::staticMetaObject;
 }

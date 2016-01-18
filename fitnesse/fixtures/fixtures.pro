@@ -18,7 +18,8 @@ SOURCES += fixtureprovider.cpp \
     testslim.cpp \
     pagedriver.cpp \
     testquery.cpp \
-    setup.cpp
+    setup.cpp \
+    teardown.cpp
 
 HEADERS += fixtureprovider.h \
     division.h \
@@ -26,7 +27,8 @@ HEADERS += fixtureprovider.h \
     testslim.h \
     pagedriver.h \
     testquery.h \
-    setup.h
+    setup.h \
+    teardown.h
 
 INCLUDEPATH += $$PWD/../../lib
 

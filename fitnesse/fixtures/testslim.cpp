@@ -10,7 +10,7 @@ namespace fixtures
 
 TestSlim::TestSlim():
     QObject(),
-    m_ctorArg(-1)
+    m_ctorArg(0)
 {
 
 }
@@ -18,6 +18,12 @@ TestSlim::TestSlim():
 TestSlim::TestSlim(int arg):
     QObject(),
     m_ctorArg(arg)
+{
+
+}
+
+TestSlim::TestSlim(int arg, TestSlim *other):
+    m_stringArg(other->m_stringArg), m_ctorArg(arg)
 {
 
 }
@@ -45,6 +51,23 @@ QString TestSlim::getStringArg() const
 int TestSlim::returnConstructorArg() const
 {
     return m_ctorArg;
+}
+
+TestSlim *TestSlim::createTestSlimWithString(const QString &arg) const
+{
+    TestSlim *result = new TestSlim();
+    result->setString(arg);
+    return result;
+}
+
+bool TestSlim::isSame(TestSlim *other) const
+{
+    return this == other;
+}
+
+QString TestSlim::getStringFromOther(TestSlim *other) const
+{
+    return other->m_stringArg;
 }
 
 void TestSlim::table(QVariant table)
