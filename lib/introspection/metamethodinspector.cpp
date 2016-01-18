@@ -45,7 +45,10 @@ bool MetaMethodInspector::hasReturnValue() const
 
 int MetaMethodInspector::returnValueTypeId() const
 {
-    return m_metaMethod.returnType();
+    if (m_metaMethod.returnType() == QMetaType::UnknownType)
+        return QMetaType::type(m_metaMethod.typeName());
+    else
+        return m_metaMethod.returnType();
 }
 
 QByteArray MetaMethodInspector::returnValueTypeName() const

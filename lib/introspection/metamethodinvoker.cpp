@@ -170,6 +170,10 @@ void MetaMethodInvoker::invokeWithReturn()
 
     const QByteArray typeName = m_inspector.returnValueTypeName();
     QVariant::Type typeId = QVariant::Type(m_inspector.returnValueTypeId());
+    if (typeId == QVariant::Invalid) {
+        setError("Invalid/unsupported return value type");
+        return;
+    }
     m_returnValueStorage = QVariant(typeId);
     m_returnValue = QGenericReturnArgument(typeName.constData(), m_returnValueStorage.data());
 
