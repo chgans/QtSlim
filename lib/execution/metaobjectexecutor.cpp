@@ -123,13 +123,15 @@ bool MetaObjectExecutor::make(const QString &instanceName, const QString &classN
     clearResult();
 
     qCDebug(executor) << "Making" << instanceName << "of class" << className;
+    QString resolvedClassName = m_context->expandVariables(className);
+    qCDebug(executor) << className << "resolved to" << resolvedClassName;
 
     if (m_context->instance(instanceName) != nullptr) {
         setError("Object already exists");
         return false;
     }
 
-    const QMetaObject *metaObject = resolveMetaObject(className);
+    const QMetaObject *metaObject = resolveMetaObject(resolvedClassName);
     if (metaObject == nullptr) {
         setError("Unknown class name");
         return false;
