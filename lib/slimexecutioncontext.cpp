@@ -60,6 +60,7 @@ QObject *SlimExecutionContext::instance(const QString &name) const
 void SlimExecutionContext::reset()
 {
     m_instances.clear();
+    m_libraries.clear();
     //m_variables.clear();
 }
 
