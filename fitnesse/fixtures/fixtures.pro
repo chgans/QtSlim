@@ -17,14 +17,16 @@ SOURCES += fixtureprovider.cpp \
     echofixture.cpp \
     testslim.cpp \
     pagedriver.cpp \
-    testquery.cpp
+    testquery.cpp \
+    setup.cpp
 
 HEADERS += fixtureprovider.h \
     division.h \
     echofixture.h \
     testslim.h \
     pagedriver.h \
-    testquery.h
+    testquery.h \
+    setup.h
 
 INCLUDEPATH += $$PWD/../../lib
 

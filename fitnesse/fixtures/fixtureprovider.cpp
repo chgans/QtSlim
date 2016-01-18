@@ -6,6 +6,7 @@
 // fitnesse.fixtures
 #include "echofixture.h"
 #include "pagedriver.h"
+#include "setup.h"
 
 // fitnesse.slim.test
 #include "testslim.h"
@@ -26,6 +27,7 @@ QList<const QMetaObject *> FixtureProvider::fixtureMetaObjects() const
             << &Division::staticMetaObject
             << &PageDriver::staticMetaObject
             << &EchoFixture::staticMetaObject
+            << &SetUp::staticMetaObject
             << &TestSlim::staticMetaObject
             << &TestQuery::staticMetaObject;
 }
