@@ -79,6 +79,7 @@ void SlimService::onStringReceived(const QString &string)
     }
 
     QString answer = SlimSerialiser::serialise(QVariant(results));
+    qCDebug(service) << "Processing result:" << answer;
     m_writer->sendString(answer);
     qCDebug(service) << "Statement processing finished";
 }

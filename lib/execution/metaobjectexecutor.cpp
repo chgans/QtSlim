@@ -51,7 +51,7 @@ const QMetaObject *MetaObjectExecutor::resolveMetaObject(const QString &classNam
 
 bool MetaObjectExecutor::invokeMethod(QObject *object, const QString &methodName, const QVariantList &arguments)
 {
-    qCDebug(executor) << "Trying" << methodName
+    qCDebug(executor) << "Trying method" << methodName
                       << "on" << object;
 
     MetaObjectInspector inspector(*object->metaObject());

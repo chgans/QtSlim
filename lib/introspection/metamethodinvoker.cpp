@@ -196,7 +196,7 @@ void MetaMethodInvoker::invokeWithReturn()
         break;
     }
 
-    qCDebug(invoker) << "Method returned" << m_returnValueStorage;
+    qCDebug(invoker) << "Return value:" << m_returnValueStorage;
 
     if (!success)
         setError("Unknown error (QMetaMethod::invoke())");

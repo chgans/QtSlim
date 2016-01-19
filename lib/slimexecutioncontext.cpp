@@ -11,15 +11,21 @@ SlimExecutionContext::SlimExecutionContext()
 
 void SlimExecutionContext::setVariable(const QString &name, const QVariant &value)
 {
-    qCDebug(context) << "Assiging value" << value << "to variable" << name;
+    qCDebug(context) << "Adding" << value << "to symbol dictionary as" << name;
     m_variables[name] = value;
 }
 
 QVariant SlimExecutionContext::variable(const QString &name) const
 {
-    if (m_variables.contains(name))
-        return m_variables[name];
-    return QVariant();
+    QVariant result;
+    if (m_variables.contains(name)) {
+        result = m_variables[name];
+        qCDebug(context) << "Found" << name << "in symbol dictionary:";
+    }
+    else {
+        qCDebug(context) << "Could not find" << name << "in symbol dictionary";
+    }
+    return result;
 }
 
 QString SlimExecutionContext::expandVariables(const QString &content)
@@ -71,20 +77,32 @@ QStringList SlimExecutionContext::pathList() const
 
 void SlimExecutionContext::setInstance(const QString &name, QObject *object)
 {
-    qCDebug(context) << "Assigning object" << object << "to" << name;
-    if (name.startsWith("library"))
+    if (name.startsWith("library")) {
+        qCDebug(context) << "Adding" << object << "to library dictionary as" << name;
         m_libraries[name] = object;
-    else
+    }
+    else {
+        qCDebug(context) << "Adding" << object << "to object dictionary as" << name;
         m_instances[name] = object;
+    }
 }
 
 QObject *SlimExecutionContext::instance(const QString &name) const
 {
-    if (m_instances.contains(name))
-        return m_instances[name];
-    if (m_libraries.contains(name))
-        return m_libraries[name];
-    return nullptr;
+    QObject *result = nullptr;
+    if (m_instances.contains(name)) {
+        result = m_instances[name];
+        qCDebug(context) << "Found" << name << "in object dictionary:" << result;
+    }
+    else if (m_libraries.contains(name)) {
+        result = m_libraries[name];
+        qCDebug(context) << "Found" << name << "in libraries dictionary:" << result;
+    }
+    else {
+        qCDebug(context) << "Could not find" << name << "in any dictionaries";
+    }
+
+    return result;
 }
 
 // FIXME: delete objects
