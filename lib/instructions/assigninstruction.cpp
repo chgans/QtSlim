@@ -21,3 +21,11 @@ InstructionResult *AssignInstruction::execute(InstructionExecutor *executor) con
     }
     return new OkInstructionResult(instructionId());
 }
+
+QString AssignInstruction::toString() const
+{
+    return QString("%1: %2 = %3")
+            .arg(instructionId())
+            .arg(symbolName())
+            .arg(symbolValue());
+}

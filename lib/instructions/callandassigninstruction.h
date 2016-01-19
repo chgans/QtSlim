@@ -44,6 +44,7 @@ private:
     // Instruction interface
 public:
     InstructionResult *execute(InstructionExecutor *executor) const;
+    QString toString() const;
 };
 
 #endif // CALLANDASSIGNINSTRUCTION_H

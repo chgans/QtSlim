@@ -13,8 +13,12 @@
 
 #include "fixtureloader.h"
 #include "slimexecutioncontext.h"
+#include "slimlibraryhelper.h"
 
-#include <QDebug>
+
+#include <QLoggingCategory>
+Q_DECLARE_LOGGING_CATEGORY(service)
+Q_LOGGING_CATEGORY(service, "qtslim.server.service", QtDebugMsg)
 
 SlimService::SlimService(QIODevice *inputDevice, QIODevice *outputDevice, QObject *parent):
     QObject(parent),
@@ -26,6 +30,9 @@ SlimService::SlimService(QIODevice *inputDevice, QIODevice *outputDevice, QObjec
     m_fixtureLoader(new FixtureLoader),
     m_executionContext(new SlimExecutionContext)
 {
+    SlimLibraryHelper *helper = new SlimLibraryHelper(this);
+    helper->setExecutionContext(m_executionContext);
+    m_executionContext->setInstance("librarySlimHelperLibrary", helper);
     m_executor->setExecutionContext(m_executionContext);
 }
 
@@ -38,6 +45,7 @@ SlimService::~SlimService()
 
 void SlimService::start()
 {
+    qCDebug(service) << "Starting service ...";
     m_fixtureLoader->load();
     m_executor->addMetaObjects(m_fixtureLoader->fixtureMetaObjects());
 
@@ -48,27 +56,31 @@ void SlimService::start()
 
 void SlimService::stop()
 {
-    //m_writer->sendString("Bye");
+    m_writer->sendString("");
+    qCDebug(service) << "Service stopped";
 }
 
 void SlimService::onStringReceived(const QString &string)
 {
-    qDebug() << "************************************************";
-    qDebug() << "Executing request:" << string;
+    qCDebug(service) << "Processing statement ...";
+    if (string == "000003:bye") { // FIXME
+        //stop();
+        return;
+    }
     m_executionContext->reset();
     QVariantList statements = SlimDeserialiser::deserialise(string).toList();
     QVariantList results;
     foreach (const QVariant &statement, statements) {
-        qDebug() << "Executing statement:" << statement;
         Instruction *instruction = InstructionFactory::createInstruction(statement.toList());
+        qCDebug(service) << "Executing instruction:" << instruction->toString();
         InstructionResult *result = instruction->execute(m_executor);
         results.append(ResultEncoder::encodeResult(*result));
-        qDebug() << "Statement execution result:" << ResultEncoder::encodeResult(*result);
+        qCDebug(service) << "Execution result:" << ResultEncoder::encodeResult(*result);
     }
 
     QString answer = SlimSerialiser::serialise(QVariant(results));
-    qDebug() << "Request execution result:" << answer;
     m_writer->sendString(answer);
+    qCDebug(service) << "Statement processing finished";
 }
 
 

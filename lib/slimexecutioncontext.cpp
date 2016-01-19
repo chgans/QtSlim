@@ -1,5 +1,9 @@
 #include "slimexecutioncontext.h"
 
+#include <QLoggingCategory>
+Q_DECLARE_LOGGING_CATEGORY(context)
+Q_LOGGING_CATEGORY(context, "qtslim.execution.context", QtDebugMsg)
+
 SlimExecutionContext::SlimExecutionContext()
 {
 
@@ -7,6 +11,7 @@ SlimExecutionContext::SlimExecutionContext()
 
 void SlimExecutionContext::setVariable(const QString &name, const QVariant &value)
 {
+    qCDebug(context) << "Assiging value" << value << "to variable" << name;
     m_variables[name] = value;
 }
 
@@ -22,6 +27,32 @@ QString SlimExecutionContext::expandVariables(const QString &content)
     QString result = content;
     foreach (const QString &key, m_variables.keys()) {
         result.replace(QString("$%1").arg(key), m_variables.value(key).toString());
+    }
+    qCDebug(context) << "Variable expanded from" << content << "to" << result;
+    return result;
+}
+
+QVariant SlimExecutionContext::expandVariables(const QVariant &content)
+{
+    if (content.type() != QVariant::String)
+        return content;
+
+    foreach (const QString &key, m_variables.keys()) {
+        if (content.value<QString>() == QString("$%1").arg(key)) {
+            QVariant result = m_variables.value(key);
+            qCDebug(context) << "Variable expanded from" << content << "to" << result;
+            return result;
+        }
+    }
+
+    return content;
+}
+
+QList<QVariant> SlimExecutionContext::expandVariables(const QList<QVariant> &contentList)
+{
+    QList<QVariant> result;
+    foreach (const QVariant &content, contentList) {
+        result.append(expandVariables(content));
     }
     return result;
 }
@@ -40,6 +71,7 @@ QStringList SlimExecutionContext::pathList() const
 
 void SlimExecutionContext::setInstance(const QString &name, QObject *object)
 {
+    qCDebug(context) << "Assigning object" << object << "to" << name;
     if (name.startsWith("library"))
         m_libraries[name] = object;
     else
@@ -60,7 +92,12 @@ QObject *SlimExecutionContext::instance(const QString &name) const
 void SlimExecutionContext::reset()
 {
     m_instances.clear();
-    m_libraries.clear();
+    //m_libraries.clear();
     //m_variables.clear();
+}
+
+QList<QObject *> SlimExecutionContext::libraries() const
+{
+    return m_libraries.values();
 }
 

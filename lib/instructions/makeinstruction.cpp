@@ -21,3 +21,11 @@ InstructionResult *MakeInstruction::execute(InstructionExecutor *executor) const
         return new ErrorInstructionResult(instructionId(), executor->errorString());
     return new OkInstructionResult(instructionId());
 }
+
+QString MakeInstruction::toString() const
+{
+    return QString("%1: %2 = new %3(...)")
+            .arg(instructionId())
+            .arg(instanceName())
+            .arg(className());
+}

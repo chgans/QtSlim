@@ -10,7 +10,7 @@ class InstructionExecutor
 public:
     InstructionExecutor();
 
-    virtual bool assign(const QString &name, const QString &value) = 0;
+    virtual bool assign(const QString &name, const QVariant &value) = 0;
     virtual bool callAndAssign(const QString &symbolName, const QString &instanceName,
                                   const QString &methodName, const QVariantList &arguments) = 0;
     virtual bool call(const QString &instanceName, const QString &methodName,

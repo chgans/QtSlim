@@ -36,7 +36,8 @@ SOURCES += \
     introspection/metaobjectinspector.cpp \
     introspection/metamethodinvoker.cpp \
     introspection/metaobjectmaker.cpp \
-    fixtureloader.cpp
+    fixtureloader.cpp \
+    slimlibraryhelper.cpp
 
 HEADERS += \
     slimapplication.h \
@@ -68,4 +69,5 @@ HEADERS += \
     introspection/metamethodinvoker.h \
     introspection/metaobjectmaker.h \
     ifixtureprovider.h \
-    fixtureloader.h
+    fixtureloader.h \
+    slimlibraryhelper.h

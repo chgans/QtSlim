@@ -24,10 +24,11 @@ private:
     QMap<QString, const QMetaObject* > m_metaObjectDictionary;
     SlimExecutionContext *m_context;
     const QMetaObject* resolveMetaObject(const QString &className);
+    bool invokeMethod(QObject *object, const QString &methodName, const QVariantList &arguments);
 
     // InstructionExecutor interface
 public:
-    bool assign(const QString &name, const QString &value);
+    bool assign(const QString &name, const QVariant &value);
     bool callAndAssign(const QString &symbolName, const QString &instanceName,
                        const QString &methodName, const QVariantList &arguments);
     bool call(const QString &instanceName, const QString &methodName,

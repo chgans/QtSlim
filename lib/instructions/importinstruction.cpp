@@ -18,3 +18,10 @@ InstructionResult *ImportInstruction::execute(InstructionExecutor *executor) con
         return new ErrorInstructionResult(instructionId(), executor->errorString());
     return new OkInstructionResult(instructionId());
 }
+
+QString ImportInstruction::toString() const
+{
+    return QString("%1: import %2")
+            .arg(instructionId())
+            .arg(path());
+}

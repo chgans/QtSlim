@@ -21,6 +21,7 @@ private:
     // Instruction interface
 public:
     InstructionResult *execute(InstructionExecutor *executor) const;
+    QString toString() const;
 };
 
 #endif // IMPORTINSTRUCTION_H

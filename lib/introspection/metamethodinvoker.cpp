@@ -5,7 +5,7 @@
 
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(invoker)
-Q_LOGGING_CATEGORY(invoker, "qtslim.introspection.invoker", QtWarningMsg)
+Q_LOGGING_CATEGORY(invoker, "qtslim.introspection.invoker", QtDebugMsg)
 
 #define ASSERT_UNREACHABLE_LOCATION() Q_ASSERT(false)
 
@@ -44,6 +44,7 @@ void MetaMethodInvoker::setParameters(const QVariantList &parameters)
         m_parametersStorage.append(value);
         const QVariant &stored = m_parametersStorage[index];
         QByteArray typeName = typeNames[index];
+        qCDebug(invoker) << index << typeName << typeId << stored;
         m_parameters.append(QGenericArgument(typeName.constData(), stored.constData()));
         qCDebug(invoker) << "Setting parameter" << m_inspector.parameterNames().value(index)
                          << "to" << value;
@@ -68,10 +69,6 @@ bool MetaMethodInvoker::validate()
 bool MetaMethodInvoker::invoke()
 {
     clearError();
-
-    qCDebug(invoker) << "Calling" << m_method.methodSignature()
-                     << "with" << m_parametersStorage
-                     << "on" << m_object ;
 
     if (m_method.methodType() == QMetaMethod::Constructor) {
         invokeConstructor();
@@ -140,7 +137,10 @@ void MetaMethodInvoker::invokeWithoutReturn()
 {
     bool success;
 
-    qCDebug(invoker) << "Invoking method without return value";
+    qCDebug(invoker) << "Invoking method" << m_method.methodSignature()
+                     << "with" << m_parametersStorage
+                     << "on" << m_object ;
+
     switch (m_parameters.count()) {
     case 0:
         success = m_method.invoke(m_object, m_connectionType);
@@ -158,8 +158,6 @@ void MetaMethodInvoker::invokeWithoutReturn()
         break;
     }
 
-    qCDebug(invoker) << "Return value is" << m_returnValueStorage;
-
     if (!success)
         setError("Unknown error (QMetaMethod::invoke())");
 }
@@ -167,6 +165,10 @@ void MetaMethodInvoker::invokeWithoutReturn()
 void MetaMethodInvoker::invokeWithReturn()
 {
     bool success;
+
+    qCDebug(invoker) << "Invoking method" << m_method.methodSignature()
+                     << "with" << m_parametersStorage
+                     << "on" << m_object ;
 
     const QByteArray typeName = m_inspector.returnValueTypeName();
     QVariant::Type typeId = QVariant::Type(m_inspector.returnValueTypeId());
@@ -176,8 +178,6 @@ void MetaMethodInvoker::invokeWithReturn()
     }
     m_returnValueStorage = QVariant(typeId);
     m_returnValue = QGenericReturnArgument(typeName.constData(), m_returnValueStorage.data());
-
-    qCDebug(invoker) << "Invoking method with a return value of type" << typeId << "aka" << typeName;
 
     switch (m_parameters.count()) {
     case 0:
@@ -196,7 +196,7 @@ void MetaMethodInvoker::invokeWithReturn()
         break;
     }
 
-    qCDebug(invoker) << "Return value is" << m_returnValueStorage;
+    qCDebug(invoker) << "Method returned" << m_returnValueStorage;
 
     if (!success)
         setError("Unknown error (QMetaMethod::invoke())");

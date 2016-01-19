@@ -18,6 +18,8 @@ public:
 
     virtual InstructionResult *execute(InstructionExecutor *executor) const = 0;
 
+    virtual QString toString() const = 0;
+
 private:
     QString m_id;
 };

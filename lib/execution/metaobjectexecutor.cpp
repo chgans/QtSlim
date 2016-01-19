@@ -49,13 +49,40 @@ const QMetaObject *MetaObjectExecutor::resolveMetaObject(const QString &classNam
     return nullptr;
 }
 
-bool MetaObjectExecutor::assign(const QString &name, const QString &value)
+bool MetaObjectExecutor::invokeMethod(QObject *object, const QString &methodName, const QVariantList &arguments)
 {
-    qCDebug(executor) << "Assiging" << value
+    qCDebug(executor) << "Trying" << methodName
+                      << "on" << object;
+
+    MetaObjectInspector inspector(*object->metaObject());
+    MetaMethodList methods = inspector.allMethods()
+            .filterByName(methodName)
+            .filterByArgumentCount(arguments.count());
+
+    foreach (const QMetaMethod &method, methods) {
+        MetaMethodInvoker invoker(method);
+        invoker.setObject(object);
+        QVariantList finalArguments = m_context->expandVariables(arguments);
+        invoker.setParameters(finalArguments);
+        if (!invoker.invoke()) {
+            qCDebug(executor) << "Invocation failed:" << invoker.errorMessage();
+            continue;
+        }
+        qCDebug(executor) << "Invocation succeed";
+        setResult(invoker.result());
+        return true;
+    }
+    qCDebug(executor) << "All invocation failed";
+    return false;
+}
+
+bool MetaObjectExecutor::assign(const QString &name, const QVariant &value)
+{
+    qCDebug(executor) << "Assigning" << value
                       << "to" << name;
 
-    QString finalString = m_context->expandVariables(value);
-    m_context->setVariable(name, QVariant(finalString));
+    QVariant finalValue = m_context->expandVariables(value);
+    m_context->setVariable(name, finalValue);
 
     return true;
 }
@@ -67,7 +94,7 @@ bool MetaObjectExecutor::callAndAssign(const QString &symbolName, const QString 
         return false;
 
     // FIXME: check valid result?
-    return assign(symbolName, result().toString());
+    return assign(symbolName, result());
 }
 
 bool MetaObjectExecutor::call(const QString &instanceName, const QString &methodName,
@@ -86,22 +113,17 @@ bool MetaObjectExecutor::call(const QString &instanceName, const QString &method
         return false;
     }
 
-    MetaObjectInspector inspector(*object->metaObject());
-    qCDebug(executor) << "Object class is" <<  object->metaObject()->className();
-    MetaMethodList methods = inspector.allMethods()
-            .filterByName(methodName)
-            .filterByArgumentCount(arguments.count());
-    qCDebug(executor) << "Found" << methods.count() << "candidate(s)";
-
-    foreach (const QMetaMethod &method, methods) {
-        MetaMethodInvoker invoker(method);
-        invoker.setObject(object);
-        invoker.setParameters(arguments);
-        if (!invoker.invoke())
-            continue;
-        setResult(invoker.result());
+    if (invokeMethod(object, methodName, arguments) == true)
         return true;
+
+    // [0.1] Library Instances: If a method specified by a Call or CallAndAssign is not found
+    // on either the specified instance, or on the System Under Test then the stack of library
+    // objects is searched, starting at the top (latest). If the method is found, it is called.
+    foreach (QObject *object, m_context->libraries()) {
+        if (invokeMethod(object, methodName, arguments) == true)
+            return true;
     }
+
     setError("No compatible method found");
     return false;
 }
@@ -122,13 +144,39 @@ bool MetaObjectExecutor::make(const QString &instanceName, const QString &classN
 {
     clearResult();
 
+    // [0.3] Symbol Copy: If <class> consists entirely of a single symbol name prefixed with $,
+    // then the item from the dictionary of symbol values with the symbol name is added to the
+    // dictionary of created objects with the name <instance>. The <arg> strings are ignored and
+    // no constructor is called.
+    // FIXME: moves this to context?
+    if (className.startsWith('$')) {
+        QString symbolName = className.mid(1);
+        if (m_context->variable(symbolName).isValid()) {
+            QVariant symbolValue = m_context->variable(symbolName);
+            qCDebug(executor) << "Making object" << instanceName << "from symbol" << symbolName << symbolValue;
+            QObject *object = symbolValue.value<QObject *>();
+            if (object == nullptr) {
+                setError("Object not found");
+            }
+            else {
+                m_context->setInstance(instanceName, object);
+                return true;
+            }
+        }
+    }
+
     qCDebug(executor) << "Making" << instanceName << "of class" << className;
     QString resolvedClassName = m_context->expandVariables(className);
     qCDebug(executor) << className << "resolved to" << resolvedClassName;
 
     if (m_context->instance(instanceName) != nullptr) {
+#if 0 // FIXME: check if this is a valid case, it seems to happen with "scriptTableActor"
         setError("Object already exists");
         return false;
+#else
+        //delete m_context->instance(instanceName); // fixme: properly remove it
+        qCWarning(executor) << ("Object already exists");
+#endif
     }
 
     const QMetaObject *metaObject = resolveMetaObject(resolvedClassName);
@@ -138,7 +186,8 @@ bool MetaObjectExecutor::make(const QString &instanceName, const QString &classN
     }
 
     MetaObjectMaker maker(*metaObject);
-    maker.setParameters(arguments);
+    QVariantList finalArguments = m_context->expandVariables(arguments);
+    maker.setParameters(finalArguments);
     if (!maker.make()) {
         setError(maker.errorMessage());
         return false;

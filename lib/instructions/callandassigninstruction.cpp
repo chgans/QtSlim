@@ -32,3 +32,12 @@ InstructionResult *CallAndAssignInstruction::execute(InstructionExecutor *execut
 
     return new InstructionResult(instructionId(), result);
 }
+
+QString CallAndAssignInstruction::toString() const
+{
+    return QString("%1: %2 = %3.%4(...)")
+            .arg(instructionId())
+            .arg(symbolName())
+            .arg(instanceName())
+            .arg(methodName());
+}

@@ -48,5 +48,5 @@ void SlimApplication::onSocketError(QAbstractSocket::SocketError error)
 {
     Q_UNUSED(error);
     qWarning() << "Client error" << m_clientSocket->errorString();
-    //quit();
+    quit();
 }

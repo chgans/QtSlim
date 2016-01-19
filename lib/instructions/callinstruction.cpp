@@ -28,3 +28,11 @@ InstructionResult *CallInstruction::execute(InstructionExecutor *executor) const
 
     return new InstructionResult(instructionId(), executor->result());
 }
+
+QString CallInstruction::toString() const
+{
+    return QString("%1: %2.%3(...)")
+            .arg(instructionId())
+            .arg(instanceName())
+            .arg(methodName());
+}

@@ -14,6 +14,8 @@ public:
     void setVariable(const QString &name, const QVariant &value);
     QVariant variable(const QString &name) const;
     QString expandVariables(const QString &content);
+    QVariant expandVariables(const QVariant &content);
+    QList<QVariant> expandVariables(const QList<QVariant> &content);
 
     void addPath(const QString &path);
     QStringList pathList() const;
@@ -22,6 +24,8 @@ public:
     QObject *instance(const QString &name) const;
 
     void reset();
+
+    QList<QObject *> libraries() const;
 
 private:
     QMap<QString, QObject *> m_instances;
