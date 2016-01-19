@@ -8,6 +8,7 @@
 #include "pagedriver.h"
 #include "setup.h"
 #include "teardown.h"
+#include "addupchange.h"
 
 // fitnesse.slim.test
 #include "testslim.h"
@@ -30,6 +31,7 @@ QList<const QMetaObject *> FixtureProvider::fixtureMetaObjects() const
             << &Division::staticMetaObject
             << &PageDriver::staticMetaObject
             << &EchoFixture::staticMetaObject
+            << &AddUpChange::staticMetaObject
             << &SetUp::staticMetaObject
             << &TearDown::staticMetaObject
             << &TestSlim::staticMetaObject
