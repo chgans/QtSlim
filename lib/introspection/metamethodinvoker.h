@@ -2,6 +2,7 @@
 #define METAMETHODINVOKER_H
 
 #include <QMetaMethod>
+#include <QVector>
 #include "metamethodinspector.h"
 
 // TODO: rename to MethodInvoker?
@@ -30,12 +31,15 @@ private:
     QObject *m_object;
 
     QVariant m_returnValueStorage;
-    QVariantList m_parametersStorage;
+    QVector<QVariant> m_parametersStorage;
     QGenericReturnArgument m_returnValue;
-    QList<QGenericArgument> m_parameters;
+    QVector<QGenericArgument> m_parameters;
     void invokeConstructor();
     void invokeWithoutReturn();
     void invokeWithReturn();
+
+    void storeArgument(int index, const QVariant &value);
+    void prepareReturnArgument();
 
     QString m_errorMessage;
     void setError(const QString &message);

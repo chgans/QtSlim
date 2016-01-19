@@ -26,28 +26,17 @@ void MetaMethodInvoker::setObject(QObject *object)
 
 void MetaMethodInvoker::setParameters(const QVariantList &parameters)
 {
-    if (parameters.count() != m_inspector.parameterCount()) {
+    int count = parameters.count();
+    if (count != m_inspector.parameterCount()) {
         setError(QString("Incompatible number of arguments"));
         return ;//false;
     }
 
-    m_parametersStorage.clear();
-    m_parameters.clear();
+    m_parametersStorage.resize(count);
+    m_parameters.resize(count);
 
-    QList<int> typeIds = m_inspector.parameterTypeIds();
-    QList<QByteArray> typeNames = m_inspector.parameterTypeNames();
-
-    for (int index=0; index<m_inspector.parameterCount(); ++index) {
-        QVariant value = parameters[index];
-        int typeId = typeIds[index];
-        value.convert(typeId);
-        m_parametersStorage.append(value);
-        const QVariant &stored = m_parametersStorage[index];
-        QByteArray typeName = typeNames[index];
-        qCDebug(invoker) << index << typeName << typeId << stored;
-        m_parameters.append(QGenericArgument(typeName.constData(), stored.constData()));
-        qCDebug(invoker) << "Setting parameter" << m_inspector.parameterNames().value(index)
-                         << "to" << value;
+    for (int index=0; index<count; ++index) {
+        storeArgument(index, parameters[index]);
     }
 }
 
@@ -170,14 +159,7 @@ void MetaMethodInvoker::invokeWithReturn()
                      << "with" << m_parametersStorage
                      << "on" << m_object ;
 
-    const QByteArray typeName = m_inspector.returnValueTypeName();
-    QVariant::Type typeId = QVariant::Type(m_inspector.returnValueTypeId());
-    if (typeId == QVariant::Invalid) {
-        setError("Invalid/unsupported return value type");
-        return;
-    }
-    m_returnValueStorage = QVariant(typeId);
-    m_returnValue = QGenericReturnArgument(typeName.constData(), m_returnValueStorage.data());
+    prepareReturnArgument();
 
     switch (m_parameters.count()) {
     case 0:
@@ -200,6 +182,40 @@ void MetaMethodInvoker::invokeWithReturn()
 
     if (!success)
         setError("Unknown error (QMetaMethod::invoke())");
+}
+
+void MetaMethodInvoker::prepareReturnArgument()
+{
+    const QByteArray typeName = m_inspector.returnValueTypeName();
+    QVariant::Type typeId = QVariant::Type(m_inspector.returnValueTypeId());
+    m_returnValueStorage = QVariant(typeId);
+    m_returnValue = QGenericReturnArgument(typeName.constData(), m_returnValueStorage.data());
+
+    qCDebug(invoker) << "Return value storage:"
+                     << "typeName=" << typeName
+                     << "typeId=" << typeId;
+}
+
+void MetaMethodInvoker::storeArgument(int index, const QVariant &value)
+{
+    const char *paramName = m_inspector.parameterNames().value(index);
+    const char *paramTypeName = value.typeName();
+    int paramTypeId = int(value.type());
+    const char *toTypeName = m_inspector.parameterTypeNames().value(index);
+    int toTypeId = m_inspector.parameterTypeIds().value(index);
+
+    m_parametersStorage[index] = value;
+    QVariant &stored = m_parametersStorage[index];
+    stored.convert(toTypeId);
+    m_parameters[index] = QGenericArgument(toTypeName, stored.constData());
+
+    qCDebug(invoker) << "Argument storage:"
+                     << "index=" << index
+                     << "name=" << paramName
+                     << "typeName=" << paramTypeName
+                     << "typeId=" << paramTypeId
+                     << "from=" << value
+                     << "to=" << stored;
 }
 
 void MetaMethodInvoker::setError(const QString &message)

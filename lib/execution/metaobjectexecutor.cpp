@@ -149,6 +149,12 @@ bool MetaObjectExecutor::make(const QString &instanceName, const QString &classN
     // dictionary of created objects with the name <instance>. The <arg> strings are ignored and
     // no constructor is called.
     // FIXME: moves this to context?
+//    if (m_context->isSymbolReferenceToObject(classNAme)) {
+//        qCDebug(executor) << "Making object" << instanceName << "from symbol" << symbolName;
+//        QObject *object = m_context->getSymbolAsObject(className);
+//        m_context->addObject(instanceName, object);
+//        return true;
+//    }
     if (className.startsWith('$')) {
         QString symbolName = className.mid(1);
         if (m_context->variable(symbolName).isValid()) {
