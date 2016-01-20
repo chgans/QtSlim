@@ -8,7 +8,7 @@ QT       += core network
 
 QT       -= gui
 
-TARGET = app
+TARGET = qtslim
 CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   += c++11
