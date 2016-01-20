@@ -18,7 +18,7 @@
 | check | echo time | 13:40:23 | 13:40:23 |
 | check | echo iso time | 13:40:23+05:30 | 13:40:23+05:30 |
 | note | Lists |
-| check | echo int list | [1, 2 3] | [1, 2, 3] |
+| check | echo int list | [1, 2, 3] | [1, 2, 3] |
 | check | echo double list | [1.2, 2.3, 3.4] | [1.2, 2.3, 3.4] |
 | check | echo bool list | [true, false] | [true, false] |
 | check | echo char list | [a, b, c] | [a, b, c] |
