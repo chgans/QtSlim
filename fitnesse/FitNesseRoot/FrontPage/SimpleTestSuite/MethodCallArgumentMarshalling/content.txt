@@ -2,7 +2,7 @@
 | fitnesse.fixtures |
 
 !| script: echo fixture |
-| note | simple types |
+| note | Plain types |
 | check | echo int | -42 | -42 |
 | check | echo int | 42 | 42 |
 | check | echo double | 4.2 | 4.2 |
@@ -12,15 +12,19 @@
 | check | echo char | a | a |
 | check | echo string | a b c | a b c |
 | #check | echo string |  虎穴に入らずんば虎子を得ず。| 虎穴に入らずんば虎子を得ず。|
-| note | Date/Time |
+| note | Date and time |
 | check | echo date | 20-Jan-2016 | 20-Jan-2016 |
 | check | echo iso date | 2016-01-20 | 2016-01-20 |
 | check | echo time | 13:40:23 | 13:40:23 |
 | check | echo iso time | 13:40:23+05:30 | 13:40:23+05:30 |
-| note | Lists |
+| note | Sequential containers |
 | check | echo int list | [1, 2, 3] | [1, 2, 3] |
 | check | echo double list | [1.2, 2.3, 3.4] | [1.2, 2.3, 3.4] |
 | check | echo bool list | [true, false] | [true, false] |
 | check | echo char list | [a, b, c] | [a, b, c] |
+| note | TBD: Associative containers |
+| note | TBD: Nested containers |
 
 TBD: custom types
+
+TODO: huge string
