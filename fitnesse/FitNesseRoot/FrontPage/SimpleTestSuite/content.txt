@@ -1,9 +1,10 @@
-!1 Simple test suite for validating basic implementation of the SliM protocol
+!1 Simple test suite for validating basic implementation of the slim protocol
 
 !define TEST_SYSTEM {slim}
-!define COMMAND_PATTERN {../../build-QtSlim-Desktop-Debug/app/app %p}
+!define COMMAND_PATTERN {../../build/QtSlim-Desktop-Debug/app/app %m}
 !define slim.port {1234}
 !define slim.pool.size {1}
+#!define manually.start.test.runner.on.debug {true}
 !path ./fixtures
 
 !contents -R2 -g -p -f -h

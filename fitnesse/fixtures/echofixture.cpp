@@ -7,7 +7,16 @@ namespace fitnesse
 namespace fixtures
 {
 
-EchoFixture::EchoFixture(QObject *parent) : QObject(parent)
+EchoFixture::EchoFixture():
+    m_name("Uncle Bob"),
+    m_calledConstructorSignature("EchoFixture::EchoFixture()")
+{
+
+}
+
+EchoFixture::EchoFixture(const QString &unusedArgument):
+    m_name("Uncle Bob"),
+    m_calledConstructorSignature("EchoFixture::EchoFixture(QString)")
 {
 
 }
@@ -30,6 +39,11 @@ bool EchoFixture::nameContains(const QString &text) const
 QString EchoFixture::echo(const QString &text) const
 {
     return text;
+}
+
+void EchoFixture::echoVoid() const
+{
+    return;
 }
 
 int EchoFixture::echoInt(int value) const
@@ -100,6 +114,42 @@ QList<char> EchoFixture::echoCharList(const QList<char> &value) const
 QList<QString> EchoFixture::echoStringList(const QList<QString> &value) const
 {
     return value;
+}
+
+void EchoFixture::methodReturningVoid()
+{
+
+}
+
+QString EchoFixture::methodReturningString()
+{
+    return QString("this is a string");
+}
+
+int EchoFixture::methodReturningInt()
+{
+    return 42;
+}
+
+double EchoFixture::methodReturningDouble()
+{
+    return 4.2;
+}
+
+QString EchoFixture::methodWithDifferentSignatures()
+{
+   return QString("EchoFixture::methodWithDifferentSignatures()");
+}
+
+QString EchoFixture::methodWithDifferentSignatures(const QString &unusedArg)
+{
+    Q_UNUSED(unusedArg);
+    return QString("EchoFixture::methodWithDifferentSignatures(QString)");
+}
+
+QString EchoFixture::calledConstructorSignature()
+{
+    return m_calledConstructorSignature;
 }
 
 

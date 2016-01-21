@@ -64,7 +64,7 @@ void SlimService::onStringReceived(const QString &string)
 {
     qCDebug(service) << "Processing statement ...";
     if (string == "000003:bye") { // FIXME
-        //stop();
+        qCDebug(service) << "Bye!";
         return;
     }
     m_executionContext->reset();

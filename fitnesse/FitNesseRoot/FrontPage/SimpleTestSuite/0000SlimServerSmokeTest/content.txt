@@ -1,0 +1,4 @@
+This empty test will cause an error if the server doesn't implement the very basic of the slim protocol:
+
+ * Slim server responds to client connection with the raw string "Slim -- ''V<version>''\n"
+ * Slim server shuts down after receiving the "Bye" directive (encoded as "000003:bye")

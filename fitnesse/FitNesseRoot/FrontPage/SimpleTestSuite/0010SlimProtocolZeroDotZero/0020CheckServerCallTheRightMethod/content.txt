@@ -1,0 +1,17 @@
+!| import |
+| fitnesse.fixtures |
+
+!4 The server should call the method with the right signature
+
+| Script: echo fixture |
+| check | methodWithDifferentSignatures | !-EchoFixture::methodWithDifferentSignatures()-! |
+| check | methodWithDifferentSignatures | someUnusedArgumentValue | !-EchoFixture::methodWithDifferentSignatures(QString)-! |
+
+!4 The server should call the constructor with the right signature
+
+| Script: echo fixture |
+| check | calledConstructorSignature | !-EchoFixture::EchoFixture()-! |
+
+
+| Script: echo fixture | someUnusedArgumentValue |
+| check | calledConstructorSignature | !-EchoFixture::EchoFixture(QString)-! |

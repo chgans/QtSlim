@@ -1,0 +1,16 @@
+This suite ensures that all the instructions are recognised, it doesn't test for the correctness of the instruction executions.
+
+!2 Check import instruction
+!| import |
+| fitnesse.fixtures |
+
+!2 Check make instruction
+| Script: echo fixture |
+
+!2 Check call instruction
+| Script: echo fixture |
+| show | name |
+
+!2 Check call and assign instruction
+| Script: echo fixture |
+| $symbol= | name |

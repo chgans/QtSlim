@@ -1,0 +1,8 @@
+!| import |
+| fitnesse.fixtures |
+
+The server should call echoString("this argument is a string")
+
+| Script: echo fixture |
+| $argument= | echo | this argument is a string |
+| check | echoString | $argument | this argument is a string |

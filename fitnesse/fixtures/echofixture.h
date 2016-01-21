@@ -14,13 +14,15 @@ class EchoFixture : public QObject, public IDecisionTable
 {
     Q_OBJECT
 public:
-    Q_INVOKABLE explicit EchoFixture(QObject *parent = 0);
+    Q_INVOKABLE explicit EchoFixture();
+    Q_INVOKABLE explicit EchoFixture(const QString &unusedArgument);
 
     Q_INVOKABLE QString name() const;
     Q_INVOKABLE void setname(const QString &name);
     Q_INVOKABLE bool nameContains(const QString &text) const;
     Q_INVOKABLE QString echo(const QString &text) const;
 
+    Q_INVOKABLE void echoVoid(void) const;
     Q_INVOKABLE int echoInt(int value) const;
     Q_INVOKABLE double echoDouble(double value) const;
     Q_INVOKABLE bool echoBool(bool value) const;
@@ -38,8 +40,19 @@ public:
     Q_INVOKABLE QList<char> echoCharList(const QList<char> &value) const;
     Q_INVOKABLE QList<QString> echoStringList(const QList<QString> &value) const;
 
+    Q_INVOKABLE void methodReturningVoid();
+    Q_INVOKABLE QString methodReturningString();
+    Q_INVOKABLE int methodReturningInt();
+    Q_INVOKABLE double methodReturningDouble();
+
+    Q_INVOKABLE QString methodWithDifferentSignatures();
+    Q_INVOKABLE QString methodWithDifferentSignatures(const QString &unusedArg);
+
+    Q_INVOKABLE QString calledConstructorSignature();
+
 private:
     QString m_name;
+    QString m_calledConstructorSignature;
 
     // IDecisionTable interface
 public slots:
