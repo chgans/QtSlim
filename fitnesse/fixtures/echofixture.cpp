@@ -18,7 +18,7 @@ EchoFixture::EchoFixture(const QString &unusedArgument):
     m_name("Uncle Bob"),
     m_calledConstructorSignature("EchoFixture::EchoFixture(QString)")
 {
-
+    Q_UNUSED(unusedArgument);
 }
 
 QString EchoFixture::name() const

@@ -8,6 +8,7 @@ fitnesse::fixtures::PageDriver::PageDriver(QObject *parent) : QObject(parent)
 
 void fitnesse::fixtures::PageDriver::table(QVariant table)
 {
+    Q_UNUSED(table);
 }
 
 void fitnesse::fixtures::PageDriver::beginTable()
