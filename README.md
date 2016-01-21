@@ -1,5 +1,3 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/jj5oa6n0cls5puaw?svg=true)](https://ci.appveyor.com/project/chgans/qtslim)
-
 # QtSlim
 An implementation of the Slim test system (part of http://fitnesse.org) for use in Qt based projects
 
