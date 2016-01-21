@@ -7,3 +7,5 @@ SUBDIRS += \
     tests \
     fitnesse \
     doc
+
+DISTFILES += .travis.yml README.md LICENSE
