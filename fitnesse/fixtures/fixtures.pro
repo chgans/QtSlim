@@ -20,7 +20,8 @@ SOURCES += fixtureprovider.cpp \
     testquery.cpp \
     setup.cpp \
     teardown.cpp \
-    addupchange.cpp
+    addupchange.cpp \
+    primenumberrowfixture.cpp
 
 HEADERS += fixtureprovider.h \
     division.h \
@@ -30,7 +31,8 @@ HEADERS += fixtureprovider.h \
     testquery.h \
     setup.h \
     teardown.h \
-    addupchange.h
+    addupchange.h \
+    primenumberrowfixture.h
 
 INCLUDEPATH += $$PWD/../../lib
 

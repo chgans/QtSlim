@@ -37,7 +37,8 @@ SOURCES += \
     introspection/metamethodinvoker.cpp \
     introspection/metaobjectmaker.cpp \
     fixtureloader.cpp \
-    slimlibraryhelper.cpp
+    slimlibraryhelper.cpp \
+    fixture/idecisiontable.cpp
 
 HEADERS += \
     slimapplication.h \
@@ -70,4 +71,6 @@ HEADERS += \
     introspection/metaobjectmaker.h \
     ifixtureprovider.h \
     fixtureloader.h \
-    slimlibraryhelper.h
+    slimlibraryhelper.h \
+    fixture/idecisiontable.h \
+    fixture/irowfixture.h
