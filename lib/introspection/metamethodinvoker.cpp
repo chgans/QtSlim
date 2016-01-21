@@ -124,7 +124,7 @@ void MetaMethodInvoker::invokeConstructor()
 
 void MetaMethodInvoker::invokeWithoutReturn()
 {
-    bool success;
+    bool success = false;
 
     qCDebug(invoker) << "Invoking method" << m_method.methodSignature()
                      << "with" << m_parametersStorage
