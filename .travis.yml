@@ -32,6 +32,6 @@ script:
     - mkdir build
     - cd build
     - qmake .. -spec ${MKSPEC} CONFIG+=${BUILD_MODE}
-    - make
+    - make -j3 -k
     - ls -lRa .
     - file app/app
