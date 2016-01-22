@@ -7,7 +7,7 @@
 
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(executor)
-Q_LOGGING_CATEGORY(executor, "qtslim.execution.executor", QtDebugMsg)
+Q_LOGGING_CATEGORY(executor, "qtslim.execution.executor")
 
 MetaObjectExecutor::MetaObjectExecutor():
     InstructionExecutor()

@@ -6,7 +6,7 @@
 
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(app)
-Q_LOGGING_CATEGORY(app, "qtslim.application", QtDebugMsg)
+Q_LOGGING_CATEGORY(app, "qtslim.application")
 
 // FIXME: enforce arguments => %p %m (port number, class path)
 SlimApplication::SlimApplication(int argc, char **argv):

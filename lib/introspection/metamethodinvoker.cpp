@@ -5,7 +5,7 @@
 
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(invoker)
-Q_LOGGING_CATEGORY(invoker, "qtslim.introspection.invoker", QtDebugMsg)
+Q_LOGGING_CATEGORY(invoker, "qtslim.introspection.invoker")
 
 #define ASSERT_UNREACHABLE_LOCATION() Q_ASSERT(false)
 

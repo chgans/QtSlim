@@ -2,7 +2,7 @@
 
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(context)
-Q_LOGGING_CATEGORY(context, "qtslim.execution.context", QtDebugMsg)
+Q_LOGGING_CATEGORY(context, "qtslim.execution.context")
 
 SlimExecutionContext::SlimExecutionContext()
 {

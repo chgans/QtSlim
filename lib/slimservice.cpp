@@ -18,7 +18,7 @@
 
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(service)
-Q_LOGGING_CATEGORY(service, "qtslim.server.service", QtDebugMsg)
+Q_LOGGING_CATEGORY(service, "qtslim.server.service")
 
 SlimService::SlimService(QIODevice *inputDevice, QIODevice *outputDevice, QObject *parent):
     QObject(parent),

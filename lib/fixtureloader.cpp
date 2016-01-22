@@ -6,7 +6,7 @@
 
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(loader)
-Q_LOGGING_CATEGORY(loader, "qtslim.fixture.loader", QtDebugMsg)
+Q_LOGGING_CATEGORY(loader, "qtslim.fixture.loader")
 
 FixtureLoader::FixtureLoader()
 {
