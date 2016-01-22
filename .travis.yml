@@ -14,6 +14,12 @@ env:
   - BUILD_MODE=release
   - BUILD_MODE=debug
 
+# Qt-5.5 doesn't build on MacOsX-10.9_x86_64 with GCC-4.8
+matrix:
+    exclude:
+        - os: osx
+            compiler: gcc
+
 install:
     - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "clang++" ]; then export MKSPEC=linux-clang; fi
     - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "g++" ]; then export MKSPEC=linux-g++; fi
@@ -34,4 +40,5 @@ script:
     - qmake .. -spec ${MKSPEC} CONFIG+=${BUILD_MODE}
     - make -j3 -k
     - ls -lRa .
-    - file app/app
+    - file app/qtslim
+    # - ./app/qtslim --version
