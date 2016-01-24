@@ -33,7 +33,7 @@ install:
     - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then brew install qt5; fi
     - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then export PATH=$(brew --prefix)/opt/qt5/bin:$PATH; fi
 
-    - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "g++" -a "${BUILD_MODE} = "debug" ]; then sudo apt-get install gcov lcov && sudo pip install cpp-coveralls; fi
+    - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "g++" -a "${BUILD_MODE}" = "debug" ]; then sudo apt-get install gcov lcov && sudo pip install cpp-coveralls; fi
 
 script:
     - echo "Building for ${MKSPEC} in ${BUILD_MODE} mode..."
