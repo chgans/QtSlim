@@ -47,4 +47,6 @@ script:
     # - ./app/qtslim --version
 
 after_success:
+    - pwd
+    - find . -name '*.gc*'
     - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "g++" -a "${BUILD_MODE}" = "debug" ]; then cpp-coveralls --verbose --root .. -E '.*/(build|tests|fitnesse|app)/.*'; fi
