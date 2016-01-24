@@ -1,0 +1,22 @@
+version: CI/AppVeyor/{branch}.{build}
+
+environment:
+    QTDIR: C:\Qt\5.4\mingw491_32
+
+build_script:
+    - set PATH=%QTDIR%\bin;C:\Qt\Tools\mingw491_32\bin;%PATH%
+      set PATH="C:\Program Files\7-Zip";%PATH%
+      set
+      sh.exe --login ci-scripts/appveyor-build.sh
+      
+artifacts:
+    - path: QtSlim-*.zip
+      name: BinaryRelease
+
+deploy:
+    - provider: GitHub
+      auth_token:
+      secure: wAn+Q1tKeN4/N/UKvocGcI32fQu170803kYYkCWZDdNlHpMejg3OPjfi7/MDKRKD
+      artifact: BinaryRelease
+      draft: true
+      prerelease: true

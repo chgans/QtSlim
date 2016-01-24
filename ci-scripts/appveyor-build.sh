@@ -1,9 +1,7 @@
-# Run in top-level directory
-cd `dirname "$0"`/..
+# Debug script and stop on error
+set -xe
 
-# Stop on error
-set -e
-
+# For troubleshooting
 pwd
 which sh
 sh --version
@@ -11,13 +9,14 @@ env | sort
 
 # Set env
 export MAKE="mingw32-make -j 8"
+export RELEASE="QtSlim-MinGW32_${APPVEYOR_REPO_BRANCH}-${APPVEYOR_REPO_COMMIT}_build-${APPVEYOR_BUILD_NUMBER}"
 
 # Configure and build
 qmake ../QtSlim.pro 
 $MAKE
 
 # Test
-QT_LOGGING_CONF="*=false" $MAKE check TESTARGS="-o $(QMAKE_TARGET).xml,xunitxml"
+QT_LOGGING_CONF="*=false" $MAKE check TESTARGS='-o $(QMAKE_TARGET).xml,xunitxml'
 
 # Make binary tarball
 mkdir $RELEASE
