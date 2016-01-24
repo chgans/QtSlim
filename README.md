@@ -14,6 +14,7 @@ An implementation of the Slim test system (part of http://fitnesse.org) for use 
 - [ ] Run FitNesse tests in CI
 - [ ] Upload build artifact from CI to github
 - [X] Add code coverage
+- [ ] Fix code coverage result difference b/w cpp-coverals and lcov
 - [ ] Add Clang static-analiser?
 - [ ] Add licensing
 - [ ] Add build instruction to README
