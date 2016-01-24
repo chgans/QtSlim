@@ -36,6 +36,7 @@ install:
     - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "g++" -a "${BUILD_MODE}" = "debug" ]; then sudo apt-get install lcov -y && sudo pip install cpp-coveralls; fi
 
 script:
+    - env
     - echo "Building for ${MKSPEC} in ${BUILD_MODE} mode..."
     - mkdir build
     - cd build
@@ -46,4 +47,4 @@ script:
     # - ./app/qtslim --version
 
 after_success:
-    - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "g++" -a "${BUILD_MODE}" = "debug" ]; then cpp-coveralls -E '.*/(build|tests|fitnesse|app)/.*'; fi
+    - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "g++" -a "${BUILD_MODE}" = "debug" ]; then cpp-coveralls --verbose -E '.*/(build|tests|fitnesse|app)/.*'; fi
