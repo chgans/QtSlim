@@ -10,10 +10,10 @@ An implementation of the Slim test system (part of http://fitnesse.org) for use 
 
 # TODO
 
-- [ ] Run unit tests in CI
+- [X] Run unit tests in CI
 - [ ] Run FitNesse tests in CI
 - [ ] Upload build artifact from CI to github
-- [ ] Add code coverage
+- [X] Add code coverage
 - [ ] Add Clang static-analiser?
 - [ ] Add licensing
 - [ ] Add build instruction to README
