@@ -46,4 +46,4 @@ script:
     # - ./app/qtslim --version
 
 after_success:
-    - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "g++" -a "${BUILD_MODE}" = "debug" ]; then cpp-coveralls -e /usr/include -e tests -e app -e fitnesse; fi
+    - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "g++" -a "${BUILD_MODE}" = "debug" ]; then cpp-coveralls -E '.*/(build|tests|fitnesse|app)/.*'; fi
