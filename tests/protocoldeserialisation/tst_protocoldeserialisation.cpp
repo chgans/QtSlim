@@ -1,27 +1,50 @@
+#include <QString>
 #include <QtTest>
+#include <QCoreApplication>
 
 #include "protocol/slimdeserialiser.h"
-#include "protocoldeserialisation.h"
+
+class ProtocolDeserialisationTest : public QObject
+{
+    Q_OBJECT
+
+public:
+    ProtocolDeserialisationTest(QObject *parent = 0);
+
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+    void testCanDeserialiseString_data();
+    void testCanDeserialiseString();
+    void testCanDeserialiseInteger_data();
+    void testCanDeserialiseInteger();
+    void testCanDeserialiseFloat_data();
+    void testCanDeserialiseFloat();
+    void testCanDeserialiseBoolean_data();
+    void testCanDeserialiseBoolean();
+    void testCanDeserialiseStringList_data();
+    void testCanDeserialiseStringList();
+};
 
 // TODO: Do not check for data conversion here
 
-ProtocolDeserialisationTestSuite::ProtocolDeserialisationTestSuite(QObject *parent):
+ProtocolDeserialisationTest::ProtocolDeserialisationTest(QObject *parent):
     QObject(parent)
 {
 
 }
 
-void ProtocolDeserialisationTestSuite::initTestCase()
+void ProtocolDeserialisationTest::initTestCase()
 {
 
 }
 
-void ProtocolDeserialisationTestSuite::cleanupTestCase()
+void ProtocolDeserialisationTest::cleanupTestCase()
 {
 
 }
 
-void ProtocolDeserialisationTestSuite::testCanDeserialiseString_data()
+void ProtocolDeserialisationTest::testCanDeserialiseString_data()
 {
     QTest::addColumn<QString>("input");
     QTest::addColumn<QString>("output");
@@ -40,7 +63,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseString_data()
             << "مرحبا بالعالم!";
 }
 
-void ProtocolDeserialisationTestSuite::testCanDeserialiseString()
+void ProtocolDeserialisationTest::testCanDeserialiseString()
 {
     QFETCH(QString, input);
     QFETCH(QString, output);
@@ -51,7 +74,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseString()
     QCOMPARE(deserialised.isNull(), output.isNull());
 }
 
-void ProtocolDeserialisationTestSuite::testCanDeserialiseInteger_data()
+void ProtocolDeserialisationTest::testCanDeserialiseInteger_data()
 {
     QTest::addColumn<QString>("input");
     QTest::addColumn<int>("output");
@@ -70,7 +93,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseInteger_data()
             << int(qPow(2, 31) - 1);
 }
 
-void ProtocolDeserialisationTestSuite::testCanDeserialiseInteger()
+void ProtocolDeserialisationTest::testCanDeserialiseInteger()
 {
     QFETCH(QString, input);
     QFETCH(int, output);
@@ -78,7 +101,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseInteger()
     QCOMPARE(deserialised, output);
 }
 
-void ProtocolDeserialisationTestSuite::testCanDeserialiseFloat_data()
+void ProtocolDeserialisationTest::testCanDeserialiseFloat_data()
 {
     QTest::addColumn<QString>("input");
     QTest::addColumn<qreal>("output");
@@ -95,7 +118,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseFloat_data()
 
 }
 
-void ProtocolDeserialisationTestSuite::testCanDeserialiseFloat()
+void ProtocolDeserialisationTest::testCanDeserialiseFloat()
 {
     QFETCH(QString, input);
     QFETCH(qreal, output);
@@ -103,7 +126,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseFloat()
     QCOMPARE(deserialised, output);
 }
 
-void ProtocolDeserialisationTestSuite::testCanDeserialiseBoolean_data()
+void ProtocolDeserialisationTest::testCanDeserialiseBoolean_data()
 {
     QTest::addColumn<QString>("input");
     QTest::addColumn<bool>("output");
@@ -131,7 +154,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseBoolean_data()
             << true;
 }
 
-void ProtocolDeserialisationTestSuite::testCanDeserialiseBoolean()
+void ProtocolDeserialisationTest::testCanDeserialiseBoolean()
 {
     QFETCH(QString, input);
     QFETCH(bool, output);
@@ -139,7 +162,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseBoolean()
     QCOMPARE(deserialised, output);
 }
 
-void ProtocolDeserialisationTestSuite::testCanDeserialiseStringList_data()
+void ProtocolDeserialisationTest::testCanDeserialiseStringList_data()
 {
     QTest::addColumn<QString>("input");
     QTest::addColumn<QVariantList>("output");
@@ -199,7 +222,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseStringList_data()
                 );
 }
 
-void ProtocolDeserialisationTestSuite::testCanDeserialiseStringList()
+void ProtocolDeserialisationTest::testCanDeserialiseStringList()
 {
     QFETCH(QString, input);
     QFETCH(QVariantList, output);
@@ -208,3 +231,7 @@ void ProtocolDeserialisationTestSuite::testCanDeserialiseStringList()
 
     QCOMPARE(deserialised, output);
 }
+
+QTEST_MAIN(ProtocolDeserialisationTest)
+
+#include "tst_protocoldeserialisation.moc"

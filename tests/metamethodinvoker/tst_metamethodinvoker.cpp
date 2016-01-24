@@ -1,29 +1,45 @@
-#include "metamethodinvokertestsuite.h"
+#include <QString>
+#include <QtTest>
+#include <QCoreApplication>
+#include <QVariant>
 
 #include "introspection/metaobjectinspector.h"
 #include "introspection/metamethodinvoker.h"
+#include "../fixtures/division.h"
 
-#include "fixtures/division.h"
+class MetaMethodInvokerTest : public QObject
+{
+    Q_OBJECT
+public:
+    explicit MetaMethodInvokerTest(QObject *parent = 0);
 
-#include <QtTest>
-#include <QDebug>
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
 
-MetaMethodInvokerTestSuite::MetaMethodInvokerTestSuite(QObject *parent) : QObject(parent)
+    void testInvoke();
+
+private:
+    void invoke(QObject *object, const QString &methodName, const QVariantList &parameters);
+    QVariant m_invokeResult;
+};
+
+MetaMethodInvokerTest::MetaMethodInvokerTest(QObject *parent) : QObject(parent)
 {
 
 }
 
-void MetaMethodInvokerTestSuite::initTestCase()
+void MetaMethodInvokerTest::initTestCase()
 {
 
 }
 
-void MetaMethodInvokerTestSuite::cleanupTestCase()
+void MetaMethodInvokerTest::cleanupTestCase()
 {
 
 }
 
-void MetaMethodInvokerTestSuite::testInvoke()
+void MetaMethodInvokerTest::testInvoke()
 {
     Division *division = new Division();
 
@@ -43,7 +59,7 @@ void MetaMethodInvokerTestSuite::testInvoke()
     delete division;
 }
 
-void MetaMethodInvokerTestSuite::invoke(QObject *object, const QString &methodName, const QVariantList &parameters)
+void MetaMethodInvokerTest::invoke(QObject *object, const QString &methodName, const QVariantList &parameters)
 {
     MetaObjectInspector inspector(*object->metaObject());
     MetaMethodList methods = inspector.allMethods().filterByName(methodName).filterByArgumentCount(parameters.count());
@@ -59,3 +75,6 @@ void MetaMethodInvokerTestSuite::invoke(QObject *object, const QString &methodNa
     m_invokeResult = invoker.result();
 }
 
+QTEST_MAIN(MetaMethodInvokerTest)
+
+#include "tst_metamethodinvoker.moc"

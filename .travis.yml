@@ -39,6 +39,6 @@ script:
     - cd build
     - qmake .. -spec ${MKSPEC} CONFIG+=${BUILD_MODE}
     - make -j3 -k
-    - ls -lRa .
+    - QT_LOGGING_CONF='*=false' make check TESTARGS='-o $(QMAKE_TARGET).xml,xunitxml'
     - file app/qtslim
     # - ./app/qtslim --version

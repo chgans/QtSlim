@@ -1,30 +1,48 @@
-#include "metamethodinspectortestsuite.h"
-#include "fixtures/basicqobectfixture.h"
+#include <QtTest>
+#include <QCoreApplication>
 
 #include  "introspection/metaobjectinspector.h"
 #include  "introspection/metamethodinspector.h"
+#include "../fixtures/basicqobectfixture.h"
 
-#include <QtTest>
+// TBD: test parameterNames()
+class MetaMethodInspectorTest: public QObject
+{
+    Q_OBJECT
+public:
+    MetaMethodInspectorTest(QObject *parent = 0);
 
-const QMetaObject MetaMethodInspectorTestSuite::META_OBJECT = BasicQObectFixture::staticMetaObject;
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+    void testMethodWitParameters();
+    void testMethodWithoutParameters();
+    void testMethodWitReturnValue();
+    void testMethodWithoutReturnValue();
 
-MetaMethodInspectorTestSuite::MetaMethodInspectorTestSuite(QObject *parent):
+private:
+    static const QMetaObject META_OBJECT;
+};
+
+const QMetaObject MetaMethodInspectorTest::META_OBJECT = BasicQObectFixture::staticMetaObject;
+
+MetaMethodInspectorTest::MetaMethodInspectorTest(QObject *parent):
     QObject(parent)
 {
 
 }
 
-void MetaMethodInspectorTestSuite::initTestCase()
+void MetaMethodInspectorTest::initTestCase()
 {
 
 }
 
-void MetaMethodInspectorTestSuite::cleanupTestCase()
+void MetaMethodInspectorTest::cleanupTestCase()
 {
 
 }
 
-void MetaMethodInspectorTestSuite::testMethodWitParameters()
+void MetaMethodInspectorTest::testMethodWitParameters()
 {
     QVERIFY(META_OBJECT.methodCount() > 13);
     QMetaMethod method = META_OBJECT.method(13);
@@ -36,7 +54,7 @@ void MetaMethodInspectorTestSuite::testMethodWitParameters()
     QCOMPARE(inspector.parameterTypeNames(), QList<QByteArray>() << "int" << "bool");
 }
 
-void MetaMethodInspectorTestSuite::testMethodWithoutParameters()
+void MetaMethodInspectorTest::testMethodWithoutParameters()
 {
     QVERIFY(META_OBJECT.methodCount() > 11);
     QMetaMethod method = META_OBJECT.method(11);
@@ -48,7 +66,7 @@ void MetaMethodInspectorTestSuite::testMethodWithoutParameters()
     QCOMPARE(inspector.parameterTypeNames(), QList<QByteArray>());
 }
 
-void MetaMethodInspectorTestSuite::testMethodWitReturnValue()
+void MetaMethodInspectorTest::testMethodWitReturnValue()
 {
     QVERIFY(META_OBJECT.methodCount() > 11);
     QMetaMethod method = META_OBJECT.method(11);
@@ -60,7 +78,7 @@ void MetaMethodInspectorTestSuite::testMethodWitReturnValue()
     QCOMPARE(inspector.returnValueTypeName(), QByteArray("bool"));
 }
 
-void MetaMethodInspectorTestSuite::testMethodWithoutReturnValue()
+void MetaMethodInspectorTest::testMethodWithoutReturnValue()
 {
     QVERIFY(META_OBJECT.methodCount() > 8);
     QMetaMethod method = META_OBJECT.method(8);
@@ -72,3 +90,6 @@ void MetaMethodInspectorTestSuite::testMethodWithoutReturnValue()
     QCOMPARE(inspector.returnValueTypeName(), QByteArray("void"));
 }
 
+QTEST_MAIN(MetaMethodInspectorTest)
+
+#include "tst_metamethodinspector.moc"

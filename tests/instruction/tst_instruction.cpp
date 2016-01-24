@@ -1,4 +1,6 @@
-#include "instructiontestsuite.h"
+#include <QString>
+#include <QtTest>
+#include <QCoreApplication>
 
 #include "instructions/instructionexecutor.h"
 #include "instructions/assigninstruction.h"
@@ -7,24 +9,39 @@
 #include "instructions/importinstruction.h"
 #include "instructions/makeinstruction.h"
 
-#include <QtTest>
+class InstructionTest : public QObject
+{
+    Q_OBJECT
+public:
+    explicit InstructionTest(QObject *parent = 0);
 
-InstructionTestSuite::InstructionTestSuite(QObject *parent) : QObject(parent)
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+    void testAssignInstruction();
+    void testCallAndAssignInstruction();
+    void testCallInstruction();
+    void testImportInstruction();
+    void testMakeInstruction();
+
+};
+
+InstructionTest::InstructionTest(QObject *parent) : QObject(parent)
 {
 
 }
 
-void InstructionTestSuite::initTestCase()
+void InstructionTest::initTestCase()
 {
 
 }
 
-void InstructionTestSuite::cleanupTestCase()
+void InstructionTest::cleanupTestCase()
 {
 
 }
 
-void InstructionTestSuite::testAssignInstruction()
+void InstructionTest::testAssignInstruction()
 {
     AssignInstruction instruction("id", "symbol", "value");
 
@@ -33,7 +50,7 @@ void InstructionTestSuite::testAssignInstruction()
     QCOMPARE(instruction.symbolValue(), QString("value"));
 }
 
-void InstructionTestSuite::testCallAndAssignInstruction()
+void InstructionTest::testCallAndAssignInstruction()
 {
     CallAndAssignInstruction instruction("id", "symbol", "instance", "method",
                                          QVariantList() << "value1" << "value2");
@@ -45,7 +62,7 @@ void InstructionTestSuite::testCallAndAssignInstruction()
     QCOMPARE(instruction.arguments(), QVariantList() << "value1" << "value2");
 }
 
-void InstructionTestSuite::testCallInstruction()
+void InstructionTest::testCallInstruction()
 {
     CallInstruction instruction("id", "instance", "method",
                                 QVariantList() << "value1" << "value2");
@@ -56,7 +73,7 @@ void InstructionTestSuite::testCallInstruction()
     QCOMPARE(instruction.arguments(), QVariantList() << "value1" << "value2");
 }
 
-void InstructionTestSuite::testImportInstruction()
+void InstructionTest::testImportInstruction()
 {
     ImportInstruction instruction("id", "path");
 
@@ -64,7 +81,7 @@ void InstructionTestSuite::testImportInstruction()
     QCOMPARE(instruction.path(), QString("path"));
 }
 
-void InstructionTestSuite::testMakeInstruction()
+void InstructionTest::testMakeInstruction()
 {
     MakeInstruction instruction("id", "instance", "class",
                                 QVariantList() << "value1" << "value2");
@@ -74,3 +91,7 @@ void InstructionTestSuite::testMakeInstruction()
     QCOMPARE(instruction.className(), QString("class"));
     QCOMPARE(instruction.arguments(), QVariantList() << "value1" << "value2");
 }
+
+QTEST_MAIN(InstructionTest)
+
+#include "tst_instruction.moc"

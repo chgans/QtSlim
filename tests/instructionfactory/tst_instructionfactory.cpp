@@ -1,4 +1,6 @@
-#include "instructionfactorytestsuite.h"
+#include <QString>
+#include <QtTest>
+#include <QCoreApplication>
 
 #include "instructions/instructionfactory.h"
 #include "instructions/assigninstruction.h"
@@ -7,24 +9,39 @@
 #include "instructions/importinstruction.h"
 #include "instructions/makeinstruction.h"
 
-#include <QtTest>
+class InstructionFactoryTest : public QObject
+{
+    Q_OBJECT
+public:
+    explicit InstructionFactoryTest(QObject *parent = 0);
 
-InstructionFactoryTestSuite::InstructionFactoryTestSuite(QObject *parent) : QObject(parent)
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+    void testCreateAssignInstruction();
+    void testCreateCallInstruction();
+    void testCreateCallAndAssignInstruction();
+    void testCreateImportInstruction();
+    void testCreateMakeInstruction();
+
+};
+
+InstructionFactoryTest::InstructionFactoryTest(QObject *parent) : QObject(parent)
 {
 
 }
 
-void InstructionFactoryTestSuite::initTestCase()
+void InstructionFactoryTest::initTestCase()
 {
 
 }
 
-void InstructionFactoryTestSuite::cleanupTestCase()
+void InstructionFactoryTest::cleanupTestCase()
 {
 
 }
 
-void InstructionFactoryTestSuite::testCreateAssignInstruction()
+void InstructionFactoryTest::testCreateAssignInstruction()
 {
     QVariantList words;
     words << "id"
@@ -42,7 +59,7 @@ void InstructionFactoryTestSuite::testCreateAssignInstruction()
     QCOMPARE(instruction->symbolValue(), QString("value"));
 }
 
-void InstructionFactoryTestSuite::testCreateCallInstruction()
+void InstructionFactoryTest::testCreateCallInstruction()
 {
     QVariantList words;
     words << "id"
@@ -63,7 +80,7 @@ void InstructionFactoryTestSuite::testCreateCallInstruction()
     QCOMPARE(instruction->arguments(), QVariantList() << "arg1" << "arg2");
 }
 
-void InstructionFactoryTestSuite::testCreateCallAndAssignInstruction()
+void InstructionFactoryTest::testCreateCallAndAssignInstruction()
 {
     QVariantList words;
     words << "id"
@@ -86,7 +103,7 @@ void InstructionFactoryTestSuite::testCreateCallAndAssignInstruction()
     QCOMPARE(instruction->arguments(), QVariantList() << "arg1" << "arg2");
 }
 
-void InstructionFactoryTestSuite::testCreateImportInstruction()
+void InstructionFactoryTest::testCreateImportInstruction()
 {
     QVariantList words;
     words << "id"
@@ -102,7 +119,7 @@ void InstructionFactoryTestSuite::testCreateImportInstruction()
     QCOMPARE(instruction->path(), QString("path"));
 }
 
-void InstructionFactoryTestSuite::testCreateMakeInstruction()
+void InstructionFactoryTest::testCreateMakeInstruction()
 {
     QVariantList words;
     words << "id"
@@ -123,3 +140,6 @@ void InstructionFactoryTestSuite::testCreateMakeInstruction()
     QCOMPARE(instruction->arguments(), QVariantList() << "arg1" << "arg2");
 }
 
+QTEST_MAIN(InstructionFactoryTest)
+
+#include "tst_instructionfactory.moc"

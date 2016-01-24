@@ -2,4 +2,8 @@
 *.pro.user
 *.pro.user.*
 
+# Emacs backup
+*~
+
+# Fitnesse executable
 fitnesse/fitnesse-standalone.jar

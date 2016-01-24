@@ -1,27 +1,49 @@
-#include "metamethodlisttestsuite.h"
-#include "introspection/metaobjectinspector.h"
-#include "fixtures/basicqobectfixture.h"
-
+#include <QString>
 #include <QtTest>
+#include <QCoreApplication>
 
-const QMetaObject MetaMethodListTestSuite::META_OBJECT = BasicQObectFixture::staticMetaObject;
+#include "introspection/metaobjectinspector.h"
+#include "../fixtures/basicqobectfixture.h"
 
-MetaMethodListTestSuite::MetaMethodListTestSuite(QObject *parent) : QObject(parent)
+class MetaMethodListTest : public QObject
+{
+    Q_OBJECT
+public:
+    explicit MetaMethodListTest(QObject *parent = 0);
+
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+    void testFilterByName();
+    void testFilterByName_NullName();
+    void testFilterByName_EmptyName();
+    void testFilterByName_NoneFound();
+    void testFilterByArgumentCount();
+    void testFilterByArgumentCount_NegativeCount();
+    void testFilterByArgumentCount_NoneFound();
+
+private:
+    static const QMetaObject META_OBJECT;
+};
+
+const QMetaObject MetaMethodListTest::META_OBJECT = BasicQObectFixture::staticMetaObject;
+
+MetaMethodListTest::MetaMethodListTest(QObject *parent) : QObject(parent)
 {
 
 }
 
-void MetaMethodListTestSuite::initTestCase()
+void MetaMethodListTest::initTestCase()
 {
 
 }
 
-void MetaMethodListTestSuite::cleanupTestCase()
+void MetaMethodListTest::cleanupTestCase()
 {
 
 }
 
-void MetaMethodListTestSuite::testFilterByName()
+void MetaMethodListTest::testFilterByName()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.allMethods().filterByName("functionMethod");
@@ -31,28 +53,28 @@ void MetaMethodListTestSuite::testFilterByName()
     QCOMPARE(methods[2].methodSignature(), QByteArray("functionMethod(int,bool)"));
 }
 
-void MetaMethodListTestSuite::testFilterByName_NullName()
+void MetaMethodListTest::testFilterByName_NullName()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.allMethods().filterByName(QString());
     QCOMPARE(methods.count(), 0);
 }
 
-void MetaMethodListTestSuite::testFilterByName_EmptyName()
+void MetaMethodListTest::testFilterByName_EmptyName()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.allMethods().filterByName(QString(""));
     QCOMPARE(methods.count(), 0);
 }
 
-void MetaMethodListTestSuite::testFilterByName_NoneFound()
+void MetaMethodListTest::testFilterByName_NoneFound()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.allMethods().filterByName("doesntexist");
     QCOMPARE(methods.count(), 0);
 }
 
-void MetaMethodListTestSuite::testFilterByArgumentCount()
+void MetaMethodListTest::testFilterByArgumentCount()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.allMethods().filterByArgumentCount(2);
@@ -62,16 +84,20 @@ void MetaMethodListTestSuite::testFilterByArgumentCount()
     QCOMPARE(methods[2].methodSignature(), QByteArray("functionMethod(int,bool)"));
 }
 
-void MetaMethodListTestSuite::testFilterByArgumentCount_NegativeCount()
+void MetaMethodListTest::testFilterByArgumentCount_NegativeCount()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.allMethods().filterByArgumentCount(-1);
     QCOMPARE(methods.count(), 0);
 }
 
-void MetaMethodListTestSuite::testFilterByArgumentCount_NoneFound()
+void MetaMethodListTest::testFilterByArgumentCount_NoneFound()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.allMethods().filterByArgumentCount(42);
     QCOMPARE(methods.count(), 0);
 }
+
+QTEST_MAIN(MetaMethodListTest)
+
+#include "tst_metamethodlist.moc"

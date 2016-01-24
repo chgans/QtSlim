@@ -1,24 +1,45 @@
+#include <QString>
 #include <QtTest>
-#include <QDebug>
+#include <QCoreApplication>
 
 #include "protocol/slimserialiser.h"
-#include "protocolserialisation.h"
 
+class ProtocolSerialisationTest : public QObject
+{
+    Q_OBJECT
 
-ProtocolSerialisationTestSuite::ProtocolSerialisationTestSuite(QObject *parent):
+public:
+    ProtocolSerialisationTest(QObject *parent = 0);
+
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+    void testCanSerialiseString_data();
+    void testCanSerialiseString();
+    void testCanSerialiseInteger_data();
+    void testCanSerialiseInteger();
+    void testCanSerialiseFloat_data();
+    void testCanSerialiseFloat();
+    void testCanSerialiseBoolean_data();
+    void testCanSerialiseBoolean();
+    void testCanSerialiseStringList_data();
+    void testCanSerialiseStringList();
+};
+
+ProtocolSerialisationTest::ProtocolSerialisationTest(QObject *parent):
     QObject(parent)
 {
 }
 
-void ProtocolSerialisationTestSuite::initTestCase()
+void ProtocolSerialisationTest::initTestCase()
 {
 }
 
-void ProtocolSerialisationTestSuite::cleanupTestCase()
+void ProtocolSerialisationTest::cleanupTestCase()
 {
 }
 
-void ProtocolSerialisationTestSuite::testCanSerialiseString_data()
+void ProtocolSerialisationTest::testCanSerialiseString_data()
 {
     QTest::addColumn<QString>("input");
     QTest::addColumn<QString>("output");
@@ -37,7 +58,7 @@ void ProtocolSerialisationTestSuite::testCanSerialiseString_data()
             << "000014:مرحبا بالعالم!";
 }
 
-void ProtocolSerialisationTestSuite::testCanSerialiseString()
+void ProtocolSerialisationTest::testCanSerialiseString()
 {
     QFETCH(QString, input);
     QFETCH(QString, output);
@@ -50,7 +71,7 @@ void ProtocolSerialisationTestSuite::testCanSerialiseString()
     QCOMPARE(deserialised.isNull(), input.isNull());
 }
 
-void ProtocolSerialisationTestSuite::testCanSerialiseInteger_data()
+void ProtocolSerialisationTest::testCanSerialiseInteger_data()
 {
     QTest::addColumn<int>("input");
     QTest::addColumn<QString>("output");
@@ -69,14 +90,14 @@ void ProtocolSerialisationTestSuite::testCanSerialiseInteger_data()
             << "000010:2147483647";
 }
 
-void ProtocolSerialisationTestSuite::testCanSerialiseInteger()
+void ProtocolSerialisationTest::testCanSerialiseInteger()
 {
     QFETCH(int, input);
     QFETCH(QString, output);
     QCOMPARE(SlimSerialiser::serialise(QVariant::fromValue<int>(input)), output);
 }
 
-void ProtocolSerialisationTestSuite::testCanSerialiseFloat_data()
+void ProtocolSerialisationTest::testCanSerialiseFloat_data()
 {
     QTest::addColumn<qreal>("input");
     QTest::addColumn<QString>("output");
@@ -92,14 +113,14 @@ void ProtocolSerialisationTestSuite::testCanSerialiseFloat_data()
             << "000008:3.141593";
 }
 
-void ProtocolSerialisationTestSuite::testCanSerialiseFloat()
+void ProtocolSerialisationTest::testCanSerialiseFloat()
 {
     QFETCH(qreal, input);
     QFETCH(QString, output);
     QCOMPARE(SlimSerialiser::serialise(QVariant::fromValue<qreal>(input)), output);
 }
 
-void ProtocolSerialisationTestSuite::testCanSerialiseBoolean_data()
+void ProtocolSerialisationTest::testCanSerialiseBoolean_data()
 {
     QTest::addColumn<bool>("input");
     QTest::addColumn<QString>("output");
@@ -112,14 +133,14 @@ void ProtocolSerialisationTestSuite::testCanSerialiseBoolean_data()
             << "000004:true";
 }
 
-void ProtocolSerialisationTestSuite::testCanSerialiseBoolean()
+void ProtocolSerialisationTest::testCanSerialiseBoolean()
 {
     QFETCH(bool, input);
     QFETCH(QString, output);
     QCOMPARE(SlimSerialiser::serialise(QVariant::fromValue<bool>(input)), output);
 }
 
-void ProtocolSerialisationTestSuite::testCanSerialiseStringList_data()
+void ProtocolSerialisationTest::testCanSerialiseStringList_data()
 {
     QTest::addColumn<QString>("serialised");
     QTest::addColumn<QVariantList>("deserialised");
@@ -179,9 +200,13 @@ void ProtocolSerialisationTestSuite::testCanSerialiseStringList_data()
                 );
 }
 
-void ProtocolSerialisationTestSuite::testCanSerialiseStringList()
+void ProtocolSerialisationTest::testCanSerialiseStringList()
 {
     QFETCH(QString, serialised);
     QFETCH(QVariantList, deserialised);
     QCOMPARE(SlimSerialiser::serialise(deserialised), serialised);
 }
+
+QTEST_MAIN(ProtocolSerialisationTest)
+
+#include "tst_protocolserialisation.moc"

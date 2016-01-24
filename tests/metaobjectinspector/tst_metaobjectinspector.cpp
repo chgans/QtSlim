@@ -1,29 +1,48 @@
-#include "metaobjectinspectortestsuite.h"
-#include "fixtures/basicqobectfixture.h"
+#include <QString>
+#include <QtTest>
+#include <QCoreApplication>
 
 #include  "introspection/metaobjectinspector.h"
+#include "../fixtures/basicqobectfixture.h"
 
-#include <QtTest>
+class MetaObjectInspectorTest : public QObject
+{
+    Q_OBJECT
+public:
+    explicit MetaObjectInspectorTest(QObject *parent = 0);
 
-const QMetaObject MetaObjectInspectorTestSuite::META_OBJECT = BasicQObectFixture::staticMetaObject;
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+    void testConstructors();
+    void testAllMethods();
+    void testFunctionMethods();
+    void testSignalMethods();
+    void testSlotMethods();
 
-MetaObjectInspectorTestSuite::MetaObjectInspectorTestSuite(QObject *parent) : QObject(parent)
+private:
+    static const QMetaObject META_OBJECT;
+};
+
+const QMetaObject MetaObjectInspectorTest::META_OBJECT = BasicQObectFixture::staticMetaObject;
+
+MetaObjectInspectorTest::MetaObjectInspectorTest(QObject *parent) : QObject(parent)
 {
 
 }
 
-void MetaObjectInspectorTestSuite::initTestCase()
+void MetaObjectInspectorTest::initTestCase()
 {
 
 }
 
-void MetaObjectInspectorTestSuite::cleanupTestCase()
+void MetaObjectInspectorTest::cleanupTestCase()
 {
 
 }
 
 // TBD: Do not test ordering, do a signatures(methods).sorted() and then compare against a QStringList()
-void MetaObjectInspectorTestSuite::testConstructors()
+void MetaObjectInspectorTest::testConstructors()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.constructors();
@@ -34,7 +53,7 @@ void MetaObjectInspectorTestSuite::testConstructors()
     QCOMPARE(methods[3].methodSignature(), QByteArray("BasicQObectFixture(int,bool)"));
 }
 
-void MetaObjectInspectorTestSuite::testAllMethods()
+void MetaObjectInspectorTest::testAllMethods()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.allMethods();
@@ -55,7 +74,7 @@ void MetaObjectInspectorTestSuite::testAllMethods()
     QCOMPARE(methods[13].methodSignature(), QByteArray("functionMethod(int,bool)"));
 }
 
-void MetaObjectInspectorTestSuite::testFunctionMethods()
+void MetaObjectInspectorTest::testFunctionMethods()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.functionMethods();
@@ -65,7 +84,7 @@ void MetaObjectInspectorTestSuite::testFunctionMethods()
     QCOMPARE(methods[2].methodSignature(), QByteArray("functionMethod(int,bool)"));
 }
 
-void MetaObjectInspectorTestSuite::testSignalMethods()
+void MetaObjectInspectorTest::testSignalMethods()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.signalMethods();
@@ -79,7 +98,7 @@ void MetaObjectInspectorTestSuite::testSignalMethods()
 
 }
 
-void MetaObjectInspectorTestSuite::testSlotMethods()
+void MetaObjectInspectorTest::testSlotMethods()
 {
     MetaObjectInspector inspector(META_OBJECT);
     MetaMethodList methods = inspector.slotMethods();
@@ -91,3 +110,6 @@ void MetaObjectInspectorTestSuite::testSlotMethods()
     QCOMPARE(methods[4].methodSignature(), QByteArray("slotMethodWithTwoParams(QString,QString)"));
 }
 
+QTEST_MAIN(MetaObjectInspectorTest)
+
+#include "tst_metaobjectinspector.moc"
