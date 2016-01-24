@@ -21,6 +21,7 @@ matrix:
           compiler: gcc
 
 install:
+    - set -x
     - source ci-scripts/travis-install.env
 
 script:
