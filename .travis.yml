@@ -3,16 +3,16 @@ dist: trusty
 language: cpp
 
 compiler:
-    - clang
     - gcc
+    - clang
 
 os:
     - linux
     - osx
 
 env:
-  - BUILD_MODE=release
   - BUILD_MODE=debug
+  - BUILD_MODE=release
 
 # Qt-5.5 doesn't build on MacOsX-10.9_x86_64 with GCC-4.8
 matrix:
