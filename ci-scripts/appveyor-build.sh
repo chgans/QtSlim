@@ -8,7 +8,7 @@ sh --version
 env | sort
 
 # Set env
-export MAKE="mingw32-make -j 8"
+export MAKE="mingw32-make -j 3"
 export RELEASE="QtSlim-MinGW32_${APPVEYOR_REPO_BRANCH}-${APPVEYOR_REPO_COMMIT}_build-${APPVEYOR_BUILD_NUMBER}"
 
 # Build in separate directory
@@ -26,7 +26,7 @@ QT_LOGGING_CONF="*=false" $MAKE check TESTARGS='-o $(QMAKE_TARGET).xml,xunitxml'
 mkdir $RELEASE
 cd $RELEASE
 cp ../app/release/qtslim.exe .
-cp ../tests/*/qtslim-*-testsuite.exe .
+cp ../tests/*/qtslim-testsuite-*.exe .
 cp $QTDIR/bin/Qt5Core.dll .
 cp $QTDIR/bin/Qt5Network.dll .
 cp $QTDIR/bin/Qt5Test.dll .
