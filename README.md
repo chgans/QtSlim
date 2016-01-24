@@ -2,6 +2,17 @@
 
 An implementation of the Slim test system (part of http://fitnesse.org) for use in Qt based projects
 
+## Licensing
+
+QtSlim is published under the terms of the GNU Lesser General Public
+License version 3 as published by the Free Software Foundation and
+appearing in the file LICENSE.LGPL3 included in the packaging of this
+file.
+
+Please review the following information to ensure the GNU Lesser
+General Public License version 3 requirements will be met:
+https://www.gnu.org/licenses/lgpl-3.0.html.
+
 ## Continuous integration
 
 | Runner | Platform | Status |
@@ -45,7 +56,7 @@ Installation ("make install") is not needed. It is however possible, using
 - [X] Add code coverage
 - [ ] Fix code coverage result difference b/w cpp-coverals and lcov
 - [ ] Add Clang static-analiser?
-- [ ] Add licensing information to README, LICENSE and source code files
+- [X] Add licensing information to README, LICENSE and source code files
 - [X] Add build instruction to README
 - [ ] Add tutorial/examples
 - [ ] Move CI logic to ci-scripts folder
