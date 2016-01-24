@@ -26,7 +26,7 @@ QT_LOGGING_CONF="*=false" $MAKE check TESTARGS='-o $(QMAKE_TARGET).xml,xunitxml'
 mkdir $RELEASE
 cd $RELEASE
 cp ../app/release/qtslim.exe .
-cp ../tests/*/qtslim-testsuite-*.exe .
+cp ../tests/*/release/qtslim-testsuite-*.exe .
 cp $QTDIR/bin/Qt5Core.dll .
 cp $QTDIR/bin/Qt5Network.dll .
 cp $QTDIR/bin/Qt5Test.dll .
@@ -40,7 +40,7 @@ cp -R $QTDIR/plugins/platforms .
 rm -f platforms/*d.dll
 cd ..
 7z a -tzip $RELEASE.zip $RELEASE
-ls -l $RELEASE$.zip
+ls -l $RELEASE.zip
 cd ..
 
 # Application smoke test
