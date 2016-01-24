@@ -20,3 +20,4 @@ An implementation of the Slim test system (part of http://fitnesse.org) for use 
 - [ ] Add tutorial/examples
 - [ ] Move CI logic to ci-scripts folder
 - [ ] Add a UDP logger and a log viewer
+- [ ] Switch CI Windows build to 64 bits
