@@ -5,9 +5,9 @@ environment:
 
 build_script:
     - set PATH=%QTDIR%\bin;C:\Qt\Tools\mingw491_32\bin;%PATH%
-      set PATH="C:\Program Files\7-Zip";%PATH%
-      set
-      sh.exe --login ci-scripts/appveyor-build.sh
+    - set PATH="C:\Program Files\7-Zip";%PATH%
+    - set
+    - sh.exe --login ci-scripts/appveyor-build.sh
       
 artifacts:
     - path: QtSlim-*.zip
