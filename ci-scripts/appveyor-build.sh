@@ -11,6 +11,10 @@ env | sort
 export MAKE="mingw32-make -j 8"
 export RELEASE="QtSlim-MinGW32_${APPVEYOR_REPO_BRANCH}-${APPVEYOR_REPO_COMMIT}_build-${APPVEYOR_BUILD_NUMBER}"
 
+# Build in separate directory
+mkdir build
+cd build
+
 # Configure and build
 qmake ../QtSlim.pro 
 $MAKE
@@ -37,3 +41,9 @@ rm -f platforms/*d.dll
 cd ..
 7z a -tzip $RELEASE.zip $RELEASE
 ls -l $RELEASE$.zip
+cd ..
+
+# Application smoke test
+# TODO: uncompress archive and run test suites and smoke tests
+# ./app/qtslim --version
+
