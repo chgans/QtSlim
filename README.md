@@ -6,7 +6,7 @@ An implementation of the Slim test system (part of http://fitnesse.org) for use 
 | Runner | Platform | Status |
 |--------|----------|--------|
 | https://www.appveyor.com | Windows | [![Build status](https://ci.appveyor.com/api/projects/status/jj5oa6n0cls5puaw?svg=true)](https://ci.appveyor.com/project/chgans/qtslim) |
-| https://travis-ci.org | Linux and Mac | [![Build Status](https://travis-ci.org/chgans/QtSlim.svg?branch=master)](https://travis-ci.org/chgans/QtSlim) |
+| https://travis-ci.org | Linux and Mac | [![Build Status](https://travis-ci.org/chgans/QtSlim.svg?branch=master)](https://travis-ci.org/chgans/QtSlim) [![Coverage Status](https://coveralls.io/repos/github/chgans/QtSlim/badge.svg?branch=master)](https://coveralls.io/github/chgans/QtSlim?branch=master)|
 
 # TODO
 

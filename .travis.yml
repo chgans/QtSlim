@@ -33,12 +33,22 @@ install:
     - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then brew install qt5; fi
     - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then export PATH=$(brew --prefix)/opt/qt5/bin:$PATH; fi
 
+    - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "g++" -a "${BUILD_MODE} = "debug" ]; then sudo apt-get install gcov lcov && sudo pip install cpp-coveralls; fi
+
 script:
     - echo "Building for ${MKSPEC} in ${BUILD_MODE} mode..."
     - mkdir build
     - cd build
-    - qmake .. -spec ${MKSPEC} CONFIG+=${BUILD_MODE}
+    - if [ "${TRAVIS_OS_NAME}" = "linux" -a "${CXX}" = "g++" -a "${BUILD_MODE} = "debug" ];
+      then
+	qmake .. -spec ${MKSPEC} CONFIG+=${BUILD_MODE} "QMAKE_CXXFLAGS+=--coverage" "QMAKE_LFLAGS+=--coverage";
+      else
+	qmake .. -spec ${MKSPEC} CONFIG+=${BUILD_MODE};
+      fi
     - make -j3 -k
     - QT_LOGGING_CONF='*=false' make check TESTARGS='-o $(QMAKE_TARGET).xml,xunitxml'
     - file app/qtslim
     # - ./app/qtslim --version
+
+after_success:
+  - cpp-coveralls -e /usr/include -e tests -e app -e fitnesse
