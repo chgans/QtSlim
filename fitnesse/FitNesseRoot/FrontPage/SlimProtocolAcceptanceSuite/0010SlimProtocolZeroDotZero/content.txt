@@ -1,2 +1,7 @@
-!1 Test suite X
+!1 Slim protocol v0.0 (baseline)
 !contents -R2 -g -p -f -h
+!2 TODO/TBD
+ * Exception string support
+ * Standard exception messages
+ * Test abortion
+ * Test suite abortion

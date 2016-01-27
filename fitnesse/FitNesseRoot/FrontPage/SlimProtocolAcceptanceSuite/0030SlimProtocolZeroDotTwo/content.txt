@@ -1,1 +1,5 @@
+!1 Slim protocol v0.2 additions
+!3 Make instruction
+Fixture Chaining: Symbols can be used in the Make command to represent a class name. If the <class> argument of the Make command contains '$' characters, then Slim should replace any symbols that have been created by previous callAndAssign commands. This allows FitNesse to compose fixture names from symbols set by fixtures, and therefore enables fixture chaining.
+
 !contents -R2 -g -p -f -h

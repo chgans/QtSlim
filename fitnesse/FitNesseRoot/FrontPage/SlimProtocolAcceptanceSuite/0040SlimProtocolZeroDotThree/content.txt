@@ -1,1 +1,29 @@
+!1 Slim protocol v0.3 additions
+!2 Instructions
+!3 Import
+No change.
+
+!3 Make
+ * Symbol Copy: If <class> consists entirely of a single symbol name prefixed with $, and the item from the dictionary of symbol values with the symbol name is not a string, then the item is added to the dictionary of created objects with the name <instance>. The <arg> strings are ignored and no constructor is called.
+
+!3 Call
+ * Symbol As Object: If an <arg> consists entirely of a single symbol name prefixed with $, then the item from the dictionary of symbol values with the symbol name is used directly as an argument in the function call.
+
+!3 Call and assign
+No change.
+
+!2 Symbols
+ * Symbol As Object: If the symbol is replaced within a string context, it will be converted to a string. If only the $ followed by a symbol name is given and an object is stored for that symbol, then the object will be used.
+
+!2 Actors
+ * The stack of library objects should be initialized with an instance of a class with the following 3 methods:
+   * getFixture(): returns the object from the dictionary of created objects named "scriptTableActor". Throws an exception if no object exists.
+   * pushFixture(): pushes the object from the dictionary of created objects named "scriptTableActor" on to the stack of actor objects. Throws an exception if no object exists.
+   * popFixture(): pops an object from the stack of actor objects and adds it to the dictionary of created objects with the name "scriptTableActor". Throws an exception if the stack is empty.
+ * To support symbol assignments in Decision Tables which are implemented with a Scenario function is required in a Library:
+   * cloneSymbol()
+
+!2 Type Conversions
+No change
+
 !contents -R2 -g -p -f -h
