@@ -50,17 +50,24 @@ Installation ("make install") is not needed. It is however possible, using
 
 ## TODO
 
+Release 0.1:
+
 - [X] Run unit tests in CI
 - [ ] Run FitNesse tests in CI
 - [ ] Upload build artifact from CI to github
 - [X] Add code coverage
-- [ ] Fix code coverage result difference b/w cpp-coverals and lcov
-- [ ] Add Clang static-analiser?
 - [X] Add licensing information to README, LICENSE and source code files
 - [X] Add build instruction to README
 - [ ] Add tutorial/examples
-- [ ] Move CI logic to ci-scripts folder
+- [X] Move CI logic to ci-scripts folder
+- [ ] Finish fitnesse testsuite fot Slim protocol v0 and pass it
+- [ ] Release QtSlim-0.1
+
+Future:
+
+- [ ] Fix code coverage result difference b/w cpp-coverals and lcov
 - [ ] Add a UDP logger and a log viewer
 - [ ] Switch CI Windows build to 64 bits
 - [ ] Build unit tests and fitnesse fixtures only in debug mode
+- [ ] Add Clang static-analiser?
 
