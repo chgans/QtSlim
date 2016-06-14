@@ -25,7 +25,7 @@ https://www.gnu.org/licenses/lgpl-3.0.html.
 Binary packages are provided for the following platforms:
 - Linux: Ubuntu 14.04, x86-64, Qt 5.2
 - Windows: MinGW 4.9, x86-32, Qt 5.4
-- Mac: Mac OS X 10.9, x86-64, Qt 5.5
+- Mac: Mac OS X 10.9, x86-64, Qt 5.6
 
 Building the sources requires Qt 5.2 or later.
 
