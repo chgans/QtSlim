@@ -47,9 +47,19 @@ rm -f platforms/*d.dll
 cd ..
 7z a -tzip $RELEASE.zip $RELEASE
 ls -l $RELEASE.zip
-cd ..
 
-# Application smoke test
-# TODO: uncompress archive and run test suites and smoke tests
 # ./app/qtslim --version
 
+mkdir tests
+cd tests
+7z e ../$RELEASE.zip
+cd $RELEASE
+pwd
+ls -l
+# qtlim.exe --version
+for suite in qtslim-testsuite-*.exe;
+do
+    $suite;
+done
+
+cd ..
