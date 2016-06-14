@@ -28,9 +28,10 @@ $MAKE
 # Test
 QT_LOGGING_CONF="*=false" $MAKE check TESTARGS='-o $(QMAKE_TARGET).xml,xunitxml'
 
-# Make binary tarball
 mkdir $RELEASE
 cd $RELEASE
+
+# Copy release artifacts
 cp ../app/release/qtslim.exe .
 cp ../tests/*/release/qtslim-testsuite-*.exe .
 cp $QTDIR/bin/Qt5Core.dll .
@@ -44,22 +45,19 @@ cp $QTDIR/bin/libwinpthread-1.dll .
 cp $QTDIR/bin/icudt53.dll .
 cp -R $QTDIR/plugins/platforms .
 rm -f platforms/*d.dll
-cd ..
-7z a -tzip $RELEASE.zip $RELEASE
-ls -l $RELEASE.zip
 
+# Smoke test app
 # ./app/qtslim --version
 
-mkdir tests
-cd tests
-7z e ../$RELEASE.zip
-cd $RELEASE
-pwd
-ls -l
-# qtlim.exe --version
+# Run unit tests
 for suite in qtslim-testsuite-*.exe;
 do
     $suite;
 done
+
+# Create zip file
+cd ..
+7z a -tzip $RELEASE.zip $RELEASE
+ls -lh
 
 cd ..
