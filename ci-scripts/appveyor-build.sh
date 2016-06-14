@@ -11,6 +11,10 @@ env | sort
 export MAKE="mingw32-make -j 3"
 export RELEASE="QtSlim-MinGW32_${APPVEYOR_REPO_BRANCH}-${APPVEYOR_REPO_COMMIT}_build-${APPVEYOR_BUILD_NUMBER}"
 
+qmake --version
+${CXX} --version
+make --version
+
 # TODO: Build in release mode, create release binary, then build in debug mode and run unit/fitnesse test suites
 
 # Build in separate directory
