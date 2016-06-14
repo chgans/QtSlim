@@ -52,7 +52,7 @@ rm -f platforms/*d.dll
 # Run unit tests
 for suite in qtslim-testsuite-*.exe;
 do
-    $suite;
+    ./$suite;
 done
 
 # Create zip file
