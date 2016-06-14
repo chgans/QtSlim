@@ -13,7 +13,7 @@ export RELEASE="QtSlim-MinGW32_${APPVEYOR_REPO_BRANCH}-${APPVEYOR_REPO_COMMIT}_b
 
 qmake --version
 g++ --version
-make --version
+$MAKE --version
 
 # TODO: Build in release mode, create release binary, then build in debug mode and run unit/fitnesse test suites
 
